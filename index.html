@@ -245,26 +245,6 @@ nav.nav5 .navlog span{font-size:26px!important;font-weight:900;line-height:1}
 .qt{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:12px 2px;font:inherit;font-size:12.5px;font-weight:700;color:var(--ink)}
 .qt span{font-size:28px}
 .qt:active,.tile:active,nav.nav5>button:active{transform:scale(.95)}
-nav.navsp{display:grid!important;grid-template-columns:repeat(4,1fr);overflow:visible!important;padding:18px 4px calc(env(safe-area-inset-bottom) + 4px)!important;border-top:0!important;background:linear-gradient(to top,var(--bg) 62%,transparent)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-nav.navsp:before,nav.navsp:after{display:none!important}
-nav.navsp>button{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:none!important;font:inherit;font-size:11px!important;white-space:nowrap;font-weight:600;color:var(--mute);padding:4px 0;min-width:0}
-nav.navsp>button span{font-size:11px!important;line-height:1.2!important;font-weight:inherit}nav.navsp>button svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-nav.navsp>button.on{color:var(--ink);font-weight:800}
-nav.navsp>button.on svg{stroke-width:2.6}
-nav.navsp>button:active{transform:scale(.92)}
-.libh{font-size:26px;font-weight:900;margin:2px 0 12px}
-.libchips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -2px 14px;padding:0 2px}
-.libchips::-webkit-scrollbar{display:none}
-.libchips button{flex:none;border:0;border-radius:20px;padding:8px 14px;background:var(--card);color:var(--ink);font:inherit;font-size:14px;font-weight:600}
-.libchips button.on{background:var(--accent);color:var(--onaccent,#fff)}
-.libl{display:flex;flex-direction:column}
-.libr{display:flex;align-items:center;gap:14px;border:0;background:none;padding:8px 0;font:inherit;color:var(--ink);text-align:left;width:100%}
-.libr:active{opacity:.6}
-.libr .art{flex:none;width:58px;height:58px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px -6px rgba(0,0,0,.5)}
-.libr .art.round{width:46px;height:46px;border-radius:50%;background:var(--card);font-size:22px;box-shadow:none}
-.libr .lt{display:flex;flex-direction:column;min-width:0}
-.libr .lt b{font-size:16px;font-weight:700}
-.libr .lt span{font-size:13px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -367,7 +347,7 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='18';
+var APPV='16';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -409,10 +389,10 @@ function render(){if(S)infoData();if(!GH||!S){document.body.className='albert du
   needRender=false;document.body.className=ui.cat+(['fights','hows'].indexOf(ui.tab)>=0?' duo':'');
   try{localStorage.setItem(LS+'-ui',JSON.stringify({cat:ui.cat,tab:ui.tab,calWho:ui.calWho}))}catch(e){}
   var h='<header><h1>Albert &amp; Milly</h1><span class="row"><span class="save">'+esc(saveState)+'</span><button class="b s" data-a="tab" data-v="settings">⚙️</button></span></header>';
-  h+=timerBanner();if(MORE_TABS[ui.tab])h+='<button class="backbar" data-a="tab" data-v="more">‹ Your Library</button>';
+  h+=timerBanner();if(MORE_TABS[ui.tab])h+='<button class="backbar" data-a="tab" data-v="more">‹ More</button>';
   if(['fights','calendar','info','todo','stock','money','hows','weight','more','settings'].indexOf(ui.tab)<0)h+='<div class="switch">'+['albert','milly'].map(function(k){var c=S.cats[k],w=sorted(c),lw=w.length?w[w.length-1].kg.toFixed(2)+' kg':'';return'<button data-a="cat" data-v="'+k+'" class="'+(ui.cat===k?'on':'')+'">'+spot(k)+'<span><span class="nm">'+esc(c.name)+'</span><span class="wt">'+lw+' → '+c.target+' kg</span></span></button>'}).join('')+'</div>';
   h+=({more:vMore,today:vToday,calendar:vCal,weight:vWeight,fights:vFights,health:vHealth,settings:vSettings,info:vInfo,todo:vTodo,stock:vStock,money:vMoney,hows:vHows})[ui.tab]();
-  h+='<nav class="navsp">'+[['today','home','Home'],['calendar','cal','Calendar'],['more','lib','Library'],['log','plus','Create']].map(function(t){if(t[0]==='log')return'<button data-a="logsheet">'+ICON.plus+'<span>Create</span></button>';var on=ui.tab===t[0]||(t[0]==='more'&&MORE_TABS[ui.tab]);return'<button data-a="tab" data-v="'+t[0]+'" class="'+(on?'on':'')+'">'+ICON[t[1]]+'<span>'+t[2]+'</span></button>'}).join('')+'</nav>';
+  h+='<nav class="nav5">'+[['today','🍽️','Today'],['calendar','📅','Calendar'],['log','',''],['weight','⚖️','Weight'],['more','☰','More']].map(function(t){if(t[0]==='log')return'<button class="navlog" data-a="logsheet" aria-label="Log something"><span>＋</span>Log</button>';var on=ui.tab===t[0]||(t[0]==='more'&&MORE_TABS[ui.tab]);return'<button data-a="tab" data-v="'+t[0]+'" class="'+(on?'on':'')+'"><span>'+t[1]+'</span>'+t[2]+'</button>'}).join('')+'</nav>';
   if(ui.modal)h+=ui.modal().replace('data-stop="1">','data-stop="1"><button class="xbtn" data-a="close" aria-label="Close">✕</button>');
   h+='<input type="file" id="fileIn" class="file">';
   var oldNav=document.querySelector('.navin'),navX=oldNav?oldNav.scrollLeft:null;if(navX==null){try{var sx=sessionStorage.getItem(LS+'-navx');if(sx!=null)navX=+sx}catch(e){}}
@@ -424,18 +404,13 @@ function render(){if(S)infoData();if(!GH||!S){document.body.className='albert du
 
 
 /* bottom bar: 5 fixed buttons, everything else lives on More */
-var MORE_TABS={weight:1,fights:1,health:1,hows:1,todo:1,stock:1,money:1,info:1,settings:1};
-var ICON={home:'<svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg>',cal:'<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',lib:'<svg viewBox="0 0 24 24"><path d="M5 3.5v17M10 3.5v17M14.5 4.2l5 15.6"/></svg>',plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'};
-function libItems(){var openT=(S.todos||[]).filter(function(x){return!x.done}).length,low=0,wk='';
+var MORE_TABS={fights:1,health:1,hows:1,todo:1,stock:1,money:1,info:1,settings:1};
+function vMore(){var openT=(S.todos||[]).filter(function(x){return!x.done}).length,low=0;
   try{['albert','milly'].forEach(function(k){S.cats[k].foods.forEach(function(f){var st=stockOf(k,f);if(st&&st.days!=null&&st.days<7)low++})});(S.extraStock||[]).forEach(function(x){var r=extraRem(x);if(r!=null&&r<=0)low++})}catch(e){}
-  try{wk=['albert','milly'].map(function(k){var w=sorted(S.cats[k]);return S.cats[k].name+' '+(w.length?(+w[w.length-1].kg).toFixed(2):'?')+' kg'}).join(' · ')}catch(e){}
-  return[['weight','⚖️','Weight',wk,'health','#e8833a,#c85a1e'],['fights','😾','Fights',(S.fights||[]).length+' logged','cats','#8b5cf6,#5b21b6'],['hows','🤝','Friendship','Who starts it, and when','cats','#f59e0b,#b45309'],['health','🩺','Health & vet','Poo, worming, symptoms, vet notes','health','#10b981,#047857'],['stock','📦','Stock',low?low+' running low':'All stocked up','food','#0ea5e9,#0369a1'],['todo','✅','To do',openT?openT+' open':'All done','home','#22c55e,#15803d'],['money','💶','Money','Costs and insurance','money','#64748b,#334155'],['info','📋','Info','Cats, hotel, vet, insurance','home','#ec4899,#9d174d'],['settings','⚙️','Settings','Plan, foods, sync','home','#52525b,#27272a']]}
-function vMore(){var f=ui.libf||'all',F=[['all','All'],['cats','Cats'],['health','Health'],['food','Food'],['money','Money']];
-  var items=libItems().filter(function(x){return f==='all'||x[4]===f||(f==='health'&&x[0]==='weight')});
-  return'<h1 class="libh">Your Library</h1><div class="libchips">'+F.map(function(x){return'<button class="'+(f===x[0]?'on':'')+'" data-a="libf" data-v="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div>'+
-    '<div class="libl">'+items.map(function(x){return'<button class="libr" data-a="tab" data-v="'+x[0]+'"><span class="art" style="background:linear-gradient(135deg,'+x[5]+')">'+x[1]+'</span><span class="lt"><b>'+x[2]+'</b><span>'+esc(x[3])+'</span></span></button>'}).join('')+'</div>'}
-function logSheet(){var Q=[['dry','🥣','Dry food','Weigh it and log the grams'],['wet','🥫','Wet food','A can or pouch'],['poo','💩','Poo','One question at a time'],['pee','💧','Pee','Clump size and smell'],['fight','😾','Fight','Who started it and why'],['weigh','⚖️','Weigh-in','Both cats in one go'],['play','🧶','Play','Start a play stopwatch'],['treat','🍬','Treat','Adds one treat to today'],['worm','🐛','Worming','Starts the 6-month countdown'],['flea','🛡️','Flea','Starts the next-dose countdown'],['symptom','🩺','Symptom','Cough, vomit, anything odd'],['note','📝','Note','A note for today']];
-  return'<div class="modal" data-a="close"><div class="sheet" data-stop="1"><div class="seg" style="grid-template-columns:1fr 1fr;margin:4px 48px 8px 0">'+['albert','milly'].map(function(k){return'<button data-a="lcat" data-v="'+k+'" class="'+(ui.cat===k?'on':'')+'">'+spot(k).replace('class="spot"','class="spot" style="width:22px;height:22px;vertical-align:middle"')+' '+esc(S.cats[k].name)+'</button>'}).join('')+'</div><div class="libl">'+Q.map(function(q){return'<button class="libr" data-a="qlog" data-v="'+q[0]+'"><span class="art round">'+q[1]+'</span><span class="lt"><b>'+q[2]+'</b><span>'+q[3]+'</span></span></button>'}).join('')+'</div></div></div>'}
+  var T=[['fights','😾','Fights',(S.fights||[]).length+' logged'],['health','🩺','Health & vet','Poo, worming, vet notes'],['hows','🤝','Friendship','Who starts it, and when'],['todo','✅','To do',openT?openT+' open':'All done'],['stock','📦','Stock',low?low+' running low':'All good'],['money','💶','Money','Costs and insurance'],['info','📋','Info','Cats, hotel, vet, insurance'],['settings','⚙️','Settings','Plan, foods, sync']];
+  return'<div class="tiles">'+T.map(function(t){return'<button class="tile" data-a="tab" data-v="'+t[0]+'"><span class="ti">'+t[1]+'</span><b>'+t[2]+'</b><span class="small mute">'+esc(t[3])+'</span></button>'}).join('')+'</div>'}
+function logSheet(){var Q=[['dry','🥣','Dry food'],['wet','🥫','Wet food'],['poo','💩','Poo'],['pee','💧','Pee'],['fight','😾','Fight'],['weigh','⚖️','Weigh-in'],['play','🧶','Play'],['treat','🍬','Treat'],['worm','🐛','Worming'],['flea','🛡️','Flea'],['symptom','🩺','Symptom'],['note','📝','Note']];
+  return'<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin:0 0 12px">Log something</h2><div class="seg" style="grid-template-columns:1fr 1fr;margin-bottom:12px">'+['albert','milly'].map(function(k){return'<button data-a="lcat" data-v="'+k+'" class="'+(ui.cat===k?'on':'')+'">'+spot(k).replace('class="spot"','class="spot" style="width:22px;height:22px;vertical-align:middle"')+' '+esc(S.cats[k].name)+'</button>'}).join('')+'</div><div class="qgrid">'+Q.map(function(q){return'<button class="qt" data-a="qlog" data-v="'+q[0]+'"><span>'+q[1]+'</span>'+q[2]+'</button>'}).join('')+'</div></div></div>'}
 function fire(a,v){var b=document.createElement('button');b.dataset.a=a;if(v!=null)b.dataset.v=v;b.style.display='none';document.getElementById('root').appendChild(b);b.click();b.remove()}
 function jumpTo(txt){var hs=[].slice.call(document.querySelectorAll('#root h2'));var h=hs.filter(function(x){return x.textContent.toLowerCase().indexOf(txt.toLowerCase())>=0})[0];if(h){var y=h.getBoundingClientRect().top+window.scrollY-70;window.scrollTo({top:y,behavior:'smooth'})}}
 function fixNav(){try{fixNav2()}catch(e){}}
@@ -1142,7 +1117,6 @@ document.addEventListener('click',function(e){
   else if(a==='ghout2'){try{localStorage.removeItem(LS+'-gh');localStorage.removeItem(LS+'-cache')}catch(e){}GH=null;S=null;ui.modal=null;render()}
   else if(a==='logsheet'){ui.modal=logSheet;render()}
   else if(a==='lcat'){ui.cat=v;render()}
-  else if(a==='libf'){ui.libf=v;render()}
   else if(a==='qlog'){ui.modal=null;var goT=function(sec){ui.tab='today';ui.day=today();render();if(sec)setTimeout(function(){jumpTo(sec)},60)};
     if(v==='dry'||v==='wet'){goT('');fire('mopen',v)}
     else if(v==='play')goT('Play');else if(v==='note')goT('Note');else if(v==='treat'){goT('Today so far');fire('treat','1')}
@@ -1157,7 +1131,7 @@ function confirmBox(msg,act,v){return'<div class="modal" data-a="close"><div cla
 function num(id){var x=parseFloat(String(document.getElementById(id).value).replace(',','.'));return isNaN(x)?null:x}
 function flash(id){var el=document.getElementById(id)||document.querySelector('[data-w="'+id+'"]');if(!el)return;el.style.borderColor='var(--bad)';el.focus()}
 
-var TABS=['today','calendar','more'],sw=null;
+var TABS=['today','calendar','weight','more'],sw=null;
 document.addEventListener('touchstart',function(e){var t=e.target;if(ui.modal||t.closest('nav,input,textarea,select,.cal,svg,.modal')){sw=null;return}var p=e.touches[0];sw={x:p.clientX,y:p.clientY,t:Date.now()}},{passive:true});
 document.addEventListener('touchend',function(e){if(!sw)return;var p=e.changedTouches[0],dx=p.clientX-sw.x,dy=p.clientY-sw.y;var quick=Date.now()-sw.t<600;sw=null;
   if(!quick||Math.abs(dx)<70||Math.abs(dy)>Math.abs(dx)*0.6)return;var i=TABS.indexOf(ui.tab);if(i<0)return;var ni=i+(dx<0?1:-1);if(ni<0||ni>=TABS.length)return;ui.tab=TABS[ni];render();scrollTo(0,0)},{passive:true});
