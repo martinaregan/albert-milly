@@ -689,12 +689,39 @@ function fightWiz(){var f=ui.f,steps=['who','trig','sev','where','sep','pher','d
   if(f.step>0)h+='<button class="b ghost" style="margin-top:10px" data-a="fback">‹ Back</button>';
   return h+'</div></div>'}
 
+function wizFrame(title,step,n,q,body,backAct){return'<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><span class="small mute" style="font-weight:800">'+title+' · '+(step+1)+' of '+n+'</span><button class="x" data-a="close">✕</button></div><div class="wizbar"><div style="width:'+Math.round((step+1)/n*100)+'%"></div></div><h2 class="wizq">'+q+'</h2>'+body+(step>0?'<button class="b ghost" style="margin-top:10px" data-a="'+backAct+'">‹ Back</button>':'')+'</div></div>'}
+function wizBig(list,cur,act,key){return'<div class="wizc">'+list.map(function(o){var v=o[0],lab=o[1],on=cur===v;return'<button class="wizb'+(on?' on':'')+'" data-a="'+act+'" data-k="'+key+'" data-v="'+esc(v)+'">'+lab+(on?' <span>✓</span>':'')+'</button>'}).join('')+'</div>'}
+function sumRow(lbl,val,act,i){return'<button class="wizsum" data-a="'+act+'" data-v="'+i+'"><span class="small mute">'+lbl+'</span><b>'+esc(val||'Not answered')+'</b></button>'}
+function symWiz(){var y=ui.sy,steps=['cat','t','done'],st=steps[y.step];
+  var catL=['albert','milly'].map(function(k){return[k,'<span style="display:flex;align-items:center;gap:10px">'+spot(k).replace('class="spot"','class="spot" style="width:30px;height:30px"')+esc(S.cats[k].name)+'</span>']});
+  var body=st==='cat'?wizBig(catL,y.cat,'syx','cat'):st==='t'?wizBig(HT.map(function(x){return[x,esc(x)]}),y.t,'syx','t'):
+    sumRow('Which cat?',y.cat?S.cats[y.cat].name:'','sygo',0)+sumRow('What happened?',y.t,'sygo',1)+
+    '<div class="grid2" style="margin-top:10px"><div><label class="l">Date</label><input type="date" data-sy="d" value="'+y.d+'" max="'+today()+'"></div><div><label class="l">Time</label><input type="time" data-sy="m" value="'+y.m+'"></div></div>'+
+    '<label class="l">Details (optional)</label><textarea rows="2" data-sy="n" placeholder="How long, after eating, at rest…">'+esc(y.n)+'</textarea>'+
+    (ui.pend.length?thumbs(ui.pend,'pend'):'')+'<div style="margin-top:10px">'+upBtn('pend','health','📷 Add photo or video','image/*,video/*').replace('class="b s"','class="b w upbig"')+'</div>'+
+    '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="sysave">Save symptom</button>';
+  return wizFrame('Log a symptom',y.step,steps.length,{cat:'Which cat?',t:'What happened?',done:'All good?'}[st],body,'syback')}
+function calmWiz(){var x=ui.cm,steps=['what','done'],st=steps[x.step];
+  var body=st==='what'?wizBig(CALMS.map(function(o){return[o,esc(o)]}),x.what,'cmx','what'):
+    sumRow('What happened?',x.what,'cmgo',0)+'<div class="grid2" style="margin-top:10px"><div><label class="l">Date</label><input type="date" data-cm="d" value="'+x.d+'" max="'+today()+'"></div><div><label class="l">Time</label><input type="time" data-cm="m" value="'+x.m+'"></div></div><label class="l">Notes (optional)</label><input data-cm="n" value="'+esc(x.n)+'">'+
+    (ui.pend&&ui.pend.length?thumbs(ui.pend,'pend'):'')+'<div style="margin-top:10px">'+upBtn('pend','calm','📷 Add photo or video','image/*,video/*').replace('class="b s"','class="b w upbig"')+'</div>'+
+    '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="cmsave">Save calm moment</button>';
+  return wizFrame('😊 Calm moment',x.step,steps.length,{what:'What did they do?',done:'All good?'}[st],body,'cmback')}
+function costWiz(){var x=ui.cs,steps=['cat','who','amount','done'],st=steps[x.step];
+  var body=st==='cat'?wizBig(CC.map(function(c){return[c,CI[c]+' '+c]}),x.cat,'ccx','cat'):st==='who'?wizBig([['albert','Albert'],['milly','Milly'],['both','Both']],x.who,'ccx','who'):
+    st==='amount'?'<label class="l">Amount (€)</label><input data-cs="amount" inputmode="decimal" value="'+esc(x.amount)+'" placeholder="0.00" style="font-size:24px;font-weight:900"><label class="l">What for</label><input data-cs="desc" value="'+esc(x.desc)+'" placeholder="e.g. 3 kg z/d, zooplus"><button class="b p w" style="margin-top:12px;padding:14px" data-a="cnext">Next</button>':
+    sumRow('What kind?',CI[x.cat]+' '+x.cat,'cgo',0)+sumRow('Which cat?',{albert:'Albert',milly:'Milly',both:'Both'}[x.who],'cgo',1)+sumRow('How much?',x.amount?'€'+x.amount+(x.desc?' · '+x.desc:''):'','cgo',2)+
+    '<label class="l">Date</label><input type="date" data-cs="d" value="'+esc(x.d)+'"><label class="l">Insurance paid back (€, optional)</label><input data-cs="reimb" inputmode="decimal" value="'+esc(x.reimb||'')+'"><label class="l">Notes (optional)</label><input data-cs="n" value="'+esc(x.n||'')+'">'+
+    '<div class="chips" style="margin-top:10px"><button class="chip'+(x.planned?' on':'')+'" data-a="ccx" data-k="planned" data-v="1">📅 Not paid yet (planned)</button></div>'+
+    '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="csave">Save cost</button>';
+  return wizFrame('Add a cost',x.step,steps.length,{cat:'What kind of cost?',who:'Which cat?',amount:'How much was it?',done:'All good?'}[st],body,'cback')}
+
 /* health and vet */
 function vHealth(){var c=cat(),since=addDays(today(),-30),hf=ui.hf||(ui.hf={});
-  var h='<details class="card flog" id="hform" data-open="hform"'+((ui.hedit||(ui.open&&ui.open.hform))?' open':'')+'><summary><span class="symbtn">'+(ui.hedit?'✎ Edit symptom':'🩺 Log a symptom')+'</span></summary><div style="margin-top:6px"><label class="l">Which cat?</label><div class="seg" style="grid-template-columns:1fr 1fr;margin:0">'+['albert','milly'].map(function(k){return'<button data-a="cat" data-v="'+k+'" class="'+(ui.cat===k?'on':'')+'">'+spot(k).replace('class="spot"','class="spot" style="width:22px;height:22px;vertical-align:middle"')+' '+esc(S.cats[k].name)+'</button>'}).join('')+'</div><label class="l">What</label><select id="ht" data-hf="t">'+HT.map(function(t){return'<option'+(hf.t===t?' selected':'')+'>'+t+'</option>'}).join('')+'</select>'+
+  var h=!ui.hedit?'<button class="symbtn fbtn" data-a="hnew">🩺 Log a symptom</button>':'<details class="card flog" id="hform" data-open="hform" open><summary><span class="symbtn">✎ Edit symptom</span></summary><div style="margin-top:6px"><label class="l">Which cat?</label><div class="seg" style="grid-template-columns:1fr 1fr;margin:0">'+['albert','milly'].map(function(k){return'<button data-a="cat" data-v="'+k+'" class="'+(ui.cat===k?'on':'')+'">'+spot(k).replace('class="spot"','class="spot" style="width:22px;height:22px;vertical-align:middle"')+' '+esc(S.cats[k].name)+'</button>'}).join('')+'</div><label class="l">What</label><select id="ht" data-hf="t">'+HT.map(function(t){return'<option'+(hf.t===t?' selected':'')+'>'+t+'</option>'}).join('')+'</select>'+
     '<div class="grid2"><div><label class="l">Date</label><input type="date" id="hd" data-hf="d" value="'+(hf.d||today())+'" max="'+today()+'"></div><div><label class="l">Time</label><input type="time" id="hm" data-hf="m" value="'+(hf.m||new Date().toTimeString().slice(0,5))+'"></div></div>'+
     '<label class="l">Details</label><textarea id="hn" data-hf="n" rows="2" placeholder="How long, after eating, at rest…">'+esc(hf.n||'')+'</textarea>'+
-    (ui.pendFor==='health'&&ui.pend.length?thumbs(ui.pend,'pend'):'')+'<div class="row" style="margin-top:10px">'+upBtn('pend','health','📷 Photo / video','image/*,video/*')+'<button class="b p" data-a="addh">'+(ui.hedit?'Update':'Save')+'</button>'+(ui.hedit?'<button class="b" data-a="hcancel">Cancel</button>':'')+'</div></div></details>';
+    (ui.pendFor==='health'&&ui.pend.length?thumbs(ui.pend,'pend'):'')+'<div class="row" style="margin-top:10px">'+upBtn('pend','health','📷 Photo / video','image/*,video/*')+'<button class="b p" data-a="addh">'+(ui.hedit?'Update':'Save')+'</button>'+(ui.hedit?'<button class="b" data-a="hcancel">Cancel</button>':'')+'</div></div></details>'+'';
   h+=['albert','milly'].map(function(k){var c=S.cats[k],h='';
   var recent=c.health.filter(function(e){return e.d>=since}),counts={};recent.forEach(function(e){counts[e.t]=(counts[e.t]||0)+1});
   h+='<div class="hsec"><h2>Last 30 days</h2>'+(recent.length?hbars(counts):'<span class="mute">Nothing logged</span>')+'<button class="b w" style="margin-top:10px" data-a="vet">📋 Summary to send the vet</button></div>';
@@ -977,7 +1004,7 @@ function vMoney(){var m=ui.fmonth||today().slice(0,7),first=parse(m+'-01'),who=u
   h+=moneyPeriods(who,share);
   if(0)h+='<div class="card"><h2>'+m.slice(0,4)+' so far</h2><div class="grid3"><div class="stat"><span class="mute">Spent</span><b>'+eur(ys)+'</b></div><div class="stat"><span class="mute">Back</span><b>'+eur(yb)+'</b></div><div class="stat"><span class="mute">You paid</span><b>'+eur(ys-yb)+'</b></div></div></div>';
   return h}
-function costSheet(){var x=ui.cs;function chips(list,key){return'<div class="chips">'+list.map(function(o){var v=o[0]||o,lab=o[1]||o;return'<button class="chip'+(x[key]===v?' on':'')+'" data-a="ccx" data-k="'+key+'" data-v="'+esc(v)+'">'+lab+'</button>'}).join('')+'</div>'}
+function costSheet(){var x=ui.cs;if(!x.id&&x.step!=null)return costWiz();function chips(list,key){return'<div class="chips">'+list.map(function(o){var v=o[0]||o,lab=o[1]||o;return'<button class="chip'+(x[key]===v?' on':'')+'" data-a="ccx" data-k="'+key+'" data-v="'+esc(v)+'">'+lab+'</button>'}).join('')+'</div>'}
   return'<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">'+(x.id?'Edit cost':'Add a cost')+'</h2>'+
     '<div class="grid2"><div><label class="l">Amount (€)</label><input data-cs="amount" inputmode="decimal" value="'+esc(x.amount)+'" placeholder="0.00"></div><div><label class="l">Date</label><input type="date" data-cs="d" value="'+esc(x.d)+'"></div></div>'+
     '<label class="l">What for</label><input data-cs="desc" value="'+esc(x.desc)+'" placeholder="e.g. 3 kg z/d, zooplus">'+
@@ -1030,7 +1057,8 @@ function vHows(){var t=today(),F=S.fights.filter(function(f){return f.d>=addDays
     (milTrig?'<p class="small mute">In '+milTrig+' of them something Milly did came first, but he\'s the one who escalates.</p>':'')+
     (topT.length?'<h3>Triggers</h3>'+hbars(tg):'')+(Object.keys(tm).length?'<h3>Time of day</h3>'+hbars(tm):'')+(Object.keys(sv).length?'<h3>How bad</h3>'+hbars(sv):'')+'</details>';
   return h}
-function calmSheet(){var x=ui.cm;return'<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">😊 Calm moment</h2><div class="chips">'+['Lying together','Groomed without biting','Played together','Ate near each other','Passed each other fine','Slept in the same room'].map(function(o){return'<button class="chip'+(x.what===o?' on':'')+'" data-a="cmx" data-v="'+o+'">'+o+'</button>'}).join('')+'</div>'+
+var CALMS=['Lying together','Groomed without biting','Played together','Ate near each other','Passed each other fine','Slept in the same room'];
+function calmSheet(){var x=ui.cm;if(x.step!=null)return calmWiz();return'<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">😊 Calm moment</h2><div class="chips">'+['Lying together','Groomed without biting','Played together','Ate near each other','Passed each other fine','Slept in the same room'].map(function(o){return'<button class="chip'+(x.what===o?' on':'')+'" data-a="cmx" data-v="'+o+'">'+o+'</button>'}).join('')+'</div>'+
   '<div class="grid2"><div><label class="l">Date</label><input type="date" data-cm="d" value="'+x.d+'" max="'+today()+'"></div><div><label class="l">Time</label><input type="time" data-cm="m" value="'+x.m+'"></div></div><label class="l">Notes</label><input data-cm="n" value="'+esc(x.n)+'">'+(ui.pend&&ui.pend.length?thumbs(ui.pend,'pend'):'')+'<div style="margin-top:10px">'+upBtn('pend','calm','📷 Add photo or video','image/*,video/*').replace('class="b s"','class="b w upbig"')+'</div><div class="row" style="margin-top:14px"><button class="b p" data-a="cmsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'}
 function vSettings(){var c=cat();
   return'<div class="card"><h2>🔗 Connection</h2><div class="kv"><span class="k">Data</span><span class="v">'+esc(GH.owner+'/'+GH.repo)+'</span></div><div class="kv"><span class="k">This phone</span><span class="v">'+esc(GH.who||'')+'</span></div><div class="kv"><span class="k">Status</span><span class="v">'+esc(saveState)+'</span></div><div class="row" style="margin-top:10px"><button class="b s" data-a="syncnow">Sync now</button><button class="b s ghost" data-a="ghout">Disconnect this phone</button></div><div class="note">App version '+APPV+'</div></div>'+'<div class="card"><h2>'+esc(c.name)+'\'s plan</h2><label class="l">Target weight (kg)</label><input data-s="target" inputmode="decimal" value="'+c.target+'">'+
@@ -1088,7 +1116,7 @@ function wcalc(){var W=ui.w;if(!W)return;var me=parseFloat(String(W.me).replace(
     var prev=sorted(S.cats[k]).filter(function(x){return x.d<W.d}).pop();
     cm.textContent=prev?(cw<prev.kg?'Down ':cw>prev.kg?'Up ':'Same as ')+(cw!==prev.kg?Math.round(Math.abs(cw-prev.kg)*1000)+' g since ':'')+short(prev.d)+' ('+prev.kg.toFixed(2)+' kg)':''})}
 document.addEventListener('focusout',function(){setTimeout(function(){if(needRender&&!busy())render()},50)});
-document.addEventListener('input',function(e){var t=e.target;if(t.dataset.cm&&ui.cm){ui.cm[t.dataset.cm]=t.value;return}if(t.dataset.cs&&ui.cs){ui.cs[t.dataset.cs]=t.value;return}if(t.dataset.tr&&ui.tr){ui.tr[t.dataset.tr]=t.value;if(t.dataset.tr==='d'&&TT[ui.tr.type].days&&t.value){ui.tr.next=addDays(t.value,TT[ui.tr.type].days);var nx=document.querySelector('[data-tr=next]');if(nx)nx.value=ui.tr.next}return}if(t.dataset.we&&ui.we){ui.we[t.dataset.we]=t.value;return}if(t.dataset.lf&&ui.l){ui.l[t.dataset.lf]=t.value;return}if(t.dataset.bf&&ui.b){ui.b[t.dataset.bf]=t.value;return}if(t.dataset.w&&ui.w){ui.w[t.dataset.w]=t.value;wcalc();return}if(t.dataset.ff&&ui.f)ui.f[t.dataset.ff]=t.value;if(t.dataset.vf&&ui.v)ui.v[t.dataset.vf]=t.value;if(t.dataset.hf){ui.hf=ui.hf||{};ui.hf[t.dataset.hf]=t.value}});
+document.addEventListener('input',function(e){var t=e.target;if(t.dataset.sy&&ui.sy){ui.sy[t.dataset.sy]=t.value;return}if(t.dataset.cm&&ui.cm){ui.cm[t.dataset.cm]=t.value;return}if(t.dataset.cs&&ui.cs){ui.cs[t.dataset.cs]=t.value;return}if(t.dataset.tr&&ui.tr){ui.tr[t.dataset.tr]=t.value;if(t.dataset.tr==='d'&&TT[ui.tr.type].days&&t.value){ui.tr.next=addDays(t.value,TT[ui.tr.type].days);var nx=document.querySelector('[data-tr=next]');if(nx)nx.value=ui.tr.next}return}if(t.dataset.we&&ui.we){ui.we[t.dataset.we]=t.value;return}if(t.dataset.lf&&ui.l){ui.l[t.dataset.lf]=t.value;return}if(t.dataset.bf&&ui.b){ui.b[t.dataset.bf]=t.value;return}if(t.dataset.w&&ui.w){ui.w[t.dataset.w]=t.value;wcalc();return}if(t.dataset.ff&&ui.f)ui.f[t.dataset.ff]=t.value;if(t.dataset.vf&&ui.v)ui.v[t.dataset.vf]=t.value;if(t.dataset.hf){ui.hf=ui.hf||{};ui.hf[t.dataset.hf]=t.value}});
 
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ui.modal){ui.modal=null;ui.f=null;render()}});
 /* clicks */
@@ -1097,6 +1125,16 @@ document.addEventListener('click',function(e){
   if(t.classList.contains('modal')&&e.target.closest('[data-stop]'))return;var a=t.dataset.a,v=t.dataset.v;if(S&&t.dataset.cat&&S.cats[t.dataset.cat])ui.cat=t.dataset.cat;var c=S?cat():null;
   if(a==='view'||a==='pick')e.preventDefault();
   if(a==='cat'){ui.cat=v;render()}
+  else if(a==='hnew'){ui.pend=[];ui.pendFor='health';ui.sy={step:0,cat:'',t:'',d:today(),m:new Date().toTimeString().slice(0,5),n:''};ui.modal=symWiz;render()}
+  else if(a==='syx'){ui.sy[t.dataset.k]=v;ui.sy.step++;render()}
+  else if(a==='syback'){ui.sy.step--;render()}
+  else if(a==='sygo'){ui.sy.step=+v;render()}
+  else if(a==='sysave'){var y=ui.sy;if(!y.cat||!y.t)return;S.cats[y.cat].health.push({id:uid(),t:y.t,d:y.d||today(),m:y.m,n:(y.n||'').trim(),att:ui.pend||[]});ui.cat=y.cat;ui.pend=[];ui.pendFor=null;ui.sy=null;ui.modal=null;change()}
+  else if(a==='cmback'){ui.cm.step--;render()}
+  else if(a==='cmgo'){ui.cm.step=+v;render()}
+  else if(a==='cnext'){var am0=parseFloat(String(ui.cs.amount).replace(',','.'));if(isNaN(am0)){var ai0=document.querySelector('[data-cs=amount]');if(ai0)ai0.style.borderColor='var(--bad)';return}ui.cs.step++;render()}
+  else if(a==='cback'){ui.cs.step--;render()}
+  else if(a==='cgo'){ui.cs.step=+v;render()}
   else if(a==='plopen'){ui.pl={type:'',min:0};ui.modal=playSheet;render()}
   else if(a==='plt'){ui.pl.type=v;render()}
   else if(a==='plm'){ui.pl.min=+v;render()}
@@ -1216,15 +1254,15 @@ document.addEventListener('click',function(e){
   else if(a==='trdel2'){c.treat=c.treat.filter(function(x){return x.id!==v});ui.modal=null;change()}
   else if(a==='fwho'){ui.fwho=v;render()}
   else if(a==='fmon'){var fp=parse((ui.fmonth||today().slice(0,7))+'-01');fp.setMonth(fp.getMonth()+(+v));ui.fmonth=iso(fp).slice(0,7);if(ui.fmonth>today().slice(0,7))ui.fmonth=today().slice(0,7);render()}
-  else if(a==='cnew'){ui.cs={amount:'',d:today(),desc:'',cat:'Food',who:ui.fwho&&ui.fwho!=='both'?ui.fwho:'both',reimb:'',n:'',planned:false};ui.modal=costSheet;render()}
+  else if(a==='cnew'){ui.cs={step:0,amount:'',d:today(),desc:'',cat:'',who:ui.fwho&&ui.fwho!=='both'?ui.fwho:'both',reimb:'',n:'',planned:false};ui.modal=costSheet;render()}
   else if(a==='cedit'){ui.cs=JSON.parse(JSON.stringify(S.costs.filter(function(x){return x.id===v})[0]));ui.modal=costSheet;render()}
-  else if(a==='ccx'){if(t.dataset.k==='planned')ui.cs.planned=!ui.cs.planned;else ui.cs[t.dataset.k]=v;render()}
+  else if(a==='ccx'){if(t.dataset.k==='planned')ui.cs.planned=!ui.cs.planned;else{ui.cs[t.dataset.k]=v;if(!ui.cs.id&&ui.cs.step!=null&&(t.dataset.k==='cat'||t.dataset.k==='who'))ui.cs.step++}render()}
   else if(a==='csave'){var cx=ui.cs,am=parseFloat(String(cx.amount).replace(',','.'));if(isNaN(am)){var ai=document.querySelector('[data-cs=amount]');if(ai)ai.style.borderColor='var(--bad)';return}var rb=parseFloat(String(cx.reimb||'').replace(',','.'));
     if(cx.id)S.costs=S.costs.filter(function(x){return x.id!==cx.id});S.costs.push({id:cx.id||uid(),d:cx.d||today(),who:cx.who,cat:cx.cat,amount:am,reimb:isNaN(rb)?0:rb,desc:(cx.desc||'').trim(),n:(cx.n||'').trim(),planned:!!cx.planned});ui.cs=null;ui.modal=null;change()}
   else if(a==='cdel'){ui.modal=function(){return confirmBox('Delete this cost?','cdel2',v)};render()}
   else if(a==='cdel2'){S.costs=S.costs.filter(function(x){return x.id!==v});ui.modal=null;change()}
-  else if(a==='calmnew'){ui.pend=[];ui.pendFor='calm';ui.cm={d:today(),m:new Date().toTimeString().slice(0,5),what:'Lying together',n:''};ui.modal=calmSheet;render()}
-  else if(a==='cmx'){ui.cm.what=v;render()}
+  else if(a==='calmnew'){ui.pend=[];ui.pendFor='calm';ui.cm={step:0,d:today(),m:new Date().toTimeString().slice(0,5),what:'',n:''};ui.modal=calmSheet;render()}
+  else if(a==='cmx'){ui.cm.what=v;if(ui.cm.step!=null&&ui.cm.step===0)ui.cm.step++;render()}
   else if(a==='cmsave'){var cm=ui.cm;S.calm.push({id:uid(),d:cm.d||today(),m:cm.m,what:cm.what,n:(cm.n||'').trim(),att:ui.pend||[]});ui.cm=null;ui.modal=null;change()}
   else if(a==='ghwho'){ui.who=v;var tk=document.getElementById('ghtok').value;render();document.getElementById('ghtok').value=tk}
   else if(a==='ghconnect'){var tok=document.getElementById('ghtok').value.trim(),rp=(document.getElementById('ghrepo')?document.getElementById('ghrepo').value:'martinaregan/albert-milly-data').trim().split('/');
