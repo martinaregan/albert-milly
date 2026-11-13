@@ -468,7 +468,7 @@ function fightLog(F){
   var tw=wkStart(today()),lw=addDays(tw,-7),cT=0,cL=0;all.forEach(function(f){var w=wkStart(f.d);if(w===tw)cT++;else if(w===lw)cL++});
   var diff=cT-cL,trend=diff>0?'<span style="color:#e0703a">▲ '+diff+' vs last week</span>':diff<0?'<span style="color:#5cb85c">▼ '+(-diff)+' vs last week</span>':'<span class="mute">same as last week</span>';
   var groups=[],gi={};all.forEach(function(f){var w=wkStart(f.d);if(!(w in gi)){gi[w]=groups.length;groups.push({w:w,items:[]})}groups[gi[w]].items.push(f)});
-  var h='<details class="card flog" data-open="flog"'+isOpen('flog',true)+'><summary><div class="row between" style="flex:1"><h2 style="margin:0">Log</h2><span class="small">'+all.length+' total</span></div><div class="small" style="margin-top:4px">This week <b>'+cT+'</b> · '+trend+'</div></summary>';
+  var h='<details class="card flog" data-open="flog"'+isOpen('flog',false)+'><summary><div class="row between" style="flex:1"><h2 style="margin:0">Log</h2><span class="small">'+all.length+' total</span></div><div class="small" style="margin-top:4px">This week <b>'+cT+'</b> · '+trend+'</div></summary>';
   groups.forEach(function(g,i){
     var it=g.items,worst=it.reduce(function(m,f){return Math.max(m,SEVN[f.sev]||0)},0);
     var bites=it.filter(function(f){return(SEVN[f.sev]||0)>=3}).length;
