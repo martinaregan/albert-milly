@@ -220,7 +220,7 @@ nav .navin button span{font-size:23px!important}
 nav{position:fixed}nav:before,nav:after{content:"";position:absolute;top:0;bottom:0;width:22px;pointer-events:none;z-index:2}
 nav:before{left:0;background:linear-gradient(90deg,var(--card),transparent)}nav:after{right:0;background:linear-gradient(270deg,var(--card),transparent)}
 #root{touch-action:pan-y}
-</style>
+input,select,textarea{box-sizing:border-box;max-width:100%;min-width:0}input[type=date]{-webkit-appearance:none;appearance:none;display:block;width:100%;text-align:left;min-height:46px;line-height:1.3}input[type=date]::-webkit-date-and-time-value{text-align:left}b[id^=res-]:empty{padding:0!important}</style>
 </head>
 <body>
 <div id="root"></div>
@@ -322,7 +322,7 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='8';
+var APPV='9';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -502,7 +502,7 @@ function vWeight(){var c=cat(),r=stats(c),st=status(r,c),fd=feed(c);
     '<div class="mute small">Weigh yourself, then step on again holding each cat. It works out their weight.</div>'+
     '<label class="l">Date</label><input type="date" data-w="d" value="'+W.d+'" max="'+today()+'">'+
     '<label class="l">1. You on your own (kg)</label><input data-w="me" inputmode="decimal" placeholder="e.g. 62.4" value="'+esc(W.me)+'">'+
-    ['albert','milly'].map(function(k){return'<label class="l">'+spot(k)+' You holding '+S.cats[k].name+' (kg)</label><div class="row" style="flex-wrap:nowrap"><input data-w="'+k+'" inputmode="decimal" placeholder="leave blank to skip" value="'+esc(W[k])+'"><b id="res-'+k+'" style="min-width:110px;text-align:right"></b></div><div id="cmp-'+k+'" class="small mute"></div>'}).join('')+
+    ['albert','milly'].map(function(k){return'<label class="l">'+spot(k)+' You holding '+S.cats[k].name+' (kg)</label><div class="row" style="flex-wrap:nowrap"><input data-w="'+k+'" inputmode="decimal" placeholder="leave blank to skip" value="'+esc(W[k])+'"><b id="res-'+k+'" style="flex:none;white-space:nowrap;text-align:right;padding-left:10px"></b></div><div id="cmp-'+k+'" class="small mute"></div>'}).join('')+
     '<button class="b p w" style="margin-top:12px" data-a="addw2">Save weigh-in</button>'+
     '<details style="margin-top:10px"><summary class="mute small">Weighed '+esc(c.name)+' on a pet scale instead?</summary><div class="row" style="flex-wrap:nowrap;margin-top:8px"><input id="wk" inputmode="decimal" placeholder="'+esc(c.name)+'\'s weight (kg)"><button class="b" data-a="addw">Save</button></div></details>'+
     '<div class="note">Same scale, same time of day (before breakfast), once a week. Bathroom scales can be 100 to 200 g out, so a single reading is a rough guide; the trend over a few weeks is what counts.</div></div>';
