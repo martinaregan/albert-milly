@@ -664,7 +664,7 @@ function playLink(){var c=S.cats.albert,t=today(),a=[],b=[],g=[],n=[];
   if(a.length>=3&&b.length>=3)out+='<p class="small">Days Albert got 15+ min play: <b>'+av(a).toFixed(1)+'</b> fights a day, vs <b>'+av(b).toFixed(1)+'</b> on days with less.</p>';
   if(g.length>=3&&n.length>=3)out+='<p class="small">Days he ran for his food: <b>'+av(g).toFixed(1)+'</b> fights a day, vs <b>'+av(n).toFixed(1)+'</b> without.</p>';
   return out?'<h3>Does play help?</h3>'+out:'<p class="note">Once you have a few days of play logged for Albert, this compares fight counts on high-play and low-play days.</p>'}
-function fightSheet(){var f=ui.f;
+function fightSheet(){var f=ui.f;if(!f.id&&f.step!=null)return fightWiz();
   function chips(list,key,multi){return'<div class="chips">'+list.map(function(x){var on=multi?f[key].indexOf(x)>=0:f[key]===x;return'<button class="chip'+(on?' on':'')+'" data-a="fc" data-k="'+key+'" data-v="'+esc(x)+'">'+esc(x)+'</button>'}).join('')+'</div>'}
   return'<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">'+(f.id?'Edit fight':'Log a fight')+'</h2>'+
     '<div class="grid2"><div><label class="l">Date</label><input type="date" data-ff="d" value="'+f.d+'" max="'+today()+'"></div><div><label class="l">Time</label><input type="time" data-ff="m" value="'+f.m+'"></div></div>'+
@@ -674,6 +674,20 @@ function fightSheet(){var f=ui.f;
     '<label class="l">5. Did you separate them?</label>'+chips(['Yes','No'],'sep')+'<label class="l">6. Pheromone diffuser plugged in?</label>'+chips(['Yes','No','Not sure'],'pher')+
     '<label class="l">Notes</label><textarea rows="2" data-ff="n" placeholder="What happened just before?">'+esc(f.n)+'</textarea>'+
     '<div class="row" style="margin-top:14px"><button class="b p" data-a="fsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'}
+
+function fightWiz(){var f=ui.f,steps=['who','trig','sev','where','sep','pher','done'];if(f.step>=steps.length)f.step=steps.length-1;if(f.step<0)f.step=0;var st=steps[f.step];
+  function big(list,key,multi){return'<div class="wizc">'+list.map(function(x){var on=multi?f[key].indexOf(x)>=0:f[key]===x;return'<button class="wizb'+(on?' on':'')+'" data-a="fc" data-k="'+key+'" data-v="'+esc(x)+'">'+esc(x)+(on?' <span>✓</span>':'')+'</button>'}).join('')+'</div>'}
+  var Q={who:['Who started it?',big(WHO,'who')],trig:['What was going on?',big(TRIG,'trig',true)+'<button class="b p w" style="margin-top:12px;padding:14px" data-a="fnext">'+(f.trig.length?'Next':'Not sure, skip')+'</button>'],
+    sev:['How bad was it?',big(SEV,'sev')],where:['Where did it happen?',big(WHERE,'where')],sep:['Did you separate them?',big(['Yes','No'],'sep')],pher:['Was the diffuser plugged in?',big(['Yes','No','Not sure'],'pher')],done:['All good?','']};
+  var h='<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><span class="small mute" style="font-weight:800">Log a fight · '+(f.step+1)+' of '+steps.length+'</span><button class="x" data-a="close">✕</button></div>'+
+    '<div class="wizbar"><div style="width:'+Math.round((f.step+1)/steps.length*100)+'%"></div></div><h2 class="wizq">'+Q[st][0]+'</h2>'+Q[st][1];
+  if(st==='done'){h+=steps.slice(0,-1).map(function(k,i){var v=k==='trig'?(f.trig.length?f.trig.join(', '):'Not sure'):(f[k]||'Not answered');return'<button class="wizsum" data-a="fgo" data-v="'+i+'"><span class="small mute">'+Q[k][0]+'</span><b>'+esc(v)+'</b></button>'}).join('')+
+    '<div class="grid2" style="margin-top:10px"><div><label class="l">Date</label><input type="date" data-ff="d" value="'+f.d+'" max="'+today()+'"></div><div><label class="l">Time</label><input type="time" data-ff="m" value="'+f.m+'"></div></div>'+
+    (ui.pend.length?thumbs(ui.pend,'pend'):'')+'<div style="margin-top:10px">'+upBtn('pend','fight','📷 Add photo or video','image/*,video/*').replace('class="b s"','class="b w upbig"')+'</div>'+
+    '<label class="l">Notes (optional)</label><textarea rows="2" data-ff="n" placeholder="What happened just before?">'+esc(f.n)+'</textarea>'+
+    '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="fsave">Save fight</button>'}
+  if(f.step>0)h+='<button class="b ghost" style="margin-top:10px" data-a="fback">‹ Back</button>';
+  return h+'</div></div>'}
 
 /* health and vet */
 function vHealth(){var c=cat(),since=addDays(today(),-30),hf=ui.hf||(ui.hf={});
@@ -737,7 +751,7 @@ function timerBanner(){var T=tGet();if(!T)return'';var el=Date.now()-T.start,txt
 function playSheet(){var P=ui.pl,c=cat();
   return'<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">🧶 Log play for '+esc(c.name)+'</h2>'+
     '<label class="l">1. What did you play?</label><div class="wizc">'+S.playTypes.map(function(p){return'<button class="wizb'+(P.type===p?' on':'')+'" data-a="plt" data-v="'+esc(p)+'">'+esc(p)+(P.type===p?' <span>✓</span>':'')+'</button>'}).join('')+'</div>'+
-    (P.type?'<label class="l" style="margin-top:14px">2. How long?</label><div class="grid3">'+[5,10,15,20,30].map(function(m){return'<button class="b'+(P.min===m?' p':'')+'" data-a="plm" data-v="'+m+'">'+m+' min</button>'}).join('')+'<button class="b" data-a="plstart">⏱ Timer</button></div>':'')+
+    (P.type?'<label class="l" style="margin-top:14px">2. How long?</label><div class="grid3">'+[5,10,15,20,30].map(function(m){return'<button class="b'+(P.min===m?' p':'')+'" data-a="plm" data-v="'+m+'">'+m+' min</button>'}).join('')+(tGet()?'':'<button class="b" data-a="plstart">⏱ Timer</button>')+'</div>':'')+
     (P.type&&P.min?'<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="plsave">Add '+P.min+' min of '+esc(P.type)+'</button>':'')+
     '<button class="b w" style="margin-top:10px" data-a="close">Cancel</button></div></div>'}
 function timerSheet(){var i=ui.tk,p=S.playTypes[i];
@@ -1083,11 +1097,11 @@ document.addEventListener('click',function(e){
   if(t.classList.contains('modal')&&e.target.closest('[data-stop]'))return;var a=t.dataset.a,v=t.dataset.v;if(S&&t.dataset.cat&&S.cats[t.dataset.cat])ui.cat=t.dataset.cat;var c=S?cat():null;
   if(a==='view'||a==='pick')e.preventDefault();
   if(a==='cat'){ui.cat=v;render()}
-  else if(a==='plopen'){if(tGet()){return}ui.pl={type:'',min:0};ui.modal=playSheet;render()}
+  else if(a==='plopen'){ui.pl={type:'',min:0};ui.modal=playSheet;render()}
   else if(a==='plt'){ui.pl.type=v;render()}
   else if(a==='plm'){ui.pl.min=+v;render()}
   else if(a==='plsave'){var dp=day();dp.play[ui.pl.type]=(dp.play[ui.pl.type]||0)+ui.pl.min;ui.modal=null;ui.pl=null;change()}
-  else if(a==='plstart'){tSet({cat:ui.cat,type:ui.pl.type,start:Date.now(),dur:0});ui.modal=null;ui.pl=null;ui.open=ui.open||{};ui.open.tplayc=true;render()}
+  else if(a==='plstart'){if(tGet()){ui.modal=null;ui.pl=null;render();return}tSet({cat:ui.cat,type:ui.pl.type,start:Date.now(),dur:0});ui.modal=null;ui.pl=null;ui.open=ui.open||{};ui.open.tplayc=true;render()}
   else if(a==='pldel'){ui.modal=function(){return confirmBox('Remove today\'s '+v+' minutes?','pldel2',esc(v))};render()}
   else if(a==='pldel2'){var dq=day();delete dq.play[v];ui.modal=null;change()}
   else if(a==='xbought'){var xb=S.extraStock[+v];if(xb){xb.need=false;if(!xb.check&&(+xb.qty||0)<=0){xb.qty=1;xb.on=today()}change()}}
@@ -1146,8 +1160,11 @@ document.addEventListener('click',function(e){
   else if(a==='addh'){if(ui.hedit)c.health=c.health.filter(function(x){return x.id!==ui.hedit});c.health.push({id:ui.hedit||uid(),t:document.getElementById('ht').value,d:document.getElementById('hd').value||today(),m:document.getElementById('hm').value,n:document.getElementById('hn').value.trim(),att:ui.pendFor==='health'?ui.pend:[]});ui.pend=[];ui.pendFor=null;ui.hf={};ui.hedit=null;change()}
   else if(a==='delh'){ui.modal=function(){return confirmBox('Delete this symptom entry?','delh2',v)};render()}
   else if(a==='delh2'){c.health=c.health.filter(function(x){return x.id!==v});ui.modal=null;change()}
-  else if(a==='fnew'){ui.pend=[];ui.pendFor='fight';var lastF=S.fights.slice().sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1})[0];ui.f={d:today(),m:new Date().toTimeString().slice(0,5),sev:'Bite',trig:[],where:'',who:'Albert',sep:'',pher:lastF&&lastF.pher?lastF.pher:'',n:''};ui.modal=fightSheet;render()}
-  else if(a==='fc'){var key=t.dataset.k;if(key==='trig'){var ix=ui.f.trig.indexOf(v);if(ix>=0)ui.f.trig.splice(ix,1);else ui.f.trig.push(v)}else ui.f[key]=ui.f[key]===v?'':v;render()}
+  else if(a==='fnew'){ui.pend=[];ui.pendFor='fight';var lastF=S.fights.slice().sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1})[0];ui.f={d:today(),m:new Date().toTimeString().slice(0,5),sev:'',trig:[],where:'',who:'',sep:'',pher:lastF&&lastF.pher?lastF.pher:'',n:'',step:0};ui.modal=fightSheet;render()}
+  else if(a==='fc'){var key=t.dataset.k,wz=ui.f.step!=null&&!ui.f.id;if(key==='trig'){var ix=ui.f.trig.indexOf(v);if(ix>=0)ui.f.trig.splice(ix,1);else ui.f.trig.push(v)}else ui.f[key]=wz?v:(ui.f[key]===v?'':v);if(wz&&key!=='trig')ui.f.step++;render()}
+  else if(a==='fnext'){ui.f.step++;render()}
+  else if(a==='fback'){ui.f.step--;render()}
+  else if(a==='fgo'){ui.f.step=+v;render()}
   else if(a==='fedit'){var fo=S.fights.filter(function(x){return x.id===v})[0];ui.f=JSON.parse(JSON.stringify(fo));ui.f.trig=ui.f.trig||[];ui.f.n=ui.f.n||'';ui.pend=ui.f.att||[];ui.pendFor='fight';ui.modal=fightSheet;render()}
   else if(a==='fsave'){var f=ui.f;if(f.id)S.fights=S.fights.filter(function(x){return x.id!==f.id});S.fights.push({id:f.id||uid(),d:f.d||today(),m:f.m,sev:f.sev,trig:f.trig,where:f.where,who:f.who,sep:f.sep,pher:f.pher,n:(f.n||'').trim(),att:ui.pend});ui.pend=[];ui.pendFor=null;ui.modal=null;ui.f=null;change()}
   else if(a==='delf'){ui.modal=function(){return confirmBox('Delete this fight entry?','delf2',v)};render()}
