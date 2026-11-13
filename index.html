@@ -579,16 +579,21 @@ function weightFeed(c){var fd=feed(c);
     (fd.dry?'<div class="note">With '+c.wetAllowance+' × '+esc(fd.wet?fd.wet.name:'wet')+', that range works out at <b>'+Math.round(fd.dLo)+'–'+Math.round(fd.dHi)+' g</b> of '+esc(fd.dry.name)+' a day.</div>':'')+
     (fd.plan>fd.hi*1.1?'<div class="note" style="color:var(--warn)">The current plan is above the formula range. That is fine while the scale shows steady loss. Close the gap in steps of about 10% rather than all at once.</div>':'')+
     '<div class="note" style="color:var(--ink)"><b>Next step:</b> '+fd.step+'</div><div class="note">Uses the standard vet formula (70 × target kg<sup>0.75</sup>, × 0.8–1.0) and the calories on each food. Run changes past the vet, especially for prescription food.</div>'}
+function eatTally(c){var tal={};Object.keys(c.days).forEach(function(k){var x=c.days[k];if(x.meals&&x.meals.length)x.meals.forEach(function(m){var n=tal[m.f]||(tal[m.f]={all:0,some:0,no:0});if(n[m.rx]!=null)n[m.rx]++});else Object.keys(x.react||{}).forEach(function(fid){var r=x.react[fid],n=tal[fid]||(tal[fid]={all:0,some:0,no:0});if(n[r]!=null)n[r]++})});return tal}
+function likesBlock(k,c){var tal=eatTally(c),yes=[],no=[];c.foods.forEach(function(f){var n=tal[f.id];if(!n)return;(n.no>n.all+n.some?no:yes).push(f.name)});
+  function list(a,empty){return a.length?'<ul class="kvl">'+a.map(function(x){return'<li>'+esc(x)+'</li>'}).join('')+'</ul>':'<div class="pl mute small">'+empty+'</div>'}
+  return'<details class="nf" data-open="wl-'+k+'"'+isOpen('wl-'+k,false)+'><summary><span>😋 Likes <span class="nfc">'+yes.length+'</span></span></summary>'+list(yes,'Nothing yet. Foods show up here when '+esc(c.name)+' eats them.')+'</details>'+
+    '<details class="nf" data-open="wn-'+k+'"'+isOpen('wn-'+k,false)+'><summary><span>🙅 Doesn\'t like <span class="nfc">'+no.length+'</span></span></summary>'+list(no,'Nothing yet. Foods show up here when you log them as refused.')+'</details>'}
 function nextWeighIn(){var t=today(),dow=parse(t).getDay(),gap=(6-dow+7)%7,done=['albert','milly'].every(function(k){return S.cats[k].weights.some(function(w){return w.d===t})});if(gap===0&&done)gap=7;return{d:addDays(t,gap),days:gap}}
 function vWeight(){var nw=nextWeighIn(),when=nw.days===0?'Today':nw.days===1?'Tomorrow':'In '+nw.days+' days';
   var h='<div class="wcount"><div><span class="small mute">Next weigh-in</span><b>'+when+'</b><span class="small mute">Saturday '+short(nw.d)+(nw.days===0?' · before breakfast':'')+'</span></div><div class="wdays'+(nw.days===0?' now':'')+'">'+(nw.days===0?'⚖️':nw.days+'<small>day'+(nw.days>1?'s':'')+'</small>')+'</div></div>';
   h+='<button class="b p w" style="margin:0 0 12px;padding:16px;font-size:17px" data-a="wopen">⚖️ Add a weigh-in for both</button>';
-  h+=['albert','milly'].map(function(k){var c=S.cats[k],r=stats(c),eat=eatsCard(c);
+  h+=['albert','milly'].map(function(k){var c=S.cats[k],r=stats(c);
     return'<details class="catcard catd" data-open="w-'+k+'"'+isOpen('w-'+k,false)+'><summary class="head" style="--g:var(--g-'+k+')">'+spot(k)+'<div><b>'+esc(c.name)+'</b><span>'+(r?(+r.last.kg).toFixed(2)+' kg → '+esc(c.target)+' kg'+(r.toGo>0?' · '+r.toGo.toFixed(2)+' to go':' · target reached'):'target '+esc(c.target)+' kg')+'</span></div></summary>'+
       weightProgress(c,r)+
       '<details class="nf" data-open="wh-'+k+'"'+isOpen('wh-'+k,false)+'><summary><span>📈 History</span></summary>'+weightHistory(k,c)+'</details>'+
       '<details class="nf" data-open="wf-'+k+'"'+isOpen('wf-'+k,false)+'><summary><span>🍽️ Feeding suggestion</span></summary>'+weightFeed(c)+'</details>'+
-      (eat?'<details class="nf" data-open="we-'+k+'"'+isOpen('we-'+k,false)+'><summary><span>😋 What '+esc(c.name)+' eats</span></summary>'+eat.replace(/^<div class="card">/,'<div>')+'</details>':'')+'</details>'}).join('');
+      likesBlock(k,c)+'</details>'}).join('');
   return h}
 
 /* fights */
