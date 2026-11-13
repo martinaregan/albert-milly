@@ -322,13 +322,14 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
+var APPV='3';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
   '<div class="pl">4. Permissions → Repository permissions → <b>Contents: Read and write</b>.</div><div class="pl">5. Tap <b>Generate token</b>, copy it and paste it below.</div>'+
   '<label class="l">Access key</label><input id="ghtok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…"><label class="l">Whose phone is this?</label><div class="chips"><button class="chip'+(ui.who==='Martina'?' on':'')+'" data-a="ghwho" data-v="Martina">Martina</button><button class="chip'+(ui.who==='Eóin'?' on':'')+'" data-a="ghwho" data-v="Eóin">Eóin</button></div>'+
   '<details style="margin-top:10px"><summary class="mute small">Advanced</summary><label class="l">Data repository</label><input id="ghrepo" value="'+esc((g.owner||'martinaregan')+'/'+(g.repo||'albert-milly-data'))+'"></details>'+
-  '<button class="b p w" style="margin-top:14px;padding:14px" data-a="ghconnect">Connect</button><div class="note" id="gherr">'+esc(ui.gherr||'')+'</div></div>'}
+  '<button class="b p w" style="margin-top:14px;padding:14px" data-a="ghconnect">Connect</button><div class="note" id="gherr" style="color:var(--bad);font-weight:700">'+esc(ui.gherr||'')+'</div><div class="note">Version '+APPV+'</div></div>'}
 /* weight maths */
 function stats(c){var w=sorted(c);if(!w.length)return null;
   var first=w[0],last=w[w.length-1],r={first:first,last:last,lost:first.kg-last.kg,pct:(first.kg-last.kg)/first.kg*100,toGo:last.kg-c.target};
@@ -359,7 +360,7 @@ function feed(c){var r=stats(c),dry=firstOf(c,'dry'),wet=firstOf(c,'wet');
   return o}
 
 /* render */
-function render(){if(!GH||!S){document.body.className='albert duo';document.getElementById('root').innerHTML=!GH?setupView():'<div class="hero duo-h" style="margin-top:40px;text-align:center"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="font-size:20px;font-weight:900">'+esc(saveState)+'</div></div>';return}
+function render(){if(!GH||!S){document.body.className='albert duo';document.getElementById('root').innerHTML=!GH?setupView():'<div class="hero duo-h" style="margin-top:40px;text-align:center"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="font-size:20px;font-weight:900">'+esc(saveState==='Synced'?'Loading…':saveState)+'</div></div><div class="row" style="justify-content:center;gap:8px"><button class="b" data-a="syncnow">Try again</button><button class="b ghost" data-a="ghout2">Re-enter access key</button></div><div class="note" style="text-align:center">Version '+APPV+'</div>';return}
   needRender=false;document.body.className=ui.cat+(['fights','hows'].indexOf(ui.tab)>=0?' duo':'');
   try{localStorage.setItem(LS+'-ui',JSON.stringify({cat:ui.cat,tab:ui.tab,calWho:ui.calWho}))}catch(e){}
   var h='<header><h1>Albert &amp; Milly</h1><span class="row"><span class="save">'+esc(saveState)+'</span><button class="b s" data-a="tab" data-v="settings">⚙️</button></span></header>';
@@ -942,6 +943,7 @@ document.addEventListener('touchstart',function(e){var t=e.target;if(ui.modal||t
 document.addEventListener('touchend',function(e){if(!sw)return;var p=e.changedTouches[0],dx=p.clientX-sw.x,dy=p.clientY-sw.y;var quick=Date.now()-sw.t<600;sw=null;
   if(!quick||Math.abs(dx)<70||Math.abs(dy)>Math.abs(dx)*0.6)return;var i=TABS.indexOf(ui.tab);if(i<0)return;var ni=i+(dx<0?1:-1);if(ni<0||ni>=TABS.length)return;ui.tab=TABS[ni];render();scrollTo(0,0)},{passive:true});
 render();
+setTimeout(function(){if(GH&&!S){ui.gherr='Still cannot load your data. Check your internet, or re-enter the access key (Only select repositories → albert-milly-data, Contents: Read and write).';GH=null;render()}},12000);
 if(GH){sync();setInterval(function(){if(document.visibilityState==='visible')sync().then(function(){if(needRender&&!busy())render()})},20000)}
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&GH)sync()});
 window.addEventListener('online',function(){if(GH){sync();push()}});
