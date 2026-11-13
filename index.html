@@ -322,7 +322,7 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='5';
+var APPV='6';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -682,7 +682,7 @@ function stockOf(k,f){var c=S.cats[k],st=S.stock[f.id];if(!st||st.qty==='')retur
   var daily=0,n=0;for(var i=1;i<=7;i++){var x=peek(c,addDays(today(),-i));if(x&&x.f&&x.f[f.id]){daily+=x.f[f.id];n++}}
   daily=n?daily/n:(f.kind==='dry'?c.dryAllowance:c.wetAllowance)||0;
   return{rem:Math.max(0,rem),daily:daily,days:daily?Math.floor(Math.max(0,rem)/daily):null}}
-function extraRem(x){if(x.qty===''||x.qty==null)return null;if(!x.check)return+x.qty;var c=S.cats[x.cat||'albert'],u=0;Object.keys(c.days).forEach(function(d){if(d>=x.on&&c.days[d].checks&&c.days[d].checks[x.check])u++});return Math.max(0,x.qty-(u-(x.usedAtSet||0)))}
+function extraRem(x){if(x.qty===''||x.qty==null)return null;if(!x.check)return+x.qty;var u=0;(x.cat==='both'?['albert','milly']:[x.cat||'albert']).forEach(function(ck){var c=S.cats[ck];Object.keys(c.days).forEach(function(d){if(d>=x.on&&c.days[d].checks&&c.days[d].checks[x.check])u++})});return Math.max(0,x.qty-(u-(x.usedAtSet||0)))}
 function vTodo(){var open=S.todos.filter(function(t){return!t.done}).sort(function(a,b){return(a.due||'9')<(b.due||'9')?-1:1}),done=S.todos.filter(function(t){return t.done}),t0=today();
   function row(t){var late=t.due&&!t.done&&t.due<t0;return'<div class="todo'+(t.done?' done':'')+'"><button class="tick" data-a="tdone" data-v="'+t.id+'">'+(t.done?'✓':'')+'</button><div class="tt2"><div class="tx">'+esc(t.text)+'</div>'+(t.due?'<div class="due'+(late?' late':'')+'">'+(late?'Overdue · ':'Due ')+short(t.due)+'</div>':'')+'</div><button class="x" data-a="tdel" data-v="'+t.id+'">✕</button></div>'}
   return'<div class="card"><div class="row between"><h2 style="margin:0">✅ To do</h2><span class="tag">'+open.length+' left</span></div>'+
@@ -808,7 +808,7 @@ document.addEventListener('change',function(e){var t=e.target;
   if(t.dataset.we){if(ui.we)ui.we[t.dataset.we]=t.value;return}
   if(t.dataset.bf){if(ui.b)ui.b[t.dataset.bf]=t.value;return}
   if(t.dataset.stock){var sp=t.dataset.stock.split('|'),q=parseFloat(String(t.value).replace(',','.'));if(isNaN(q)){delete S.stock[sp[1]]}else setStock(sp[0],sp[1],q);change();return}
-  if(t.dataset.xstock){var xi=S.extraStock[+t.dataset.xstock],q2=parseFloat(String(t.value).replace(',','.'));if(isNaN(q2)){xi.qty=''}else{xi.qty=q2;xi.on=today();var cc=S.cats[xi.cat||'albert'],dd0=peek(cc,today());xi.usedAtSet=xi.check&&dd0&&dd0.checks&&dd0.checks[xi.check]?1:0}change();return}
+  if(t.dataset.xstock){var xi=S.extraStock[+t.dataset.xstock],q2=parseFloat(String(t.value).replace(',','.'));if(isNaN(q2)){xi.qty=''}else{xi.qty=q2;xi.on=today();xi.usedAtSet=0;(xi.cat==='both'?['albert','milly']:[xi.cat||'albert']).forEach(function(ck){var dd0=peek(S.cats[ck],today());if(xi.check&&dd0&&dd0.checks&&dd0.checks[xi.check])xi.usedAtSet++})}change();return}
   if(t.dataset.prof){S.profiles[t.dataset.prof]=t.value;change();return}
   if(t.dataset.notes){S.notes[t.dataset.notes]=t.value;change();return}
   if(t.dataset.info){var pp=t.dataset.info.split('.');S.info[pp[0]][pp[1]]=t.value.trim();change();return}
