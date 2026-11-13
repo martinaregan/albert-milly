@@ -242,7 +242,7 @@ var S=null,BASE=null,SHA=null,dirty=false;
 try{var cache=JSON.parse(localStorage.getItem(LS+'-cache')||'null');if(cache&&cache.S){S=cache.S;BASE=cache.BASE;SHA=cache.SHA;dirty=!!cache.dirty}}catch(e){}
 var ui={cat:'albert',tab:'today',day:today(),month:today().slice(0,7),modal:null,f:null,pend:[]};
 var pending=false;
-try{var u=JSON.parse(localStorage.getItem(LS+'-ui')||'{}');if(u.cat)ui.cat=u.cat;if(u.tab)ui.tab=u.tab;if(u.calWho)ui.calWho=u.calWho;}catch(e){}
+try{var u=JSON.parse(localStorage.getItem(LS+'-ui')||'{}');if(u.cat)ui.cat=u.cat;ui.tab='today';if(u.calWho)ui.calWho=u.calWho;}catch(e){}
 var saveState=S?(dirty?'Saving…':'Synced'):'Loading…',timer=null;
 if(S)migrate();
 
