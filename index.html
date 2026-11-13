@@ -322,7 +322,7 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='9';
+var APPV='10';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -375,8 +375,11 @@ function render(){if(!GH||!S){document.body.className='albert duo';document.getE
   var nv=document.querySelector('.navin'),act=nv&&nv.querySelector('.on');
   if(nv){if(navX!=null)nv.scrollLeft=navX;if(act){var l=act.offsetLeft,r=l+act.clientWidth,vl=nv.scrollLeft,vr=vl+nv.clientWidth;if(l<vl+10)nv.scrollLeft=l-10;else if(r>vr-10)nv.scrollLeft=r-nv.clientWidth+10}}
   if(nv)nv.addEventListener('scroll',function(){try{sessionStorage.setItem(LS+'-navx',nv.scrollLeft)}catch(e){}},{passive:true});
-  ui.lastTab=ui.tab;hydrate();if(ui.tab==='weight')wcalc()}
+  ui.lastTab=ui.tab;fixNav();hydrate();if(ui.tab==='weight')wcalc()}
 
+function fixNav(){try{fixNav2()}catch(e){}}
+function fixNav2(){var n=document.querySelector('nav');if(!n)return;n.style.transform='';var r=n.getBoundingClientRect(),vv=window.visualViewport,port=window.innerWidth<=window.innerHeight,full=(navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches))?(port?screen.height:screen.width):0,bottom=Math.max(window.innerHeight,vv?vv.height+vv.offsetTop:0,full),gap=bottom-r.bottom;if(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;if(gap>1&&gap<260)n.style.transform='translateY('+gap+'px)'}
+['resize','orientationchange','focusout','pageshow'].forEach(function(ev){window.addEventListener(ev,function(){setTimeout(fixNav,350)})});if(window.visualViewport){visualViewport.addEventListener('resize',function(){setTimeout(fixNav,100)});visualViewport.addEventListener('scroll',function(){setTimeout(fixNav,100)})}document.addEventListener('visibilitychange',function(){setTimeout(fixNav,300)});
 function bar(val,max){var over=max>0&&val>max+1e-9;var pct=max>0?Math.min(100,val/max*100):(val>0?100:0);return'<div class="bar'+(over?' over':'')+'"><div style="width:'+pct+'%"></div></div>'}
 function lastDone(c,k){var ds=Object.keys(c.days).filter(function(d){return d<ui.day&&c.days[d].checks&&c.days[d].checks[k]}).sort();if(!ds.length)return'';var n=daysBetween(ds[ds.length-1],ui.day);return'<br><span class="mute small">Last: '+(n===1?'yesterday':n+' days ago')+'</span>'}
 function thumbs(att){return'<div class="thumbs">'+att.map(function(a){var k=a.path||a.id;
