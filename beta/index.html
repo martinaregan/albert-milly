@@ -238,7 +238,7 @@ nav.nav5 .navlog span{font-size:26px;line-height:1;font-weight:900}
 .qt span{font-size:28px}
 .qt:active,.tile:active,.gl:active{transform:scale(.96)}
 .pseg{margin-bottom:12px}
-</style>
+.flog>summary,.fwk>summary,.fit>summary{list-style:none;cursor:pointer;display:flex;flex-direction:column}.flog>summary::-webkit-details-marker,.fwk>summary::-webkit-details-marker,.fit>summary::-webkit-details-marker{display:none}.flog>summary{position:relative;padding-right:22px}.flog>summary:after,.fwk>summary:after{content:'›';position:absolute;right:0;top:2px;font-size:22px;color:var(--mute,#999);transition:transform .2s}.flog[open]>summary:after,.fwk[open]>summary:after{transform:rotate(90deg)}.fwk{margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:10px 12px}.fwk>summary{position:relative;padding-right:20px}.fit{border-top:1px solid var(--line);padding:8px 0}.fwk[open]>summary{margin-bottom:6px}.fbody{padding:6px 0 0 40px}.ell{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style>
 </head>
 <body>
 <div id="root"></div>
@@ -451,16 +451,43 @@ function vToday(){var c=cat(),d=day(c),r=stats(c),st=status(r,c),t=dayTotals(c,d
   if(rated.length&&!BETA)h+='<div class="card"><h2>What '+esc(c.name)+' actually eats</h2>'+rated.map(function(f){var n=tal[f.id],tot=n.all+n.some+n.no,verdict=tot<2?'':(n.no/tot>=.5?'<span class="tag bad">Mostly refuses</span>':(n.all/tot>=.7?'<span class="tag ok">Likes it</span>':'<span class="tag warn">Hit and miss</span>'));
     return'<div class="food"><div class="row between" style="flex-wrap:nowrap;gap:8px"><b>'+esc(f.name)+'</b>'+verdict+'</div><div class="small mute">😋 '+n.all+' · 😐 '+n.some+' · 🙅 '+n.no+(n.last?' · last refused '+short(n.last):'')+'</div></div>'}).join('')+'</div>';
   if(c.checks.length)h+='<div class="card"><h2>Daily checklist</h2>'+c.checks.map(function(k,i){var done=!!d.checks[k];return'<div class="check'+(done?' done':'')+'" data-a="chk" data-v="'+i+'"><span class="box">'+(done?'✓':'')+'</span><span>'+esc(k)+lastDone(c,k)+'</span></div>'}).join('')+'</div>';
-  var lt=S.litter.filter(function(x){return x.d===ui.day&&x.who===c.name});
-  h+='<div class="card"><h2>Poo &amp; pee · 💩 '+lt.filter(function(x){return x.type==='Poo'}).length+' · 💧 '+lt.filter(function(x){return x.type==='Pee'}).length+'</h2>'+
-    (lt.length?'<div class="list">'+lt.map(litterLine).join('')+'</div>':'')+
-    '<div class="row" style="margin-top:8px"><button class="b" data-a="lnew" data-v="Poo">💩 Log poo</button><button class="b" data-a="lnew" data-v="Pee">💧 Log pee</button></div><div class="note">Tap Log poo, then 📷 Take a photo.</div></div>';
   h+='<div class="card"><h2>Play / exercise · '+t.play+' min</h2>'+S.playTypes.map(function(p,i){var m=d.play[p]||0;
     return'<div class="food"><div class="row between"><b>'+esc(p)+'</b><span class="row"><input class="amt" inputmode="numeric" data-amt="play" data-k="'+i+'" value="'+m+'"><span class="mute small">min</span></span></div><div class="row" style="margin-top:6px"><button class="b s" data-a="play" data-k="'+i+'" data-v="5">+5</button><button class="b s" data-a="play" data-k="'+i+'" data-v="10">+10</button><button class="b s" data-a="play" data-k="'+i+'" data-v="15">+15</button><button class="b s p" data-a="tnew" data-k="'+i+'">⏱ Start</button></div></div>'}).join('')+'</div>';
   h+='<div class="card"><h2>Photos</h2>'+(d.photos.length?thumbs(d.photos):'<span class="mute small">None for this day</span>')+'<div style="margin-top:10px">'+upBtn('day','','📷 Take or add photo','image/*')+'</div></div>';
   h+='<div class="card"><h2>Note for the day</h2><textarea rows="2" data-a="note" placeholder="Begging, ate slowly, sitter visit…">'+esc(d.note)+'</textarea></div>';
   return h}
 
+var SEVC={'Stare / stalk':'#b8a6ff','Chase / hiss':'#8b6cff','Bite':'#e0703a','Full fight':'#d23b3b'},SEVN={'Stare / stalk':1,'Chase / hiss':2,'Bite':3,'Full fight':4};
+function isOpen(k,def){ui.open=ui.open||{};return(k in ui.open?ui.open[k]:def)?' open':''}
+function wkStart(d){var x=parse(d),n=(x.getDay()+6)%7;x.setDate(x.getDate()-n);return x.getFullYear()+'-'+('0'+(x.getMonth()+1)).slice(-2)+'-'+('0'+x.getDate()).slice(-2)}
+function topOf(arr){var m={};arr.forEach(function(v){if(v)m[v]=(m[v]||0)+1});var k=Object.keys(m).sort(function(a,b){return m[b]-m[a]});return k.length?k[0]+(m[k[0]]>1?' ×'+m[k[0]]:''):''}
+function fightLog(F){
+  if(!F.length)return'<div class="card"><h2>Log</h2><span class="mute">Nothing logged yet</span></div>';
+  var all=F.filter(function(f){return f.d}).slice().sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1});
+  var tw=wkStart(today()),lw=addDays(tw,-7),cT=0,cL=0;all.forEach(function(f){var w=wkStart(f.d);if(w===tw)cT++;else if(w===lw)cL++});
+  var diff=cT-cL,trend=diff>0?'<span style="color:#e0703a">▲ '+diff+' vs last week</span>':diff<0?'<span style="color:#5cb85c">▼ '+(-diff)+' vs last week</span>':'<span class="mute">same as last week</span>';
+  var groups=[],gi={};all.forEach(function(f){var w=wkStart(f.d);if(!(w in gi)){gi[w]=groups.length;groups.push({w:w,items:[]})}groups[gi[w]].items.push(f)});
+  var h='<details class="card flog" data-open="flog"'+isOpen('flog',true)+'><summary><div class="row between" style="flex:1"><h2 style="margin:0">Log</h2><span class="small">'+all.length+' total</span></div><div class="small" style="margin-top:4px">This week <b>'+cT+'</b> · '+trend+'</div></summary>';
+  groups.forEach(function(g,i){
+    var it=g.items,worst=it.reduce(function(m,f){return Math.max(m,SEVN[f.sev]||0)},0);
+    var bites=it.filter(function(f){return(SEVN[f.sev]||0)>=3}).length;
+    var trig=topOf([].concat.apply([],it.map(function(f){return f.trig||[]})));
+    var lbl=g.w===tw?'This week':g.w===lw?'Last week':'Week of '+short(g.w);
+    h+='<details class="fwk" data-open="fwk'+g.w+'"'+isOpen('fwk'+g.w,i===0)+'><summary><div style="flex:1"><div class="row between"><b>'+lbl+'</b><span class="small">'+it.length+(it.length===1?' incident':' incidents')+'</span></div>'+
+      '<div class="row between" style="margin-top:4px"><span>'+it.slice().reverse().map(function(f){return'<span class="sevdot" style="background:'+(SEVC[f.sev]||'#999')+'"></span>'}).join('')+'</span><span class="mute small">'+(bites?bites+(bites>1?' bites':' bite')+' or worse':'no bites')+'</span></div>'+
+      (trig?'<div class="mute small" style="margin-top:2px">Top trigger: '+esc(trig)+'</div>':'')+'</div></summary>';
+    it.forEach(function(f){
+      var who=f.who==='Albert'?spot('albert'):f.who==='Milly'?spot('milly'):'<span style="width:30px;text-align:center;font-size:20px">❔</span>';
+      var sub=(f.trig||[])[0]||f.where||'';
+      h+='<details class="fit" data-open="fit'+f.id+'"'+isOpen('fit'+f.id,false)+'><summary><div class="fl" style="flex:1;align-items:center">'+who+'<div style="flex:1;min-width:0"><div class="row between"><b><span class="sevdot" style="background:'+(SEVC[f.sev]||'#999')+'"></span>'+esc(f.sev||'Fight')+'</b><span class="mute small">'+short(f.d)+' '+esc(f.m||'')+'</span></div>'+(sub?'<div class="mute small ell">'+esc(sub)+'</div>':'')+'</div></div></summary>'+
+        '<div class="fbody"><div class="small">'+esc([f.who?'Started by '+f.who:'',(f.trig||[]).join(', '),f.where,f.sep==='Yes'?'separated':f.sep==='No'?'not separated':'',f.pher==='Yes'?'pheromones on':f.pher==='No'?'pheromones off':''].filter(Boolean).join(' · '))+'</div>'+(f.n?'<div class="small mute" style="margin-top:4px">'+esc(f.n)+'</div>':'')+((f.att||[]).length?thumbs(f.att):'')+
+        '<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="x" data-a="fedit" data-v="'+f.id+'">Edit</button><button class="x" data-a="delf" data-v="'+f.id+'">✕</button></div></div></details>';
+    });
+    h+='</details>';
+  });
+  return h+'</details>';
+}
+document.addEventListener('toggle',function(e){var k=e.target&&e.target.dataset&&e.target.dataset.open;if(k){ui.open=ui.open||{};ui.open[k]=e.target.open}},true);
 function spot(k){var c=k==='albert'?'#e8822f':'#1e1e1e',patch=k==='albert'?
   '<path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q17 8.6 15.6 10.4 12 8.2 8.4 10.4 7 8.6 4.2 9.2Z" fill="'+c+'"/><path d="M11 6.1h2l-.5 3h-1z" fill="#fff" opacity=".9"/>':
   '<path d="M4.2 9.2 5 2.6 9.6 6.2Q11.5 5.6 12.5 5.8 13 10 10 13.5 7 15.5 3.9 13.2 3.6 11 4.2 9.2Z" fill="'+c+'"/>';
@@ -577,7 +604,7 @@ function vFights(){var t=today(),since=addDays(t,-30),F=S.fights,rec=F.filter(fu
     var top=Object.keys(tg).sort(function(a,b){return tg[b]-tg[a]})[0],pk=Object.keys(tm).sort(function(a,b){return tm[b]-tm[a]})[0];
     h+='<div class="card"><h2>Patterns (30 days)</h2><button class="b s ghost" data-a="tab" data-v="hows">🤝 See How\'s it going</button>'+
       (Object.keys(wo).length?'<h3>Who started it</h3>'+hbars(wo):'')+'<h3>Why</h3>'+(Object.keys(tg).length?hbars(tg):'<span class="mute small">No triggers ticked yet</span>')+'<h3>How bad</h3>'+hbars(sv)+(Object.keys(wh).length?'<h3>Where</h3>'+hbars(wh):'')+(Object.keys(tm).length?'<h3>When</h3>'+hbars(tm):'')+(Object.keys(sp).length?'<h3>Separated afterwards</h3>'+hbars(sp):'')+(Object.keys(ph).length?'<h3>Pheromones plugged in</h3>'+hbars(ph):'')+playLink()+'</div>'}
-  h+='<div class="card list"><h2>Log</h2>'+(F.length?F.slice().sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1}).slice(0,40).map(function(f){return'<div class="it"><div class="fl">'+(f.who==='Albert'?spot('albert'):f.who==='Milly'?spot('milly'):'<span style="width:30px;text-align:center;font-size:20px">❔</span>')+'<div style="flex:1"><div class="row between"><b><span class="sevdot" style="background:'+({'Stare / stalk':'#b8a6ff','Chase / hiss':'#8b6cff','Bite':'#e0703a','Full fight':'#d23b3b'}[f.sev]||'#999')+'"></span>'+esc(f.sev||'Fight')+'</b><span class="mute small">'+short(f.d)+' '+esc(f.m||'')+'<button class="x" data-a="fedit" data-v="'+f.id+'">Edit</button><button class="x" data-a="delf" data-v="'+f.id+'">✕</button></span></div><div class="small">'+esc([f.who?'Started by '+f.who:'',(f.trig||[]).join(', '),f.where,f.sep==='Yes'?'separated':f.sep==='No'?'not separated':'',f.pher==='Yes'?'pheromones on':f.pher==='No'?'pheromones off':''].filter(Boolean).join(' · '))+'</div>'+(f.n?'<div class="small mute">'+esc(f.n)+'</div>':'')+(f.att.length?thumbs(f.att):'')+'</div></div></div>'}).join(''):'<span class="mute">Nothing logged yet</span>')+'</div>';
+  h+=fightLog(F);
   return h}
 function playLink(){var c=S.cats.albert,t=today(),a=[],b=[],g=[],n=[];
   for(var i=1;i<=30;i++){var d=addDays(t,-i),x=peek(c,d);if(!x)continue;var fc=S.fights.filter(function(f){return f.d===d}).length,p=dayTotals(c,x).play;(p>=15?a:b).push(fc);
@@ -606,9 +633,13 @@ function vHealth(){var c=cat(),since=addDays(today(),-30),hf=ui.hf||(ui.hf={});
   var recent=c.health.filter(function(e){return e.d>=since}),counts={};recent.forEach(function(e){counts[e.t]=(counts[e.t]||0)+1});
   h+='<div class="card"><h2>Last 30 days</h2>'+(recent.length?hbars(counts):'<span class="mute">Nothing logged</span>')+'<button class="b w" style="margin-top:10px" data-a="vet">📋 Summary to send the vet</button></div>';
   h+='<div class="card list"><h2>Symptom history</h2>'+(c.health.length?c.health.slice().sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1}).map(function(e){return'<div class="it"><div class="row between"><b>'+esc(e.t)+'</b><span class="mute small">'+short(e.d)+' '+esc(e.m||'')+'<button class="x" data-a="hedit" data-v="'+e.id+'">Edit</button><button class="x" data-a="delh" data-v="'+e.id+'">✕</button></span></div>'+(e.n?'<div class="small">'+esc(e.n)+'</div>':'')+(e.att.length?thumbs(e.att):'')+'</div>'}).join(''):'<span class="mute">Nothing yet</span>')+'</div>';
+  var lt=S.litter.filter(function(x){return x.d===today()&&x.who===c.name});
+  h+='<div class="card"><h2>Poo &amp; pee today · 💩 '+lt.filter(function(x){return x.type==='Poo'}).length+' · 💧 '+lt.filter(function(x){return x.type==='Pee'}).length+'</h2>'+
+    (lt.length?'<div class="list">'+lt.map(litterLine).join('')+'</div>':'')+
+    '<div class="row" style="margin-top:8px"><button class="b" data-a="lnew" data-v="Poo" data-k="today">💩 Log poo</button><button class="b" data-a="lnew" data-v="Pee" data-k="today">💧 Log pee</button></div><div class="note">Tap Log poo, then 📷 Take a photo.</div></div>';
   var ls=litterSummary(c);
   h+='<div class="card"><h2>Poo &amp; pee, last 30 days</h2>'+(ls?'<div class="grid2"><div class="stat"><span class="mute">Poos</span><b>'+ls.poo+'</b><span class="mute small">'+fmt(ls.poo/ls.days)+' per logged day</span></div><div class="stat"><span class="mute">Pees</span><b>'+ls.pee+'</b><span class="mute small">'+fmt(ls.pee/ls.days)+' per logged day</span></div></div>'+
-    (Object.keys(ls.cs).length?'<h3>Poo consistency</h3>'+hbars(ls.cs):'')+(Object.keys(ls.sm).length?'<h3>Smell</h3>'+hbars(ls.sm):'')+(Object.keys(ls.fl).length?'<h3>⚠️ Unusual</h3>'+hbars(ls.fl):'<p class="small mute">Nothing unusual logged.</p>'):'<span class="mute small">Nothing logged yet. Use the Poo &amp; pee card on Today.</span>')+
+    (Object.keys(ls.cs).length?'<h3>Poo consistency</h3>'+hbars(ls.cs):'')+(Object.keys(ls.sm).length?'<h3>Smell</h3>'+hbars(ls.sm):'')+(Object.keys(ls.fl).length?'<h3>⚠️ Unusual</h3>'+hbars(ls.fl):'<p class="small mute">Nothing unusual logged.</p>'):'<span class="mute small">Nothing logged yet.</span>')+
     '<details style="margin-top:8px"><summary class="mute small">All entries</summary><div class="list">'+S.litter.filter(function(x){return x.who===c.name}).sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1}).slice(0,60).map(function(x){return'<div class="mute small" style="margin-top:6px">'+short(x.d)+'</div>'+litterLine(x)}).join('')+'</div></details></div>';
   h+='<div class="card"><div class="row between"><h2 style="margin:0">Vet notes &amp; files</h2><button class="b s p" data-a="vnew">+ Add</button></div>';
   h+='<div class="list" style="margin-top:6px">'+(c.vet.length?c.vet.slice().sort(function(a,b){return(a.d||'0')<(b.d||'0')?1:-1}).map(function(v){return'<div class="it"><div class="row between"><b>'+esc(v.reason||'Vet note')+'</b><span class="mute small">'+short(v.d)+'<button class="x" data-a="vedit" data-v="'+v.id+'">Edit</button></span></div>'+
@@ -952,7 +983,7 @@ document.addEventListener('click',function(e){
   else if(a==='addfood2'){ui.cat=t.dataset.k;S.cats[ui.cat].foods.push({id:uid(),name:'New food',kind:'dry',kcal:370});change();ui.tab='settings';ui.modal=null;render();var fc=document.getElementById('foodscard');if(fc){var ins=fc.querySelectorAll('input[data-fk=name]');fc.scrollIntoView();var li=ins[ins.length-1];if(li){li.select&&li.select()}}}
   else if(a==='addfood'){c.foods.push({id:uid(),name:'New food',kind:'dry',kcal:370});change()}
   else if(a==='delfood'){if(c.foods.length>1){c.foods.splice(+v,1);change()}}
-  else if(a==='lnew'){ui.pend=[];ui.pendFor='litter';ui.l={who:c.name,type:v,d:ui.day,m:ui.day===today()?new Date().toTimeString().slice(0,5):'',cons:'',amt:'Normal',smell:'Normal',extra:[],n:''};ui.modal=litterSheet;render()}
+  else if(a==='lnew'){ui.pend=[];ui.pendFor='litter';var lday=(t.dataset.k==='today')?today():ui.day;ui.l={who:c.name,type:v,d:lday,m:lday===today()?new Date().toTimeString().slice(0,5):'',cons:'',amt:'Normal',smell:'Normal',extra:[],n:''};ui.modal=litterSheet;render()}
   else if(a==='lc'){var lk=t.dataset.k;if(lk==='extra'){var li=ui.l.extra.indexOf(v);if(li>=0)ui.l.extra.splice(li,1);else ui.l.extra.push(v)}else if(lk==='type'||lk==='who')ui.l[lk]=v;else ui.l[lk]=ui.l[lk]===v?'':v;if(lk==='type'&&v==='Pee')ui.l.cons='';render()}
   else if(a==='ledit'){var lo=S.litter.filter(function(x){return x.id===v})[0];ui.l=JSON.parse(JSON.stringify(lo));ui.l.extra=ui.l.extra||[];ui.pend=ui.l.att||[];ui.pendFor='litter';ui.modal=litterSheet;render()}
   else if(a==='lsave'){var l=ui.l;if(l.id)S.litter=S.litter.filter(function(x){return x.id!==l.id});S.litter.push({id:l.id||uid(),who:l.who,type:l.type,d:l.d||today(),m:l.m,cons:l.cons,amt:l.amt,smell:l.smell,extra:l.extra,n:(l.n||'').trim(),att:ui.pend});ui.pend=[];ui.pendFor=null;ui.l=null;ui.modal=null;change()}
