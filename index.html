@@ -376,7 +376,7 @@ function render(){if(S)infoData();if(ui.tab==='hows')ui.tab='fights';if(ui.tab==
   var h='<header><h1>Albert &amp; Milly</h1><span class="row"><span class="save">'+esc(saveState)+'</span><button class="b s" data-a="tab" data-v="settings">⚙️</button></span></header>';
   if(['fights','calendar','info','todo','stock','money','hows','weight','health'].indexOf(ui.tab)<0)h+='<div class="switch">'+['albert','milly'].map(function(k){var c=S.cats[k],w=sorted(c),lw=w.length?w[w.length-1].kg.toFixed(2)+' kg':'';return'<button data-a="cat" data-v="'+k+'" class="'+(ui.cat===k?'on':'')+'">'+spot(k)+'<span><span class="nm">'+esc(c.name)+'</span><span class="wt">'+lw+' → '+c.target+' kg</span><span class="swh">'+(ui.cat===k?'Showing now':'Tap to switch ›')+'</span></span></button>'}).join('')+'</div>';
   h+=({today:vToday,calendar:vCal,weight:vWeight,fights:vTogether,health:vHealth,settings:vSettings,info:vInfo,todo:vTodo,stock:vStock,money:vMoney,hows:vHows})[ui.tab]();
-  h+='<nav><div class="navin">'+[['today','🍽️','Food & play'],['calendar','📅','Calendar'],['weight','⚖️','Weight'],['fights','<i class="navfaces">'+spot('albert')+spot('milly')+'</i>','Friendship'],['health','🩺','Health'],['stock','📦','Stock'],['money','💶','Costs'],['info','📋','Info']].map(function(t){return'<button data-a="tab" data-v="'+t[0]+'" class="'+(ui.tab===t[0]?'on':'')+'"><span>'+t[1]+'</span>'+t[2]+'</button>'}).join('')+'</div></nav>';
+  h+='<nav><div class="navin">'+[['today','🍽️','Food & play'],['weight','⚖️','Weight'],['health','🩺','Health'],['calendar','📅','Calendar'],['fights','<i class="navfaces">'+spot('albert')+spot('milly')+'</i>','Friendship'],['stock','📦','Stock'],['money','💶','Costs'],['info','📋','Info']].map(function(t){return'<button data-a="tab" data-v="'+t[0]+'" class="'+(ui.tab===t[0]?'on':'')+'"><span>'+t[1]+'</span>'+t[2]+'</button>'}).join('')+'</div></nav>';
   if(ui.modal)h+=ui.modal().replace('data-stop="1">','data-stop="1"><button class="xbtn" data-a="close" aria-label="Close">✕</button>');
   h+='<input type="file" id="fileIn" class="file">';
   var oldNav=document.querySelector('.navin'),navX=oldNav?oldNav.scrollLeft:null;if(navX==null){try{var sx=sessionStorage.getItem(LS+'-navx');if(sx!=null)navX=+sx}catch(e){}}
@@ -1209,7 +1209,7 @@ function confirmBox(msg,act,v){return'<div class="modal" data-a="close"><div cla
 function num(id){var x=parseFloat(String(document.getElementById(id).value).replace(',','.'));return isNaN(x)?null:x}
 function flash(id){var el=document.getElementById(id)||document.querySelector('[data-w="'+id+'"]');if(!el)return;el.style.borderColor='var(--bad)';el.focus()}
 
-var TABS=['today','calendar','weight','fights','health','stock','money','info'],sw=null;
+var TABS=['today','weight','health','calendar','fights','stock','money','info'],sw=null;
 document.addEventListener('touchstart',function(e){var t=e.target;if(ui.modal||t.closest('nav,input,textarea,select,.cal,svg,.modal')){sw=null;return}var p=e.touches[0];sw={x:p.clientX,y:p.clientY,t:Date.now()}},{passive:true});
 document.addEventListener('touchend',function(e){if(!sw)return;var p=e.changedTouches[0],dx=p.clientX-sw.x,dy=p.clientY-sw.y;var quick=Date.now()-sw.t<600;sw=null;
   if(!quick||Math.abs(dx)<70||Math.abs(dy)>Math.abs(dx)*0.6)return;var i=TABS.indexOf(ui.tab);if(i<0)return;var ni=i+(dx<0?1:-1);if(ni<0||ni>=TABS.length)return;ui.tab=TABS[ni];render();scrollTo(0,0)},{passive:true});
