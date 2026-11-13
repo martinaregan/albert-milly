@@ -322,7 +322,7 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='7';
+var APPV='8';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -396,17 +396,24 @@ function vToday(){var c=cat(),d=day(c),r=stats(c),st=status(r,c),t=dayTotals(c,d
     '<div class="wt">'+(r?r.last.kg.toFixed(2):'–')+' <small>kg</small></div>'+
     '<div class="track"><div style="width:'+Math.max(prog,2)+'%"></div></div><div class="ends"><span>'+(r?r.first.kg.toFixed(2)+' kg start':'')+'</span><span>'+(r&&r.toGo>0?r.toGo.toFixed(2)+' kg to go · ':'')+'target '+c.target+' kg</span></div>'+
     '<span class="pill">'+st[1]+'</span></div>';
-  h+='<div class="card"><h2>Food</h2>'+c.foods.map(function(f){var a=d.f[f.id]||0,dry=f.kind==='dry';
-    return'<div class="food"><div class="row between"><b>'+esc(f.name)+'</b><span class="row"><input class="amt" inputmode="decimal" data-amt="food" data-k="'+f.id+'" value="'+fmt(a)+'"><span class="mute small">'+(dry?'g':(f.kind==='wet'?'×':''))+'</span></span></div><div class="row" style="margin-top:6px">'+
-    (dry?[5,10,25]:[0.5,1]).map(function(s){return'<button class="b s" data-a="food" data-k="'+f.id+'" data-v="'+s+'">+'+s+'</button>'}).join('')+'</div></div>'}).join('')+
+  var M=ui.meal&&ui.meal.cat===ui.cat?ui.meal:(ui.meal={cat:ui.cat,fid:'',amt:'',rx:'all'}),mf=c.foods.filter(function(f){return f.id===M.fid})[0],RXL={all:['😋','Ate it all'],some:['😐','Some'],no:['🙅','Refused']};
+  var meals=(d.meals||[]);
+  h+='<div class="card"><h2>🍽️ Log a meal</h2><label class="l">What did '+esc(c.name)+' get?</label><div class="row" style="gap:6px;flex-wrap:wrap">'+c.foods.map(function(f){return'<button class="chip'+(M.fid===f.id?' on':'')+'" data-a="mfood" data-v="'+f.id+'">'+esc(f.name)+'</button>'}).join('')+'</div>';
+  if(mf){var dry=mf.kind==='dry';
+    h+='<label class="l" style="margin-top:12px">How much? '+(dry?'(grams)':'(cans/pouches)')+'</label><div class="row" style="gap:6px;flex-wrap:wrap;align-items:center"><input class="amt" id="mamt" inputmode="decimal" style="width:90px" value="'+esc(String(M.amt))+'" placeholder="'+(dry?'g':'×')+'">'+(dry?[10,20,25,40,50,80]:[0.25,0.5,1]).map(function(s){return'<button class="chip'+(String(M.amt)===String(s)?' on':'')+'" data-a="mamt" data-v="'+s+'">'+(s===0.25?'¼':s===0.5?'½':s)+'</button>'}).join('')+'</div>';
+    h+='<label class="l" style="margin-top:12px">Did '+esc(c.name)+' eat it?</label><div class="row" style="gap:6px;flex-wrap:wrap">'+['all','some','no'].map(function(k){return'<button class="chip'+(M.rx===k?' on':'')+'" data-a="mrx" data-v="'+k+'">'+RXL[k][0]+' '+RXL[k][1]+'</button>'}).join('')+'</div>';}
+  h+='<button class="b p w" style="margin-top:14px;padding:14px" data-a="mlog"'+(mf?'':' disabled style="margin-top:14px;padding:14px;opacity:.4"')+'>Log meal</button>';
+  if(meals.length)h+='<div style="margin-top:14px">'+meals.map(function(m){var f=c.foods.filter(function(x){return x.id===m.f})[0],dry=f&&f.kind==='dry';return'<div class="row between" style="flex-wrap:nowrap;gap:8px;padding:8px 0;border-top:1px solid var(--line)"><span>'+(RXL[m.rx]||['',''])[0]+' <b>'+esc(f?f.name:'(removed food)')+'</b><br><span class="small mute">'+(m.t?m.t+' · ':'')+fmt(m.a)+(dry?' g':' ×')+' · '+(RXL[m.rx]||['',''])[1]+(m.who?' · '+esc(m.who):'')+'</span></span><button class="x" data-a="mdel" data-v="'+m.id+'">✕</button></div>'}).join('')+'</div>';
+  h+='<details style="margin-top:10px"><summary class="small mute">Adjust today\'s totals by hand</summary>'+c.foods.map(function(f){var a=d.f[f.id]||0,dry=f.kind==='dry';return'<div class="row between" style="margin-top:6px"><span class="small">'+esc(f.name)+'</span><span class="row"><input class="amt" inputmode="decimal" data-amt="food" data-k="'+f.id+'" value="'+fmt(a)+'"><span class="mute small">'+(dry?'g':'×')+'</span></span></div>'}).join('')+'</details>'+
     '<div class="food"><div class="row between"><b>Treats / extras</b><input class="amt" inputmode="decimal" data-amt="treat" value="'+(d.treats||0)+'"></div><div class="row" style="margin-top:6px"><button class="b s" data-a="treat" data-v="1">+1</button></div></div>'+
     '<div style="margin-top:10px"><div class="row between small"><span>Dry total</span><span>'+fmt(t.dry)+(c.dryAllowance?' / '+c.dryAllowance:'')+' g</span></div>'+bar(t.dry,c.dryAllowance)+
     '<div class="row between small"><span>Wet total</span><span>'+fmt(t.wet)+' / '+c.wetAllowance+'</span></div>'+bar(t.wet,c.wetAllowance)+
     '<div class="row between small"><span>Calories (approx.)</span><span>'+Math.round(t.kcal)+' kcal</span></div>'+bar(t.kcal,fd.hi)+
     '<div class="note">Weight-loss range for '+esc(c.name)+': about '+Math.round(fd.lo)+'–'+Math.round(fd.hi)+' kcal a day.'+(c.dryAllowance?'':' Set a dry allowance in ⚙️ to get the dry bar.')+'</div></div></div>';
-  var RX=[['all','😋','Ate it all'],['some','😐','Some'],['no','🙅','Refused']];
-  if(c.foods.length)h+='<div class="card"><h2>Did '+esc(c.name)+' eat it?</h2><div class="note" style="margin-top:0">Tap after a meal (tap again to undo). Builds up a picture of what '+esc(c.name)+' actually eats.</div>'+c.foods.map(function(f){var cur=(d.react||{})[f.id],n={all:0,some:0,no:0},last='';Object.keys(c.days).sort().forEach(function(k){var r=(c.days[k].react||{})[f.id];if(r&&n[r]!=null){n[r]++;if(r==='no')last=k}});var tot=n.all+n.some+n.no,verdict=tot<2?'':(n.no/tot>=.5?'<span class="tag bad">Mostly refuses</span>':(n.all/tot>=.7?'<span class="tag ok">Likes it</span>':'<span class="tag warn">Hit and miss</span>'));
-    return'<div class="food"><div class="row between" style="flex-wrap:nowrap;gap:8px"><b>'+esc(f.name)+'</b>'+verdict+'</div><div class="small mute">'+(tot?'😋 '+n.all+' · 😐 '+n.some+' · 🙅 '+n.no+(last?' · last refused '+short(last):''):'No meals rated yet')+'</div><div class="row" style="gap:6px;margin-top:6px">'+RX.map(function(r){return'<button class="chip'+(cur===r[0]?' on':'')+'" data-a="react" data-k="'+f.id+'" data-v="'+r[0]+'">'+r[1]+' '+r[2]+'</button>'}).join('')+'</div></div>'}).join('')+'</div>';
+  var tal={};Object.keys(c.days).sort().forEach(function(k){var x=c.days[k];if(x.meals&&x.meals.length)x.meals.forEach(function(m){var n=tal[m.f]||(tal[m.f]={all:0,some:0,no:0,last:''});if(n[m.rx]!=null)n[m.rx]++;if(m.rx==='no')n.last=k});else Object.keys(x.react||{}).forEach(function(fid){var r=x.react[fid],n=tal[fid]||(tal[fid]={all:0,some:0,no:0,last:''});if(n[r]!=null)n[r]++;if(r==='no')n.last=k})});
+  var rated=c.foods.filter(function(f){return tal[f.id]});
+  if(rated.length)h+='<div class="card"><h2>What '+esc(c.name)+' actually eats</h2>'+rated.map(function(f){var n=tal[f.id],tot=n.all+n.some+n.no,verdict=tot<2?'':(n.no/tot>=.5?'<span class="tag bad">Mostly refuses</span>':(n.all/tot>=.7?'<span class="tag ok">Likes it</span>':'<span class="tag warn">Hit and miss</span>'));
+    return'<div class="food"><div class="row between" style="flex-wrap:nowrap;gap:8px"><b>'+esc(f.name)+'</b>'+verdict+'</div><div class="small mute">😋 '+n.all+' · 😐 '+n.some+' · 🙅 '+n.no+(n.last?' · last refused '+short(n.last):'')+'</div></div>'}).join('')+'</div>';
   if(c.checks.length)h+='<div class="card"><h2>Daily checklist</h2>'+c.checks.map(function(k,i){var done=!!d.checks[k];return'<div class="check'+(done?' done':'')+'" data-a="chk" data-v="'+i+'"><span class="box">'+(done?'✓':'')+'</span><span>'+esc(k)+lastDone(c,k)+'</span></div>'}).join('')+'</div>';
   var lt=S.litter.filter(function(x){return x.d===ui.day&&x.who===c.name});
   h+='<div class="card"><h2>Poo &amp; pee · 💩 '+lt.filter(function(x){return x.type==='Poo'}).length+' · 💧 '+lt.filter(function(x){return x.type==='Pee'}).length+'</h2>'+
@@ -680,7 +687,7 @@ function bookSheet(){var b=ui.b;
     '<label class="l">Confirmation / files</label>'+(b.att.length?thumbs(b.att):'')+'<div style="margin-top:6px">'+upBtn('book','','📎 Add confirmation','image/*,application/pdf')+'</div>'+
     '<div class="row" style="margin-top:14px"><button class="b p" data-a="bsave">Save</button><button class="b" data-a="close">Cancel</button>'+(b.isNew?'':'<button class="b" style="background:var(--bad);color:#fff" data-a="bdel" data-v="'+b.id+'">Delete</button>')+'</div></div></div>'}
 /* food stock: remaining = what you had when you last set it, minus everything logged since */
-function usedSince(c,f,since){var u=0;Object.keys(c.days).forEach(function(d){if(d>=since)u+=(c.days[d].f||{})[f.id]||0});return u}
+function usedSince(c,f,since){var u=0;Object.keys(c.days).forEach(function(d){if(d>=since)u+=((c.days[d].f||{})[f.id]||0)+((c.days[d].waste||{})[f.id]||0)});return u}
 function stockOf(k,f){var c=S.cats[k],st=S.stock[f.id];if(!st||st.qty==='')return null;var rem=st.qty-(usedSince(c,f,st.on)-(st.usedAtSet||0));
   var daily=0,n=0;for(var i=1;i<=7;i++){var x=peek(c,addDays(today(),-i));if(x&&x.f&&x.f[f.id]){daily+=x.f[f.id];n++}}
   daily=n?daily/n:(f.kind==='dry'?c.dryAllowance:c.wetAllowance)||0;
@@ -850,7 +857,16 @@ document.addEventListener('click',function(e){
   else if(a==='food'){var d=day();d.f[t.dataset.k]=Math.max(0,fmt((d.f[t.dataset.k]||0)+parseFloat(v)));change()}
   else if(a==='treat'){var d1=day();d1.treats=Math.max(0,(d1.treats||0)+(+v));change()}
   else if(a==='play'){var d2=day(),pt=S.playTypes[+t.dataset.k];d2.play[pt]=Math.max(0,(d2.play[pt]||0)+(+v));change()}
-  else if(a==='react'){var d4=day(),fk=t.dataset.k;if(!d4.react)d4.react={};if(d4.react[fk]===v)delete d4.react[fk];else d4.react[fk]=v;change()}
+  else if(a==='mfood'){ui.meal={cat:ui.cat,fid:v,amt:'',rx:'all'};var mf2=c.foods.filter(function(f){return f.id===v})[0];if(mf2&&mf2.kind!=='dry')ui.meal.amt=1;render()}
+  else if(a==='mamt'){ui.meal.amt=parseFloat(v);render()}
+  else if(a==='mrx'){var ai=document.getElementById('mamt');if(ai)ui.meal.amt=ai.value;ui.meal.rx=v;render()}
+  else if(a==='mlog'){var ai2=document.getElementById('mamt'),M2=ui.meal,am=parseFloat(String(ai2?ai2.value:M2.amt).replace(',','.'));if(!M2||!M2.fid)return;if(!(am>0)){if(ai2){ai2.focus();ai2.style.borderColor='var(--bad)'}return}
+    var d5=day();if(!d5.meals)d5.meals=[];var now=new Date(),tm=ui.day===today()?String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0'):'';
+    d5.meals.push({id:uid(),f:M2.fid,a:am,rx:M2.rx,t:tm,who:(GH&&GH.who)||''});
+    if(M2.rx==='no'){if(!d5.waste)d5.waste={};d5.waste[M2.fid]=fmt((d5.waste[M2.fid]||0)+am)}else d5.f[M2.fid]=fmt((d5.f[M2.fid]||0)+am);
+    if(!d5.react)d5.react={};d5.react[M2.fid]=M2.rx;ui.meal={cat:ui.cat,fid:'',amt:'',rx:'all'};change()}
+  else if(a==='mdel'){var d6=day(),m6=(d6.meals||[]).filter(function(m){return m.id===v})[0];if(!m6)return;d6.meals=d6.meals.filter(function(m){return m.id!==v});
+    if(m6.rx==='no'){if(d6.waste)d6.waste[m6.f]=Math.max(0,fmt((d6.waste[m6.f]||0)-m6.a))}else d6.f[m6.f]=Math.max(0,fmt((d6.f[m6.f]||0)-m6.a));change()}
   else if(a==='chk'){var k=c.checks[+v],d3=day();d3.checks[k]=!d3.checks[k];change()}
   else if(a==='calc'){var A=num('wa'),B=num('wb');if(A&&B&&A>B)document.getElementById('wk').value=(A-B).toFixed(2)}
   else if(a==='addw2'){var W=ui.w,me=parseFloat(String(W.me).replace(',','.')),saved=0,bad=false;
