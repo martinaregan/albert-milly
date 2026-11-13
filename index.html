@@ -283,7 +283,7 @@ function b64e(str){return btoa(unescape(encodeURIComponent(str)))}
 function b64d(b){return decodeURIComponent(escape(atob(String(b).replace(/\s/g,''))))}
 function api(path,opt){opt=opt||{};var h={'Authorization':'Bearer '+GH.token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};var oh=opt.headers||{};for(var k in oh)h[k]=oh[k];
   return fetch('https://api.github.com/repos/'+GH.owner+'/'+GH.repo+'/contents/'+path+(opt.q||''),{method:opt.method||'GET',headers:h,body:opt.body,cache:'no-store'})}
-function pull(){return api('data.json').then(function(r){if(r.status===401||r.status===403)throw{auth:1};if(r.status===404)return null;if(!r.ok)throw{http:r.status};return r.json()}).then(function(j){if(!j)return null;return{data:JSON.parse(b64d(j.content)),sha:j.sha}})}
+function pull(){return api('data.json').then(function(r){if(r.status===401||r.status===403)throw{auth:1};if(r.status===404)throw{noaccess:1};if(!r.ok)throw{http:r.status};return r.json()}).then(function(j){if(!j)return null;return{data:JSON.parse(b64d(j.content)),sha:j.sha}})}
 function eq(a,b){return JSON.stringify(a)===JSON.stringify(b)}
 function keyOf(x){return x&&typeof x==='object'?(x.id!=null?'i:'+x.id:x.d!=null?'d:'+x.d:'j:'+JSON.stringify(x)):'p:'+JSON.stringify(x)}
 function merge3(b,l,r){if(eq(l,r))return l;if(l===undefined)return r;if(r===undefined)return l;if(eq(l,b))return r;if(eq(r,b))return l;
@@ -307,7 +307,7 @@ function sync(){if(!GH||pushing)return Promise.resolve();return pull().then(func
     if(p.sha===SHA&&S)return;
     var first=!S,merged=S?merge3(BASE,S,p.data):p.data,changed=!eq(merged,S);S=merged;migrate();BASE=p.data;SHA=p.sha;dirty=!eq(S,BASE);persist();
     if(dirty)push();if(first||changed){if(busy())needRender=true;else render()}setStatus(dirty?'Saving…':'Synced')})
-  .catch(function(e){setStatus(e&&e.auth?'Access key not working':S?'Offline, showing saved copy':'Could not load. Check connection');if(!S)render()})}
+  .catch(function(e){setStatus(e&&(e.auth||e.noaccess)?'Access key not working':S?'Offline, showing saved copy':'Could not load. Check connection');if(!S){if(e&&(e.auth||e.noaccess)){ui.gherr=keyErr(e);GH=null;try{localStorage.removeItem(LS+'-gh')}catch(x){}}render()}})}
 /* photos and files: saved to photos/ in the data repo, cached on the phone */
 var PH={};
 function blobToB64(b){return new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(String(fr.result).split(',')[1])};fr.onerror=rej;fr.readAsDataURL(b)})}
@@ -321,6 +321,7 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
     .then(function(bl){PH[path]=URL.createObjectURL(bl);return PH[path]})}
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
+function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -926,7 +927,7 @@ document.addEventListener('click',function(e){
   else if(a==='ghconnect'){var tok=document.getElementById('ghtok').value.trim(),rp=(document.getElementById('ghrepo')?document.getElementById('ghrepo').value:'martinaregan/albert-milly-data').trim().split('/');
     if(!tok){ui.gherr='Paste your access key first.';render();return}var cand={token:tok,owner:rp[0],repo:rp[1],who:ui.who||'Martina'};var keep=GH;GH=cand;document.getElementById('gherr').textContent='Connecting…';
     pull().then(function(p){try{localStorage.setItem(LS+'-gh',JSON.stringify(GH))}catch(e){}ui.gherr='';S=null;BASE=null;SHA=null;dirty=false;if(p){S=p.data;migrate();BASE=p.data;SHA=p.sha;dirty=!eq(S,BASE);persist()}setStatus('Synced');render();if(dirty)push()})
-    .catch(function(e){GH=keep;ui.gherr=e&&e.auth?'That key didn\'t work. Check it has Contents: Read and write on albert-milly-data.':'Could not reach GitHub. Check your connection.';render()})}
+    .catch(function(e){GH=keep;ui.gherr=keyErr(e);render()})}
   else if(a==='syncnow'){setStatus('Syncing…');sync().then(function(){if(dirty)push()})}
   else if(a==='ghout'){ui.modal=function(){return confirmBox('Disconnect this phone? Your data stays safe in GitHub; you\'ll need the access key to reconnect.','ghout2','x')};render()}
   else if(a==='ghout2'){try{localStorage.removeItem(LS+'-gh');localStorage.removeItem(LS+'-cache')}catch(e){}GH=null;S=null;ui.modal=null;render()}
