@@ -322,7 +322,7 @@ function photoURL(path){if(PH[path])return Promise.resolve(PH[path]);var key='ht
 function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(function(el){var p=el.getAttribute('data-ph');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='3';
+var APPV='4';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Martina iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -371,7 +371,7 @@ function render(){if(!GH||!S){document.body.className='albert duo';document.getE
   if(ui.modal)h+=ui.modal();
   h+='<input type="file" id="fileIn" class="file">';
   var oldNav=document.querySelector('.navin'),navX=oldNav?oldNav.scrollLeft:null;if(navX==null){try{var sx=sessionStorage.getItem(LS+'-navx');if(sx!=null)navX=+sx}catch(e){}}
-  document.getElementById('root').innerHTML=h;
+  var rt=document.getElementById('root'),sy=window.scrollY||0,sameTab=ui.lastTab===ui.tab;rt.style.minHeight=rt.offsetHeight+'px';rt.innerHTML=h;if(sameTab){window.scrollTo(0,sy);requestAnimationFrame(function(){if(Math.abs((window.scrollY||0)-sy)>2)window.scrollTo(0,sy)})}rt.style.minHeight='';
   var nv=document.querySelector('.navin'),act=nv&&nv.querySelector('.on');
   if(nv){if(navX!=null)nv.scrollLeft=navX;if(act){var l=act.offsetLeft,r=l+act.clientWidth,vl=nv.scrollLeft,vr=vl+nv.clientWidth;if(l<vl+10)nv.scrollLeft=l-10;else if(r>vr-10)nv.scrollLeft=r-nv.clientWidth+10}}
   if(nv)nv.addEventListener('scroll',function(){try{sessionStorage.setItem(LS+'-navx',nv.scrollLeft)}catch(e){}},{passive:true});
@@ -896,8 +896,8 @@ document.addEventListener('click',function(e){
   else if(a==='bsave'){var bb=ui.b;if(!bb.from){var fi2=document.querySelector('[data-bf=from]');if(fi2)fi2.style.borderColor='var(--bad)';return}if(!bb.to)bb.to=bb.from;delete bb.isNew;S.info.bookings=S.info.bookings.filter(function(x){return x.id!==bb.id});S.info.bookings.push(bb);ui.b=null;ui.modal=null;change()}
   else if(a==='bdel'){ui.modal=function(){return confirmBox('Delete this booking?','bdel2',v)};render()}
   else if(a==='bdel2'){S.info.bookings=S.info.bookings.filter(function(x){return x.id!==v});ui.modal=null;change()}
-  else if(a==='tnew'){if(tGet()){scrollTo(0,0);return}tSet({cat:ui.cat,type:S.playTypes[+t.dataset.k],start:Date.now(),dur:0});render();scrollTo(0,0)}
-  else if(a==='tstart'){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume()}catch(er){}tSet({cat:ui.cat,type:S.playTypes[ui.tk],start:Date.now(),dur:+v});ui.modal=null;render();scrollTo(0,0)}
+  else if(a==='tnew'){if(tGet()){return}tSet({cat:ui.cat,type:S.playTypes[+t.dataset.k],start:Date.now(),dur:0});render()}
+  else if(a==='tstart'){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume()}catch(er){}tSet({cat:ui.cat,type:S.playTypes[ui.tk],start:Date.now(),dur:+v});ui.modal=null;render()}
   else if(a==='tstop'){var T=tGet();if(T){var mins=Math.max(1,Math.round((Date.now()-T.start)/60000));if(T.dur)mins=Math.min(mins,T.dur);tLog(T,mins)}}
   else if(a==='tcancel'){tSet(null);render()}
   else if(a==='tedit'){ui.edit=ui.edit||{};var ae=document.activeElement;if(ae&&ae.blur)ae.blur();ui.edit[v]=!ui.edit[v];render()}
