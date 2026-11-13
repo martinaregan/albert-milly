@@ -581,7 +581,7 @@ function weightFeed(c){var fd=feed(c);
     '<div class="note" style="color:var(--ink)"><b>Next step:</b> '+fd.step+'</div><div class="note">Uses the standard vet formula (70 × target kg<sup>0.75</sup>, × 0.8–1.0) and the calories on each food. Run changes past the vet, especially for prescription food.</div>'}
 function vWeight(){var h='<button class="b p w" style="margin:0 0 12px;padding:16px;font-size:17px" data-a="wopen">⚖️ Add a weigh-in for both</button>';
   h+=['albert','milly'].map(function(k){var c=S.cats[k],r=stats(c),eat=eatsCard(c);
-    return'<details class="catcard catd" data-open="w-'+k+'"'+isOpen('w-'+k,true)+'><summary class="head" style="--g:var(--g-'+k+')">'+spot(k)+'<div><b>'+esc(c.name)+'</b><span>'+(r?(+r.last.kg).toFixed(2)+' kg → '+esc(c.target)+' kg'+(r.toGo>0?' · '+r.toGo.toFixed(2)+' to go':' · target reached'):'target '+esc(c.target)+' kg')+'</span></div></summary>'+
+    return'<details class="catcard catd" data-open="w-'+k+'"'+isOpen('w-'+k,false)+'><summary class="head" style="--g:var(--g-'+k+')">'+spot(k)+'<div><b>'+esc(c.name)+'</b><span>'+(r?(+r.last.kg).toFixed(2)+' kg → '+esc(c.target)+' kg'+(r.toGo>0?' · '+r.toGo.toFixed(2)+' to go':' · target reached'):'target '+esc(c.target)+' kg')+'</span></div></summary>'+
       weightProgress(c,r)+
       '<details class="nf" data-open="wh-'+k+'"'+isOpen('wh-'+k,false)+'><summary><span>📈 History</span></summary>'+weightHistory(k,c)+'</details>'+
       '<details class="nf" data-open="wf-'+k+'"'+isOpen('wf-'+k,false)+'><summary><span>🍽️ Feeding suggestion</span></summary>'+weightFeed(c)+'</details>'+
