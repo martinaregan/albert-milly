@@ -387,19 +387,32 @@ function render(){if(S)infoData();if(ui.tab==='hows')ui.tab='fights';if(ui.tab==
   if(nv){var navEl=nv.parentNode,edges=function(){navEl.classList.toggle('atstart',nv.scrollLeft<4);navEl.classList.toggle('atend',nv.scrollLeft+nv.clientWidth>=nv.scrollWidth-4)};edges();nv.addEventListener('scroll',function(){edges();try{sessionStorage.setItem(LS+'-navx',nv.scrollLeft)}catch(e){}},{passive:true});if(!window.__navNudged&&nv.scrollLeft<4&&0){window.__navNudged=1;setTimeout(function(){nv.scrollTo({left:110,behavior:'smooth'});setTimeout(function(){nv.scrollTo({left:0,behavior:'smooth'})},700)},900)}}
   ui.lastTab=ui.tab;fixNav();hydrate();if(ui.tab==='weight')wcalc()}
 
-(function(){var y0=null,mode=0,off=0,pg=null,raf=0,want=0,dir=0;
-  function band(d){var h=window.innerHeight,a=Math.abs(d),v=(1-1/(a*0.55/h+1))*h;return d<0?-v:v}
-  function apply(){raf=0;if(!pg)return;pg.style.transform=want?'translate3d(0,'+want.toFixed(1)+'px,0)':''}
-  function set(v){want=v;off=v;if(!raf)raf=requestAnimationFrame(apply)}
-  document.addEventListener('touchstart',function(e){if(e.touches.length!==1||document.querySelector('.modal')||e.target.closest('nav,input,textarea,select'))return;pg=document.getElementById('pg');if(!pg)return;
-    var se=document.scrollingElement||document.documentElement,top=se.scrollTop<=0,bot=se.scrollTop+window.innerHeight>=se.scrollHeight-2;if(!top&&!bot){y0=null;return}
-    y0=e.touches[0].clientY;dir=0;mode=(top?1:0)|(bot?2:0);pg.style.transition='none';pg.style.willChange='transform'},{passive:true});
-  document.addEventListener('touchmove',function(e){if(y0==null)return;var dy=e.touches[0].clientY-y0;
-    if(!dir){if(Math.abs(dy)<4)return;dir=dy>0?1:-1;if(!((dir>0&&(mode&1))||(dir<0&&(mode&2)))){y0=null;return}}
-    if((dir>0&&dy<0)||(dir<0&&dy>0)){set(0);return}set(band(dy))},{passive:true});
-  function end(){if(y0==null&&!off)return;y0=null;if(!pg)return;var p=pg;p.style.transition='transform .5s cubic-bezier(.17,.89,.32,1.15)';want=0;off=0;if(raf){cancelAnimationFrame(raf);raf=0}p.style.transform='';setTimeout(function(){p.style.transition='';p.style.willChange=''},520)}
-  document.addEventListener('touchend',end,{passive:true});document.addEventListener('touchcancel',end,{passive:true})})();
-function fixNav(){fixNav.y=window.scrollY;try{fixNav2()}catch(e){}}
+(function(){var pg=null,off=0,raw=0,pull=0,ly=null,lt=0,fv=0,touching=false,raf=0,anim=null,C=0.55,W=13;
+  function H(){return window.innerHeight||700}
+  function band(d){var h=H(),a=Math.abs(d),v=(1-1/(a*C/h+1))*h;return d<0?-v:v}
+  function unband(v){var h=H(),a=Math.min(Math.abs(v),h*0.98),d=(h/C)*(1/(1-a/h)-1);return v<0?-d:d}
+  function getPg(){return pg&&pg.isConnected?pg:(pg=document.getElementById('pg'))}
+  function paint(){var p=getPg();if(!p)return;if(Math.abs(off)<0.3){off=0;p.style.transform='';p.style.willChange='';return}p.style.willChange='transform';p.style.transform='translate3d(0,'+off.toFixed(2)+'px,0)'}
+  function stop(){if(raf)cancelAnimationFrame(raf);raf=0;anim=null}
+  function spring(x0,v0){stop();var p=getPg();if(p)p.style.transition='none';anim={x0:x0,v0:v0,t0:performance.now()};
+    (function step(now){if(!anim)return;var t=(now-anim.t0)/1000,e=Math.exp(-W*t);off=(anim.x0+(anim.v0+W*anim.x0)*t)*e;
+      if(t>0.05&&Math.abs(off)<0.3&&Math.abs((anim.v0-W*(anim.v0+W*anim.x0)*t)*e)<20){off=0;anim=null;raf=0;paint();return}
+      paint();raf=requestAnimationFrame(step)})(performance.now())}
+  function edges(){var se=document.scrollingElement||document.documentElement,y=se.scrollTop;return{top:y<=0,bot:y+window.innerHeight>=se.scrollHeight-1}}
+  function skip(e){return e.touches.length!==1||document.querySelector('.modal')||(e.target.closest&&e.target.closest('nav,input,textarea,select'))}
+  document.addEventListener('touchstart',function(e){if(skip(e)){ly=null;return}touching=true;ly=e.touches[0].clientY;lt=e.timeStamp;fv=0;
+    if(off){stop();raw=unband(off);pull=off>0?1:-1}else{raw=0;pull=0}},{passive:true});
+  document.addEventListener('touchmove',function(e){if(ly==null)return;var y=e.touches[0].clientY,dy=y-ly,dt=Math.max(1,e.timeStamp-lt);ly=y;lt=e.timeStamp;fv=fv*0.6+(dy/dt*1000)*0.4;
+    if(!pull){var ed=edges();if(dy>0&&ed.top)pull=1;else if(dy<0&&ed.bot)pull=-1;else return;raw=0}
+    raw+=dy;if((pull>0&&raw<=0)||(pull<0&&raw>=0)){raw=0;pull=0;off=0;paint();return}
+    off=band(raw);if(!raf)raf=requestAnimationFrame(function(){raf=0;paint()})},{passive:true});
+  function end(){if(!touching)return;touching=false;ly=null;pull=0;raw=0;if(off){var v=fv;if((off>0&&v>0)||(off<0&&v<0))v=0;spring(off,v*0.5)}}
+  document.addEventListener('touchend',end,{passive:true});document.addEventListener('touchcancel',end,{passive:true});
+  var sy=window.scrollY,st=performance.now(),sv=0;
+  window.addEventListener('scroll',function(){var now=performance.now(),y=window.scrollY,dt=Math.max(1,now-st);var jump=Math.abs(y-sy);sv=(y-sy)/dt*1000;sy=y;st=now;
+    if(touching||anim||off||dt>50||jump>250)return;var ed=edges(),hit=(ed.top&&sv<-150)||(ed.bot&&sv>150&&y>0);
+    if(hit){var v=Math.max(-2600,Math.min(2600,-sv*0.3));spring(0,v)}},{passive:true})})();
+ function fixNav(){fixNav.y=window.scrollY;try{fixNav2()}catch(e){}}
 function fixNav2(){var n=document.querySelector('nav');if(!n)return;n.style.transform='';var r=n.getBoundingClientRect(),vv=window.visualViewport,port=window.innerWidth<=window.innerHeight,full=(navigator.standalone||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches))?(port?screen.height:screen.width):0,bottom=Math.max(window.innerHeight,vv?vv.height+vv.offsetTop:0,full),gap=bottom-r.bottom;if(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;if(gap>40&&gap<260&&Math.abs(window.scrollY-(fixNav.y||0))<2)n.style.transform='translateY('+gap+'px)'}
 ['resize','orientationchange','focusout','pageshow'].forEach(function(ev){window.addEventListener(ev,function(){setTimeout(fixNav,350)})});if(window.visualViewport){visualViewport.addEventListener('resize',function(){setTimeout(fixNav,100)});0}document.addEventListener('visibilitychange',function(){setTimeout(fixNav,300)});
 function bar(val,max){var over=max>0&&val>max+1e-9;var pct=max>0?Math.min(100,val/max*100):(val>0?100:0);return'<div class="bar'+(over?' over':'')+'"><div style="width:'+pct+'%"></div></div>'}
