@@ -111,7 +111,8 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 |---|---|
 | `src/index.html` | Page shell (the HTML), with markers where the CSS and JavaScript go |
 | `src/css/` | Styles, in three files, joined in name order |
-| `src/js/` | The code, in 20 files by area (setup, sync, weight maths, each tab, icons, clicks, start-up), joined in name order. Each file starts with a one-line note saying what's in it |
+| `src/js/` | The code, by area (setup, sync, weight maths, each tab, icons, start-up), joined in name order. Each file starts with a one-line note saying what's in it |
+| `src/js/19-actions-*.js` | What every button does, grouped by area (today, health, weight, money…). Each is `ACT["name"]`, run when a `data-a="name"` button is tapped |
 | `tests/smoke.py` | Automated checks: every tab in light and dark mode, logging and undo, quick log, search, vet summary, swipe to delete, and the minified build |
 | `tests/sample-data.json` | Made-up cats and logs used by the tests (never the real data) |
 | `package.json` | Shortcuts: `npm run build`, `npm run dev`, `npm test` |
@@ -128,7 +129,7 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 - **No framework.** Plain JavaScript in one `<script>` block, wrapped in a function so nothing leaks into the page. Edit the files in `src/`, then run `node tools/build.js` to produce the minified `index.html` that GitHub Pages serves. The JavaScript files are joined in order inside one function, so they share variables; function declarations can live in any file, but statements that run at start-up (in `20-start.js`) must stay last.
 - **State**: one object `S` (the contents of `data.json`) plus `ui` for screen state (tab, selected cat, open sections, open sheet).
 - **Rendering**: each view is a function that returns an HTML string (`vToday`, `vWeight`, `vHealth`, `vCal`, `vTogether`, `vStock`, `vMoney`, `vInfo`, `vSettings`). `render()` builds the page, swaps emoji for line icons, then updates only the parts of the screen that changed (a small DOM diff, `morphKids`), so taps are quick and the scroll position stays put. Switching tabs does a full rebuild. Collapsed sections marked `data-lazy` are only built when opened.
-- **Actions**: buttons carry `data-a="action"` and `data-v="value"`; one click handler routes them. `change()` saves locally, redraws and schedules the upload.
+- **Actions**: buttons carry `data-a="action"` and `data-v="value"`; the click handler in `19-clicks.js` looks up `ACT[action]` and runs it. To add a button, add `ACT["myaction"] = function (e, t, a, v, c) {…}` to the right `19-actions-*.js` file. `change()` saves locally, redraws and schedules the upload.
 - **Sync**: `pull()` / `push()` talk to the GitHub contents API; `merge3(base, mine, theirs)` merges concurrent edits by item id.
 - **Offline**: `sw.js` caches the app shell. Bump the `SHELL` name in `sw.js` and `APPV` in `index.html` with every release.
 - **Icons and font**: when they change, give the files a new name and update the references, because iOS caches them by file name.

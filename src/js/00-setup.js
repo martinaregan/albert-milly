@@ -1,5 +1,7 @@
 /* 00-setup: App state (S = your data, ui = what is on screen), constants, data migration, date and number helpers. */
 (function () {
+  var ACT = {}; // button actions, filled in by the 19-actions-*.js files
+
   var LS = "am-tracker";
 
   var GH = null;
@@ -89,70 +91,11 @@
   function migrate() {
     if (!S.fights) S.fights = [];
     if (!S.calm) S.calm = [];
-    if (!S.costs)
-      S.costs = [
-        {
-          id: "c1",
-          d: "2026-11-07",
-          who: "albert",
-          cat: "Vet",
-          amount: 104.5,
-          reimb: 75,
-          desc: "Vaccinations",
-          n: "Insurance claim"
-        },
-        {
-          id: "c2",
-          d: "2026-11-07",
-          who: "albert",
-          cat: "Food",
-          amount: 37.5,
-          reimb: 0,
-          desc: "Diet food bought at the vet",
-          n: "Not covered by insurance"
-        },
-        {
-          id: "c3",
-          d: "2026-11-07",
-          who: "milly",
-          cat: "Vet",
-          amount: 65.75,
-          reimb: 52.6,
-          desc: "Vaccinations",
-          n: "Insurance claim"
-        },
-        {
-          id: "c4",
-          d: "2026-12-19",
-          who: "both",
-          cat: "Hotel / sitter",
-          amount: 280,
-          reimb: 0,
-          desc: "Cat hotel, 10 nights",
-          n: "Pay at drop-off",
-          planned: true
-        }
-      ];
+    if (!S.costs) S.costs = [];
     ["albert", "milly"].forEach(function (k) {
       if (!S.cats[k].treat) S.cats[k].treat = [];
     });
-    if (!S.todos)
-      S.todos = [
-        {
-          id: "t1",
-          text: "Check names match on vet, insurance and microchip records",
-          done: false,
-          due: ""
-        },
-        {
-          id: "t2",
-          text: "Ask the cat hotel about a quiet room",
-          done: false,
-          due: "2026-12-18"
-        },
-        { id: "t3", text: "Add insurance policy numbers in Info", done: false, due: "" },
-        { id: "t4", text: "Cancel any open sitter requests", done: false, due: "" }
-      ];
+    if (!S.todos) S.todos = [];
     if (!S.stock) S.stock = {};
     if (!S.extraStock)
       S.extraStock = [
@@ -165,17 +108,17 @@
           check: "Digestive powder",
           cat: "albert"
         },
-        { id: "x3", name: "Cat's Best litter", qty: "", unit: "bags" }
+        { id: "x3", name: "Cat litter", qty: "", unit: "bags" }
       ];
     if (S.info && S.info.insurance && S.info.insurance.yearAlbert == null) {
       var In = S.info.insurance;
       In.policyAlbert = In.policyAlbert || In.policy || "";
       In.policyMilly = In.policyMilly || "";
-      In.yearAlbert = "1 Jul to 30 Jun";
-      In.yearMilly = "1 Feb to 31 Jan";
+      In.yearAlbert = "";
+      In.yearMilly = "";
       In.notes = (In.notes || "").replace(
         /^Separate insurance years:[^\n]*\n?/,
-        "Two separate insurer policies, one per cat.\n"
+        "Separate policies, one per cat.\n"
       );
     }
     if (!S.profiles) S.profiles = { albert: "", milly: "", ages: "" };
@@ -193,11 +136,11 @@
         },
         vet: { clinic: "", address: "", phone: "", email: "", hours: "", notes: "", att: [] },
         hotel: {
-          name: "the cat hotel cat hotel",
+          name: "",
           address: "",
           phone: "",
           email: "",
-          notes: "Milly: quiet / older / shyer department. Albert: playful department.",
+          notes: "",
           att: []
         },
         bookings: []

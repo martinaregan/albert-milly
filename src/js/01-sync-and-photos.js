@@ -446,7 +446,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "24";
+  var APPV = "25";
 
   function setupView() {
     var g = GH || {};
@@ -457,13 +457,11 @@
       spot("milly") +
       '</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>' +
       '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>' +
-      '<div class="pl">2. Name it after this phone (e.g. <i>Me iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>' +
+      '<div class="pl">2. Name it after this phone (e.g. <i>My iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>' +
       '<div class="pl">4. Permissions → Repository permissions → <b>Contents: Read and write</b>.</div><div class="pl">5. Tap <b>Generate token</b>, copy it and paste it below.</div>' +
-      '<label class="l">Access key</label><input id="ghtok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…"><label class="l">Whose phone is this?</label><div class="chips"><button class="chip' +
-      (ui.who === "Me" ? " on" : "") +
-      '" data-a="ghwho" data-v="Me">Me</button><button class="chip' +
-      (ui.who === "Partner" ? " on" : "") +
-      '" data-a="ghwho" data-v="Partner">Partner</button></div>' +
+      '<label class="l">Access key</label><input id="ghtok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…"><label class="l">Your name</label><input id="ghname" autocomplete="name" placeholder="Shown next to everything you log" value="' +
+      esc(ui.who || "") +
+      '">' +
       '<details style="margin-top:10px"><summary class="mute small">Advanced</summary><label class="l">Data repository</label><input id="ghrepo" value="' +
       esc((g.owner || "martinaregan") + "/" + (g.repo || "albert-milly-data")) +
       '"></details>' +
