@@ -260,15 +260,19 @@
         '<div class="card"><div class="pl mute">Once a few fights are logged, this page tells you who starts it, when, and what sets it off.</div></div><!--fz-->'
       );
     }
-    var wo = { Albert: 0, Milly: 0, "Not sure": 0 },
+    var A = S.cats.albert.name,
+      M = S.cats.milly.name,
+      wo = { "Not sure": 0 },
       tg = {},
       tm = {},
       sv = {},
       milTrig = 0,
       night = 0,
       beg = 0;
+    wo.a = wo.m = 0;
     F.forEach(function (f) {
-      wo[f.who || "Not sure"] = (wo[f.who || "Not sure"] || 0) + 1;
+      var fw = f.who === A ? "a" : f.who === M ? "m" : "Not sure";
+      wo[fw] = (wo[fw] || 0) + 1;
       (f.trig || []).forEach(function (x) {
         tg[x] = (tg[x] || 0) + 1;
       });
@@ -276,12 +280,12 @@
       if (f.m) tm[p] = (tm[p] || 0) + 1;
       if (
         (f.trig || []).some(function (x) {
-          return MILLY_TRIG.indexOf(x) >= 0;
+          return MILLY_TRIG.map(nmz).indexOf(x) >= 0;
         })
       )
         milTrig++;
       if ((f.trig || []).indexOf("Night") >= 0 || /^Night/.test(p)) night++;
-      if ((f.trig || []).indexOf("Milly begging for food") >= 0) beg++;
+      if ((f.trig || []).indexOf(nmz("Milly begging for food")) >= 0) beg++;
       if (f.sev) sv[f.sev] = (sv[f.sev] || 0) + 1;
     });
     var topT = Object.keys(tg).sort(function (a, b) {
@@ -293,15 +297,15 @@
     var tips = [];
     tips.push([
       "⚖️",
-      wo.Albert >= wo.Milly * 2 && wo.Albert > 0
-        ? "Albert starts most of it"
-        : wo.Milly > wo.Albert
-          ? "Milly starts more than you'd think"
+      wo.a >= wo.m * 2 && wo.a > 0
+        ? A + " starts most of it"
+        : wo.m > wo.a
+          ? M + " starts more than you'd think"
           : "It's fairly mixed",
-      wo.Albert + " of " + n + " started by Albert."
+      wo.a + " of " + n + " started by " + A + "."
     ]);
     var bigT = topT[0];
-    if (bigT === "Milly begging for food")
+    if (bigT === nmz("Milly begging for food"))
       tips.push([
         "🍽️",
         "Food begging is the top trigger",
@@ -355,23 +359,27 @@
       isOpen("hfull", false) +
       "><summary><b>📊 Full breakdown (60 days)</b></summary>" +
       '<h3>Who starts it</h3><div class="split"><div style="width:' +
-      pct(wo.Albert, n) +
+      pct(wo.a, n) +
       '%;background:#e8822f"></div><div style="width:' +
-      pct(wo.Milly, n) +
+      pct(wo.m, n) +
       '%;background:#3a3a3a"></div><div style="width:' +
       pct(wo["Not sure"], n) +
       '%;background:#b9b0a6"></div></div>' +
-      '<div class="row between small u-fw800"><span>Albert ' +
-      wo.Albert +
-      "</span><span>Milly " +
-      wo.Milly +
+      '<div class="row between small u-fw800"><span>' +
+      esc(A) +
+      " " +
+      wo.a +
+      "</span><span>" +
+      esc(M) +
+      " " +
+      wo.m +
       "</span><span>Not sure " +
       wo["Not sure"] +
       "</span></div>" +
       (milTrig
         ? '<p class="small mute">In ' +
           milTrig +
-          " of them something Milly did came first, but he's the one who escalates.</p>"
+          " of them something " + esc(M) + " did came first, but he's the one who escalates.</p>"
         : "") +
       (topT.length ? "<h3>Triggers</h3>" + hbars(tg) : "") +
       (Object.keys(tm).length ? "<h3>Time of day</h3>" + hbars(tm) : "") +

@@ -5,7 +5,7 @@
     try {
       var file = new File([blob], name, { type: "application/json" });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({ files: [file], title: "Albert & Milly backup" }).catch(function () {});
+        navigator.share({ files: [file], title: S.cats.albert.name + " & " + S.cats.milly.name + " backup" }).catch(function () {});
         return;
       }
     } catch (e) {}
@@ -89,7 +89,11 @@
       "</div></div>" +
       '<div class="card"><h2>' +
       esc(c.name) +
-      '\'s plan</h2><label class="l">Birthday</label><input type="date" data-s="born" value="' +
+      '\'s plan</h2><label class="l">Name</label><input data-rename="' +
+      ui.cat +
+      '" value="' +
+      esc(c.name) +
+      '" autocapitalize="words" maxlength="20"><label class="l">Birthday</label><input type="date" data-s="born" value="' +
       esc(c.born || "") +
       '"><label class="tickl u-mt6"><input type="checkbox" data-s="bornGuess"' +
       (c.bornGuess ? " checked" : "") +

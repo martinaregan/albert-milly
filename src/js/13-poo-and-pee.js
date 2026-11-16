@@ -75,7 +75,7 @@
     var Q = {
       who: [
         "Whose " + (l.type === "Poo" ? "poo" : "pee") + " is it?",
-        big(["Albert", "Milly", "Not sure"], "who")
+        big([S.cats.albert.name, S.cats.milly.name, "Not sure"], "who")
       ],
       cons: ["What did it look like?", big(PC, "cons")],
       amt: ["How much?" + (l.type === "Pee" ? " (clump size)" : ""), big(AMT, "amt")],
@@ -191,7 +191,7 @@
         : "") +
       (ui.pend.length ? thumbs(ui.pend, "pend") : "") +
       '<label class="l">Whose?</label>' +
-      chips(["Albert", "Milly", "Not sure"], "who") +
+      chips([S.cats.albert.name, S.cats.milly.name, "Not sure"], "who") +
       '<label class="l">Poo or pee</label>' +
       chips(["Poo", "Pee"], "type") +
       '<div class="grid2"><div><label class="l">Date</label><input type="date" data-lf="d" value="' +

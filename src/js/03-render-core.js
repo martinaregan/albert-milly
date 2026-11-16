@@ -24,7 +24,7 @@
       localStorage.setItem(LS + "-ui", JSON.stringify({ cat: ui.cat, tab: ui.tab, calWho: ui.calWho }));
     } catch (e) {}
     var h =
-      '<header><h1>Albert &amp; Milly</h1><span class="row"><span class="save">' +
+      '<header><h1>' + esc(S.cats.albert.name) + " &amp; " + esc(S.cats.milly.name) + "</h1>" + '<span class="row"><span class="save">' +
       esc(saveState) +
       '</span><button class="b s hb" data-a="srch" aria-label="Search">' +
       ico("search") +

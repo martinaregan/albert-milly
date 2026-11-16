@@ -89,6 +89,44 @@
 
   var WHO = ["Albert", "Milly", "Not sure"];
 
+  // Cat names can be changed. Built-in text says "Albert"/"Milly"; nmz() swaps in the current names.
+  function nmz(s) {
+    if (!S || !S.cats) return s;
+    return String(s)
+      .replace(/\bAlbert\b/g, "\u0001")
+      .replace(/\bMilly\b/g, S.cats.milly.name)
+      .replace(/\u0001/g, S.cats.albert.name);
+  }
+
+  function keyOfName(n) {
+    return S && n === S.cats.milly.name ? "milly" : S && n === S.cats.albert.name ? "albert" : null;
+  }
+
+  // Rename a cat everywhere its name is stored (poo/pee, fights, triggers, bookings).
+  function renameCat(k, nn) {
+    var old = S.cats[k].name;
+    nn = String(nn || "").trim();
+    if (!nn || nn === old || nn === S.cats[k === "albert" ? "milly" : "albert"].name) return false;
+    var re = new RegExp("\\b" + old.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "g");
+    S.cats[k].name = nn;
+    (S.litter || []).forEach(function (x) {
+      if (x.who === old) x.who = nn;
+    });
+    (S.fights || []).forEach(function (f) {
+      if (f.who === old) f.who = nn;
+      if (f.trig)
+        f.trig = f.trig.map(function (t) {
+          return t.replace(re, nn);
+        });
+    });
+    ((S.info && S.info.bookings) || []).forEach(function (b) {
+      b.cats = (b.cats || []).map(function (c) {
+        return c === old ? nn : c;
+      });
+    });
+    return true;
+  }
+
   var PC = ["Hard pellets", "Firm, well formed", "Soft but formed", "Mushy, no shape", "Liquid"];
 
   var AMT = ["Small", "Normal", "Large"];

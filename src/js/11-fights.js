@@ -105,9 +105,9 @@
         "</div></summary>";
       it.forEach(function (f) {
         var who =
-          f.who === "Albert"
+          f.who === S.cats.albert.name
             ? spot("albert")
-            : f.who === "Milly"
+            : f.who === S.cats.milly.name
               ? spot("milly")
               : '<span class="u-w30 u-ta-center u-fs20">❔</span>';
         var sub = (f.trig || [])[0] || f.where || "";
@@ -423,7 +423,7 @@
     var out = "";
     if (a.length >= 3 && b.length >= 3)
       out +=
-        '<p class="small">Days Albert got 15+ min play: <b>' +
+        '<p class="small">Days ' + esc(S.cats.albert.name) + " got 15+ min play: <b>" +
         av(a).toFixed(1) +
         "</b> fights a day, vs <b>" +
         av(b).toFixed(1) +
@@ -437,7 +437,7 @@
         "</b> without.</p>";
     return out
       ? "<h3>Does play help?</h3>" + out
-      : '<p class="note">Once you have a few days of play logged for Albert, this compares fight counts on high-play and low-play days.</p>';
+      : '<p class="note">Once you have a few days of play logged for ' + esc(S.cats.albert.name) + ', this compares fight counts on high-play and low-play days.</p>';
   }
 
   function fightSheet() {
@@ -484,9 +484,9 @@
       ) +
       "</div>" +
       '<label class="l">1. Who started it</label>' +
-      chips(WHO, "who") +
+      chips(WHO.map(nmz), "who") +
       '<label class="l">2. Why / what was going on (tick all)</label>' +
-      chips(TRIG, "trig", true) +
+      chips(TRIG.map(nmz), "trig", true) +
       '<label class="l">3. How bad</label>' +
       chips(SEV, "sev") +
       '<label class="l">4. Where</label>' +
@@ -532,10 +532,10 @@
       );
     }
     var Q = {
-      who: ["Who started it?", big(WHO, "who")],
+      who: ["Who started it?", big(WHO.map(nmz), "who")],
       trig: [
         "What was going on?",
-        big(TRIG, "trig", true) +
+        big(TRIG.map(nmz), "trig", true) +
           '<button class="b p w u-mt12 u-p14" data-a="fnext">' +
           (f.trig.length ? "Next" : "Not sure, skip") +
           "</button>"

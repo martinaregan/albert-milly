@@ -648,7 +648,7 @@
           lab: x.type + " · " + x.who,
           tx: tx,
           a: "openday",
-          k: x.who === "Milly" ? "milly" : "albert",
+          k: keyOfName(x.who) || "albert",
           v: x.d
         });
     });

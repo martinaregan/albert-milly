@@ -802,7 +802,7 @@
     var fs = S.fights.filter(function (f) {
       return f.d >= since;
     });
-    if (fs.length) L.push("", "Fights between Albert and Milly: " + fs.length + " in 30 days.");
+    if (fs.length) L.push("", "Fights between " + S.cats.albert.name + " and " + S.cats.milly.name + ": " + fs.length + " in 30 days.");
     return L.join("\n");
   }
 

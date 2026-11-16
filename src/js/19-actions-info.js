@@ -3,7 +3,7 @@ ACT["bnew"] = function (e, t, a, v, c) {
   ui.b = {
     isNew: true,
     id: uid(),
-    cats: ["Albert", "Milly"],
+    cats: [S.cats.albert.name, S.cats.milly.name],
     from: "",
     to: "",
     place: "",

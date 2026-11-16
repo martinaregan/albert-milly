@@ -16,8 +16,8 @@
         : st === "who"
           ? wizBig(
               [
-                ["albert", "Albert"],
-                ["milly", "Milly"],
+                ["albert", S.cats.albert.name],
+                ["milly", S.cats.milly.name],
                 ["both", "Both"]
               ],
               x.who,
@@ -31,7 +31,7 @@
               esc(x.desc) +
               '" placeholder="e.g. 3 kg z/d, zooplus"><button class="b p w u-mt12 u-p14" data-a="cnext">Next</button>'
             : sumRow("What kind?", CI[x.cat] + " " + x.cat, "cgo", 0) +
-              sumRow("Which cat?", { albert: "Albert", milly: "Milly", both: "Both" }[x.who], "cgo", 1) +
+              sumRow("Which cat?", { albert: S.cats.albert.name, milly: S.cats.milly.name, both: "Both" }[x.who], "cgo", 1) +
               sumRow("How much?", x.amount ? "€" + x.amount + (x.desc ? " · " + x.desc : "") : "", "cgo", 2) +
               '<label class="l">Date</label><input type="date" data-cs="d" value="' +
               esc(x.d) +
@@ -692,8 +692,8 @@
       '<div class="seg">' +
       [
         ["both", "Both"],
-        ["albert", "Albert"],
-        ["milly", "Milly"]
+        ["albert", S.cats.albert.name],
+        ["milly", S.cats.milly.name]
       ]
         .map(function (o) {
           return (
@@ -899,8 +899,8 @@
       '<label class="l">Which cat</label>' +
       chips(
         [
-          ["albert", "Albert"],
-          ["milly", "Milly"],
+          ["albert", S.cats.albert.name],
+          ["milly", S.cats.milly.name],
           ["both", "Both"]
         ],
         "who"

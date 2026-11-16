@@ -141,6 +141,11 @@
       change();
       return;
     }
+    if (t.dataset.rename) {
+      if (renameCat(t.dataset.rename, t.value)) change();
+      else t.value = S.cats[t.dataset.rename].name;
+      return;
+    }
     if (t.dataset.sitnote) {
       S.sitterNote = t.value;
       change();

@@ -541,12 +541,12 @@
       "🛡️ Pet insurance",
       [
         ["provider", "Insurer"],
-        ["policyAlbert", "Albert: policy number"],
-        ["premiumAlbert", "Albert: € per month", "num"],
-        ["yearAlbert", "Albert: insurance year"],
-        ["policyMilly", "Milly: policy number"],
-        ["premiumMilly", "Milly: € per month", "num"],
-        ["yearMilly", "Milly: insurance year"],
+        ["policyAlbert", nmz("Albert: policy number")],
+        ["premiumAlbert", nmz("Albert: € per month"), "num"],
+        ["yearAlbert", nmz("Albert: insurance year")],
+        ["policyMilly", nmz("Milly: policy number")],
+        ["premiumMilly", nmz("Milly: € per month"), "num"],
+        ["yearMilly", nmz("Milly: insurance year")],
         ["phone", "Claims phone", "tel"],
         ["email", "Claims email", "email"],
         ["notes", "Notes (excess, what's covered, how to claim)", "area"]
@@ -564,7 +564,7 @@
                 '<div class="ci"><span class="ic">' +
                 spot(k).replace('class="spot"', 'class="spot" style="width:28px;height:28px"') +
                 '</span><span><span class="t">' +
-                (k === "albert" ? "Albert" : "Milly") +
+                esc(S.cats[k].name) +
                 ' policy</span><br><span class="val">' +
                 esc(o["policy" + K] || "No policy number yet") +
                 '</span><br><span class="small mute">' +
@@ -595,17 +595,18 @@
       (b.isNew ? "New booking" : "Edit booking") +
       "</h2>" +
       '<label class="l">Which cats</label><div class="chips">' +
-      ["Albert", "Milly"]
-        .map(function (k) {
+      ["albert", "milly"]
+        .map(function (ck) {
+          var k = S.cats[ck].name;
           return (
             '<button class="chip' +
             (b.cats.indexOf(k) >= 0 ? " on" : "") +
             '" data-a="bcat" data-v="' +
-            k +
+            esc(k) +
             '">' +
-            spot(k.toLowerCase()) +
+            spot(ck) +
             " " +
-            k +
+            esc(k) +
             "</button>"
           );
         })
