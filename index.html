@@ -10,8 +10,8 @@
 <meta name="apple-mobile-web-app-title" content="Albert &amp; Milly">
 <meta name="theme-color" content="#141210">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="apple-touch-icon-v2.png">
-<link rel="icon" href="icon-192-v2.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-v3.png">
+<link rel="icon" href="icon-192-v3.png">
 <style id="css">@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap");
 
 :root{--bg:#faf6f1;--card:#fff;--ink:#2b2622;--mute:#8a8079;--line:#ece4db;--albert:#e07a2e;--milly:#3b3b3b;--ok:#3e9a63;--warn:#d49a1f;--bad:#c9453b;--accent:var(--albert)}
@@ -285,6 +285,16 @@ html,body{overscroll-behavior-y:auto!important}
 :root{--shadow:0 1px 2px rgba(60,40,20,.06),0 2px 8px rgba(60,40,20,.05)!important}
 .switch button.on{box-shadow:none!important}.hero,.hl{box-shadow:none!important}
 @media (prefers-color-scheme:dark){:root{--shadow:0 1px 2px rgba(0,0,0,.35)!important}}
+
+.ic{width:1.15em;height:1.15em;vertical-align:-.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.icw{display:contents}
+.hb .ic{width:20px;height:20px;vertical-align:-4px}
+h2 .ic,summary .ic{color:var(--accent);margin-right:2px}
+.cir{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:16px;margin-top:10px;background:var(--bg)}.cir.ok{background:color-mix(in srgb,var(--ok) 13%,var(--card))}.cir.warn{background:color-mix(in srgb,var(--warn) 16%,var(--card))}
+.wsum{padding:10px 0;border-top:1px solid var(--line)}.wsum:first-of-type{border-top:0}.wsh2{display:flex;align-items:center;gap:8px;margin-bottom:4px}.wsum ul{margin:0;padding-left:20px}.wsum li{margin:3px 0;font-size:14px}
+body.milly{--accent:#a24a6c!important;--onaccent:#fff!important}
+@media (prefers-color-scheme:dark){body.milly{--accent:#e59ab8!important;--onaccent:#2a0f1b!important}}
+.hlbtn{background:var(--accent)!important;color:var(--onaccent,#fff)!important}.qbig{background:var(--accent)!important;color:var(--onaccent,#fff)!important}.fab{color:var(--onaccent,#fff)!important}
 </style>
 </head>
 <body>
@@ -388,7 +398,7 @@ function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(
   document.querySelectorAll('[data-phv]').forEach(function(el){var p=el.getAttribute('data-phv');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='16';
+var APPV='17';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Me iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -429,7 +439,7 @@ function feed(c){var r=stats(c),dry=firstOf(c,'dry'),wet=firstOf(c,'wet');
 function render(){if(S)infoData();if(ui.tab==='hows')ui.tab='fights';if(ui.tab==='todo')ui.tab='calendar';if(!GH||!S){document.body.className='albert duo';document.getElementById('root').innerHTML=(!GH?setupView():'<div class="hero duo-h" style="margin-top:40px;text-align:center"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="font-size:20px;font-weight:900">'+esc(saveState==='Synced'?'Loading…':saveState)+'</div></div><div class="row" style="justify-content:center;gap:8px"><button class="b" data-a="syncnow">Try again</button><button class="b ghost" data-a="ghout2">Re-enter access key</button></div><div class="note" style="text-align:center">Version '+APPV+'</div>');return}
   needRender=false;document.body.className=ui.cat;
   try{localStorage.setItem(LS+'-ui',JSON.stringify({cat:ui.cat,tab:ui.tab,calWho:ui.calWho}))}catch(e){}
-  var h='<header><h1>Albert &amp; Milly</h1><span class="row"><span class="save">'+esc(saveState)+'</span><button class="b s" data-a="srch" aria-label="Search">🔍</button><button class="b s" data-a="tab" data-v="settings">⚙️</button></span></header>';
+  var h='<header><h1>Albert &amp; Milly</h1><span class="row"><span class="save">'+esc(saveState)+'</span><button class="b s hb" data-a="srch" aria-label="Search">'+ico('search')+'</button><button class="b s hb" data-a="tab" data-v="settings" aria-label="Settings">'+ico('gear')+'</button></span></header>';
   if(['fights','calendar','info','todo','stock','money','hows','weight','health'].indexOf(ui.tab)<0)h+='<div class="switch">'+['albert','milly'].map(function(k){var c=S.cats[k],w=sorted(c),lw=w.length?w[w.length-1].kg.toFixed(2)+' kg':'';return'<button data-a="cat" data-v="'+k+'" class="'+(ui.cat===k?'on':'')+'">'+spot(k)+'<span><span class="nm">'+esc(c.name)+'</span><span class="wt">'+lw+' → '+c.target+' kg</span><span class="swh">'+(ui.cat===k?'Showing now':'Tap to switch ›')+'</span></span></button>'}).join('')+'</div>';
   h+=({today:vToday,calendar:vCal,weight:vWeight,fights:vTogether,health:vHealth,settings:vSettings,info:vInfo,todo:vTodo,stock:vStock,money:vMoney,hows:vHows})[ui.tab]();
   if(['today','fights','health'].indexOf(ui.tab)>=0&&!ui.modal)h+='<button class="fab" data-a="quick" aria-label="Quick log">+</button>';
@@ -442,7 +452,7 @@ function render(){if(S)infoData();if(ui.tab==='hows')ui.tab='fights';if(ui.tab==
   if(nv){if(navX!=null)nv.scrollLeft=navX;if(act){var l=act.offsetLeft,r=l+act.clientWidth,vl=nv.scrollLeft,vr=vl+nv.clientWidth;if(l<vl+10)nv.scrollLeft=l-10;else if(r>vr-10)nv.scrollLeft=r-nv.clientWidth+10}}
   if(nv){var navEl=nv.parentNode,edges=function(){navEl.classList.toggle('atstart',nv.scrollLeft<4);navEl.classList.toggle('atend',nv.scrollLeft+nv.clientWidth>=nv.scrollWidth-4)};edges();nv.addEventListener('scroll',function(){edges();try{sessionStorage.setItem(LS+'-navx',nv.scrollLeft)}catch(e){}},{passive:true});if(!window.__navNudged&&nv.scrollLeft<4&&0){window.__navNudged=1;setTimeout(function(){nv.scrollTo({left:110,behavior:'smooth'});setTimeout(function(){nv.scrollTo({left:0,behavior:'smooth'})},700)},900)}}
   try{var pgEl=document.getElementById('pg'),rmo=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(pgEl&&pgEl.animate&&!rmo){if(ui.lastTab&&ui.lastTab!==ui.tab){var tdir=TABS.indexOf(ui.tab)>=TABS.indexOf(ui.lastTab)?1:-1;pgEl.animate([{transform:'translate3d('+(tdir*40)+'px,0,0)',opacity:0},{transform:'translate3d(0,0,0)',opacity:1}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'})}else if(ui.lastCat&&ui.lastCat!==ui.cat){pgEl.animate([{opacity:.3},{opacity:1}],{duration:200,easing:'ease-out'})}}}catch(e){}
-  ui.lastCat=ui.cat;ui.lastTab=ui.tab;fixNav();hydrate();badge();if(ui.tab==='weight')wcalc()}
+  ui.lastCat=ui.cat;ui.lastTab=ui.tab;fixNav();hydrate();badge();try{iconize(document.getElementById('root'))}catch(e){}if(ui.tab==='weight')wcalc()}
 
 (function(){return;var pg=null,off=0,raw=0,pull=0,ly=null,lt=0,fv=0,touching=false,raf=0,anim=null,C=0.55,W=10,idle=0;
   function H(){return window.innerHeight||700}
@@ -627,8 +637,95 @@ function backup(){var name='albert-milly-backup-'+today()+'.json',blob=new Blob(
   try{var file=new File([blob],name,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:'Albert & Milly backup'}).catch(function(){});return}}catch(e){}
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1000)}
 
+var IC={cam:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>',
+scale:'<path d="M12 3v18M7 21h10M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/><path d="m16 16 3-8 3 8c-.9.7-1.9 1-3 1s-2.1-.3-3-1zM2 16l3-8 3 8c-.9.7-1.9 1-3 1s-2.1-.3-3-1z"/>',
+check:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+bed:'<path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/>',
+food:'<path d="M3 2v7a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3zm0 0v7"/>',
+yarn:'<circle cx="12" cy="12" r="9"/><path d="M5.5 6.5c4 .5 9 5 10 12M9 3.5c3.5 2 7 6.5 7.5 11M3.3 11c3 0 6.5 2.5 8 8"/>',
+steth:'<path d="M5 3H4a1 1 0 0 0-1 1v5a5 5 0 0 0 10 0V4a1 1 0 0 0-1-1h-1M8 14v1a5 5 0 0 0 10 0v-3"/><circle cx="18" cy="10" r="2"/>',
+alert:'<path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3zM12 9v4M12 17h.01"/>',
+clip:'<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>',
+pen:'<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+pill:'<path d="m10.5 20.5 10-10a5 5 0 1 0-7-7l-10 10a5 5 0 1 0 7 7zM8.5 8.5l7 7"/>',
+shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>',
+paper:'<path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>',
+bug:'<path d="M8 2l2 2M16 2l-2 2M9 7.1v-1a3 3 0 0 1 6 0v1M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6zM12 20v-9M6 13H2M22 13h-4M6.5 9C4.6 8.8 3 7.1 3 5M21 5c0 2.1-1.6 3.8-3.5 4M3 21c0-2.1 1.7-3.9 3.8-4M17.2 17c2.1.1 3.8 1.9 3.8 4"/>',
+up:'<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/>',down:'<path d="M3 3v18h18"/><path d="m7 9 4 4 3-3 6 6"/>',
+cart:'<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2 2h2l2.7 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L22 7H5.1"/>',
+cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/>',
+home:'<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10"/>',
+pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+rep:'<path d="m17 2 4 4-4 4M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v1a4 4 0 0 1-4 4H3"/>',
+phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
+syr:'<path d="m18 2 4 4M17 7l3-3M19 9 8.7 19.3a2.4 2.4 0 0 1-3.4 0l-.6-.6a2.4 2.4 0 0 1 0-3.4L15 5M9 11l4 4M5 19l-3 3M14 4l6 6"/>',
+rcpt:'<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1zM16 8H8M16 12H8M13 16H8"/>',
+gear:'<path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
+users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+wind:'<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+box:'<path d="M21 8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7zM3.3 7 12 12l8.7-5M12 22V12"/>',
+bars:'<path d="M3 3v18h18M8 17V10M13 17V5M18 17v-4"/>',file:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5zM14 2v6h6"/>',
+star:'<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/>',
+help:'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>',
+book:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2C7.9 18.8 7 20.2 7 22M14 14.7V17c0 .6.5 1 1 1.2 1.1.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0z"/>',
+gift:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a2 2 0 0 0 3.4 0"/>',
+save:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
+link:'<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.8 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+trash:'<path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>'};
+var EMI={'📷':'cam','⚖️':'scale','⚖':'scale','✅':'check','🏨':'bed','🍽️':'food','🍽':'food','🧶':'yarn','🩺':'steth','🏥':'steth','⚠️':'alert','⚠':'alert','📋':'clip','📝':'pen','💊':'pill','🛡️':'shield','🛡':'shield','📎':'paper','🐛':'bug','📈':'up','📉':'down','🛒':'cart','📅':'cal','🌙':'moon','🏠':'home','📍':'pin','🕒':'clock','🔁':'rep','📞':'phone','✉️':'mail','✉':'mail','💉':'syr','🧾':'rcpt','⚙️':'gear','⚙':'gear','👥':'users','🫁':'wind','➕':'plus','🔎':'search','🔍':'search','🥫':'box','🧺':'box','🧻':'box','📊':'bars','📄':'file','⭐':'star','☀️':'sun','☀':'sun','❓':'help','❔':'help','📖':'book','🏆':'trophy','🍬':'gift','🥣':'food','🔴':'bell','💾':'save','🔗':'link','🗑':'trash','🗑️':'trash'};
+var EMRE=new RegExp('('+Object.keys(EMI).sort(function(a,b){return b.length-a.length}).map(function(k){return k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('|')+')\uFE0F?','g');
+function ico(n){return'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+IC[n]+'</svg>'}
+function iconize(root){if(!root)return;var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;if(!p||/^(TEXTAREA|OPTION|SCRIPT|STYLE|TITLE)$/.test(p.nodeName)||p.closest('nav,svg,.noico'))return NodeFilter.FILTER_REJECT;EMRE.lastIndex=0;return EMRE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP}}),list=[];while(w.nextNode())list.push(w.currentNode);
+  list.forEach(function(n){var span=document.createElement('span');span.className='icw';span.innerHTML=esc(n.nodeValue).replace(EMRE,function(m,k){var key=EMI[k]||EMI[k.replace('\uFE0F','')];return key?ico(key):m});n.parentNode.replaceChild(span,n)})}
+
+function intervals(c){var w=sorted(c),out=[];var j=w.length-1;while(j>0){var i=j-1;while(i>=0&&daysBetween(w[i].d,w[j].d)<5)i--;if(i<0)break;var dd=daysBetween(w[i].d,w[j].d);out.push({from:w[i],to:w[j],rate:(w[i].kg-w[j].kg)/w[i].kg*100/dd*7,g:Math.round((w[i].kg-w[j].kg)*1000)});j=i}return out}
+function checkin(k){var c=S.cats[k],w=sorted(c);if(!w.length)return null;var last=w[w.length-1],iv=intervals(c),fd=feed(c),vet=!!(c.kcalLo&&c.kcalHi),cur=c.dryAllowance;
+  if(last.kg<=c.target)return{tone:'ok',head:c.name+' has reached '+c.target+' kg',tx:'Ask the vet about switching to maintenance amounts. Keep weighing weekly.'};
+  if(!iv.length)return{tone:'neutral',head:c.name+': first weigh-in logged',tx:'Keep feeding exactly '+cur+' g dry. Next Saturday\'s weigh-in gives the first real number.'};
+  var pf=c.planFrom||'',ivp=iv.filter(function(x){return!pf||x.from.d>=pf});if(!ivp.length){var r0=iv[0];return{tone:'neutral',head:c.name+': new amount, first week',tx:(r0.g>=0?'Down '+r0.g+' g':'Up '+(-r0.g)+' g')+' since '+short(r0.from.d)+', mostly before the change to '+cur+' g on '+short(pf)+'. Stay at '+cur+' g; next weigh-in shows how it\'s working.'}}iv=ivp;
+  var r=iv[0],slow=0;for(var i=0;i<iv.length&&iv[i].rate<0.5;i++)slow++;
+  var ch=(r.g>=0?'Down '+r.g+' g':'Up '+(-r.g)+' g')+' since '+short(r.from.d)+' ('+(r.rate>=0?'':'+')+Math.abs(r.rate).toFixed(1)+'% a week)';
+  if(r.rate>1.5){var up=Math.ceil(cur*1.1/5)*5;return{tone:'warn',head:c.name+' is losing too fast',tx:ch+'. Go up to '+up+' g dry and ring the vet.',apply:vet?null:up}}
+  if(r.rate>=0.5)return{tone:'ok',head:c.name+' is on track',tx:ch+'. Keep feeding exactly '+cur+' g dry.'};
+  if(slow<2)return{tone:'neutral',head:c.name+': slow week',tx:ch+'. One slow week is normal scale noise. Stay at '+cur+' g and check nothing extra is being eaten.'};
+  if(vet)return{tone:'warn',head:c.name+': slow '+slow+' weeks running',tx:ch+'. '+c.name+'\'s amounts are set with the vet, so mention it to them before changing anything.'};
+  var nx=fd.next||Math.floor(cur*0.9/5)*5;if(nx>=cur)return{tone:'warn',head:c.name+': slow '+slow+' weeks running',tx:ch+'. The plan is already at the lowest safe amount. Check for extra food, then ask the vet.'};
+  return{tone:'warn',head:c.name+': slow '+slow+' weeks running',tx:ch+'. Time to drop dry from '+cur+' g to '+nx+' g a day.',apply:nx}}
+function checkinCard(force){var t=today(),ks=['albert','milly'].filter(function(k){var w=sorted(S.cats[k]);return w.length&&daysBetween(w[w.length-1].d,t)<=2});
+  if(!force){if(!ks.length)return'';try{if(localStorage.getItem(LS+'-ci')===t)return''}catch(e){}}else ks=['albert','milly'];
+  return'<div class="card ci2"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">⚖️ Weekly check-in</h2>'+(force?'':'<button class="x" data-a="cidone" aria-label="Hide">✕</button>')+'</div>'+ks.map(function(k){var o=checkin(k);if(!o)return'';return'<div class="cir '+o.tone+'">'+spot(k).replace('class="spot"','class="spot" style="width:34px;height:34px;flex:none"')+'<div style="flex:1"><b>'+esc(o.head)+'</b><div class="small">'+esc(o.tx)+'</div>'+(o.apply?'<button class="b s p" style="margin-top:8px" data-a="ciapply" data-k="'+k+'" data-v="'+o.apply+'">Change to '+o.apply+' g</button>':'')+'</div></div>'}).join('')+'</div>'}
+function setDry(k,g){var c=S.cats[k],old=c.dryAllowance;c.dryAllowance=g;c.planFrom=today();var dry=firstOf(c,'dry'),wet=firstOf(c,'wet');
+  c.plan=String(c.plan||'').split('\n').map(function(l){if(/drop to|below|go up|without asking/i.test(l))return l;l=l.replace(new RegExp('\\b'+old+' g\\b','g'),g+' g');if(/kcal/.test(l)&&dry){var kc=Math.round(g*dry.kcal/100+(wet?c.wetAllowance*wet.kcal:0));l=l.replace(/About \d+ kcal/,'About '+kc+' kcal')}return l}).join('\n');
+  c.vet=c.vet||[];c.vet.push({id:uid(),d:today(),clinic:'',reason:'Food change: '+old+' g → '+g+' g dry',notes:'Changed from the weekly check-in.',next:'',email:'',att:[]})}
+function weekSummary(){var t=today(),s0=addDays(t,-6),p0=addDays(t,-13),ks=['albert','milly'];function inW(d,a,b){return d>=a&&d<=b}
+  var rows=[];
+  ks.forEach(function(k){var c=S.cats[k],w=sorted(c),wk=w.filter(function(x){return inW(x.d,s0,t)}),prev=w.filter(function(x){return x.d<s0}),lw=wk[wk.length-1],pw=prev[prev.length-1];
+    var meals=0,kc=0,kn=0,pl=0;for(var i=0;i<7;i++){var d=addDays(s0,i),x=peek(c,d);if(!x)continue;var tt=dayTotals(c,x);if(tt.dry>0&&tt.wet>0)meals++;if(tt.kcal>0){kc+=tt.kcal;kn++}pl+=tt.play}
+    var poo=(S.litter||[]).filter(function(x){return x.who===c.name&&x.type==='Poo'&&inW(x.d,s0,t)}),soft=poo.filter(function(x){return/mushy|liquid|soft/i.test(x.cons||'')}).length;
+    var rr=(c.rr||[]).filter(function(x){return inW(x.d,s0,t)}),ra=rr.length?Math.round(rr.reduce(function(m,x){return m+x.bpm},0)/rr.length):null;
+    rows.push('<div class="wsum"><div class="wsh2">'+spot(k).replace('class="spot"','class="spot" style="width:26px;height:26px"')+'<b>'+esc(c.name)+'</b></div><ul>'+
+      '<li>Weight: '+(lw?(+lw.kg).toFixed(2)+' kg'+(pw?' ('+(lw.kg<=pw.kg?'−':'+')+Math.abs(Math.round((lw.kg-pw.kg)*1000))+' g)':''):'no weigh-in this week')+'</li>'+
+      '<li>Both meals logged on '+meals+' of 7 days'+(kn?', about '+Math.round(kc/kn)+' kcal a day':'')+'</li>'+
+      '<li>Play: '+(pl?Math.round(pl/7)+' min a day on average':'none logged')+'</li>'+
+      '<li>Poo: '+(poo.length?poo.length+' logged, '+soft+' soft':'none logged')+'</li>'+(ra!=null?'<li>Sleeping breathing: '+ra+'/min average ('+rr.length+' counts)</li>':'')+'</ul></div>')});
+  var fw=S.fights.filter(function(f){return inW(f.d,s0,t)}).length,fp=S.fights.filter(function(f){return inW(f.d,p0,addDays(s0,-1))}).length,cm=(S.calm||[]).filter(function(x){return inW(x.d,s0,t)}).length,bn=Object.keys(S.bed||{}).filter(function(d){return inW(d,s0,t)}).length;
+  rows.push('<div class="wsum"><div class="wsh2"><b>Together</b></div><ul><li>'+fw+' fight'+(fw!==1?'s':'')+' this week, '+(fw<fp?'down from ':fw>fp?'up from ':'same as ')+fp+'</li><li>'+cm+' calm moment'+(cm!==1?'s':'')+' logged</li><li>Bedtime routine on '+bn+' of 7 nights</li></ul></div>');
+  var nx=[],e7=addDays(t,7);ks.forEach(function(k){['Worming','Flea'].forEach(function(ty){var du=treatDue(S.cats[k],ty);if(du&&du.next<=e7)nx.push(ty+' for '+S.cats[k].name+' '+short(du.next))});S.cats[k].foods.filter(function(f){return f.main}).forEach(function(f){var o=orderBy(k,f);if(o&&o.by<=e7)nx.push('Order '+f.name.split(' (')[0]+' by '+short(o.by))});var q=(S.cats[k].vq||[]).filter(function(x){return!x.done}).length;if(q)nx.push(q+' question'+(q>1?'s':'')+' for the vet about '+S.cats[k].name)});
+  ((S.info&&S.info.bookings)||[]).forEach(function(b){if(b.from&&b.from>=t&&b.from<=e7)nx.push((b.place||'Booking')+' drop-off '+short(b.from))});(S.todos||[]).forEach(function(x){if(!x.done&&x.due&&x.due<=e7)nx.push(x.text+(x.due<t?' (overdue)':' by '+short(x.due)))});
+  rows.push('<div class="wsum"><div class="wsh2"><b>Next 7 days</b></div>'+(nx.length?'<ul>'+nx.map(function(x){return'<li>'+esc(x)+'</li>'}).join('')+'</ul>':'<div class="small mute">Nothing due.</div>')+'</div>');
+  return rows.join('')}
+function weekCard(force){var dow=new Date().getDay(),t=today();if(!force){if(!(dow===0||(dow===1&&new Date().getHours()<14)))return'';try{if(localStorage.getItem(LS+'-ws')===t)return''}catch(e){}}
+  return'<details class="card wkc" data-open="wkc"'+(force?'':isOpen('wkc',true))+'><summary><h2 style="display:inline">📊 Your week · '+short(addDays(t,-6))+' to '+short(t)+'</h2></summary>'+weekSummary()+(force?'':'<button class="b s ghost" style="margin-top:8px" data-a="wsdone">Hide until next Sunday</button>')+'</details>'}
+
 function vToday(){var c=cat(),d=day(c),r=stats(c),st=status(r,c),t=dayTotals(c,d),fd=feed(c);
-  var h=(ui.day===today()?headline():'')+'<div class="datebar"><button class="b" data-a="day" data-v="-1">‹</button><b>'+nice(ui.day)+'</b><button class="b" data-a="day" data-v="1" '+(ui.day>=today()?'disabled style="opacity:.3"':'')+'>›</button></div>';
+  var h=(ui.day===today()?headline()+checkinCard()+weekCard():'')+'<div class="datebar"><button class="b" data-a="day" data-v="-1">‹</button><b>'+nice(ui.day)+'</b><button class="b" data-a="day" data-v="1" '+(ui.day>=today()?'disabled style="opacity:.3"':'')+'>›</button></div>';
   if(new Date().getDay()===6&&ui.day===today()&&['albert','milly'].some(function(k){return!S.cats[k].weights.some(function(w){return w.d===today()})}))
     h+='<button class="b p w" style="margin-bottom:12px;padding:14px" data-a="tab" data-v="weight">⚖️ It\'s Saturday: weigh-in day. Tap to log</button>';
   var prog=r&&r.first.kg>c.target?Math.max(0,Math.min(100,(r.first.kg-r.last.kg)/(r.first.kg-c.target)*100)):0;
@@ -691,10 +788,10 @@ function fightLog(F){
 document.addEventListener('toggle',function(e){var k=e.target&&e.target.dataset&&e.target.dataset.open;if(k){ui.open=ui.open||{};ui.open[k]=e.target.open}},true);
 function spot(k){if(S&&S.cats&&S.cats[k]&&S.cats[k].photo&&GH)return'<img class="spot" data-ph="'+esc(S.cats[k].photo)+'" alt="" data-sph="'+k+'">';var c=k==='albert'?'#e8822f':'#1e1e1e',patch=k==='albert'?
   '<path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q17 8.6 15.6 10.4 12 8.2 8.4 10.4 7 8.6 4.2 9.2Z" fill="'+c+'"/><path d="M11 6.1h2l-.5 3h-1z" fill="#fff" opacity=".9"/>':
-  '<path d="M4.2 9.2 5 2.6 9.6 6.2Q11.5 5.6 12.5 5.8 13 10 10 13.5 7 15.5 3.9 13.2 3.6 11 4.2 9.2Z" fill="'+c+'"/>';
+  '<path d="M5.7 4.1 6.1 7.3 8.6 6.1Z" fill="#f4b9c2"/><path d="M18.3 4.1 17.9 7.3 15.4 6.1Z" fill="#f4b9c2"/><path d="M7.6 6.6 9.6 6.2Q11.2 5.7 12.4 6.0Q12.2 8.0 10.8 8.9Q9.0 9.3 7.8 8.4Q7.3 7.6 7.6 6.6Z" fill="'+c+'"/><path d="M16.0 6.9Q18.6 6.6 19.8 9.2Q20.5 11.4 20.1 13.2Q18.7 12.3 17.7 10.9Q16.5 9.3 16.0 6.9Z" fill="'+c+'"/>';
   return'<svg class="spot" viewBox="0 0 24 24" aria-label="'+k+'"><path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q21 13.2 19 16.8 16.4 21 12 21 7.6 21 5 16.8 3 13.2 4.2 9.2Z" fill="#fff"/>'+patch+
   '<path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q21 13.2 19 16.8 16.4 21 12 21 7.6 21 5 16.8 3 13.2 4.2 9.2Z" fill="none" stroke="#6b6560" stroke-width="1.1" stroke-linejoin="round"/>'+
-  '<ellipse cx="9" cy="13.2" rx="1.1" ry="1.4" fill="'+(k==='milly'?'#7cc35a':'#3a3a3a')+'"/><ellipse cx="15" cy="13.2" rx="1.1" ry="1.4" fill="'+(k==='milly'?'#7cc35a':'#3a3a3a')+'"/><path d="M11.2 16h1.6l-.8 .9z" fill="#e88a9a"/></svg>'}
+  '<ellipse cx="9" cy="13.2" rx="1.1" ry="1.4" fill="'+(k==='milly'?'#9cbf6a':'#3a3a3a')+'"/><ellipse cx="15" cy="13.2" rx="1.1" ry="1.4" fill="'+(k==='milly'?'#9cbf6a':'#3a3a3a')+'"/><path d="M11.2 16h1.6l-.8 .9z" fill="#e88a9a"/></svg>'}
 function catDayIcons(c,ds){var x=peek(c,ds),tt=dayTotals(c,x),ic='';
   if(c.weights.some(function(w){return w.d===ds}))ic+='⚖️';
   if(c.health.some(function(e){return e.d===ds}))ic+='🩺';
@@ -741,6 +838,7 @@ function vCal(){ui.calWho='both';var m=ui.month,first=parse(m+'-01'),y=first.get
   h+='</div><details class="legend2"><summary class="mute small">What the icons mean</summary><div class="small mute" style="margin-top:6px;line-height:1.8">😾 fight · ⚖️ weigh-in · 🏥 vet · 🩺 symptom · ⚠️ poo/pee to check · 🐛🛡️ worm/flea · 🍽️ ate over plan · ✅ to do · 📝 note · 🏨 hotel drop-off/pick-up · striped day = at the cat hotel</div></details></div>';
   h+=dayPanel(sel);
   var tdn=(S.todos||[]).filter(function(x){return!x.done}).length;h+='<details class="nf tdnf" data-open="caltodo"'+isOpen('caltodo',false)+' style="margin:0 0 12px"><summary><span>✅ To do &amp; coming up'+(tdn?' <span class="nfc">'+tdn+'</span>':'')+'</span></summary>'+calList()+'</details>';
+  h+='<details class="nf" data-open="wsall"'+isOpen('wsall',false)+'><summary><span>📊 Last 7 days summary</span></summary><div class="card" style="margin:0">'+weekSummary()+'</div></details>';
   h+='<details class="nf" data-open="mrecap"'+isOpen('mrecap',false)+'><summary><span>📖 What happened in '+first.toLocaleDateString('en-GB',{month:'long'})+(month.length?' <span class="nfc">'+month.length+'</span>':'')+'</span></summary><div class="card" style="margin:0">'+(month.length?month.reverse().map(function(r){var dt=parse(r[0]);return'<div class="mrow" data-a="open" data-v="'+r[0]+'"><div class="mdate"><b>'+dt.getDate()+'</b><span>'+dt.toLocaleDateString('en-GB',{weekday:'short'})+'</span></div><div class="mitems">'+r[1].map(function(b){return'<div>'+b[0]+' '+esc(b[1])+'</div>'}).join('')+'</div></div>'}).join(''):emptyState('','A quiet month','No fights, vet visits or anything worrying logged.',''))+'</div></details>';
   return h}
 function todoRow(x){var t0=today(),late=x.due&&!x.done&&x.due<t0;return'<div class="todo'+(x.done?' done':'')+'"><button class="tick" data-a="tdone" data-v="'+x.id+'">'+(x.done?'✓':'')+'</button><div class="tt2"><div class="tx">'+esc(x.text)+'</div>'+(x.due?'<div class="due'+(late?' late':'')+'">'+(late?'Overdue · ':x.due===t0?'Today · ':'Due ')+short(x.due)+'</div>':'')+'</div></div>'}
@@ -848,7 +946,7 @@ function weightFeed(c){var fd=feed(c);
     '<div class="stat"><span class="mute">Loss range</span><b>'+Math.round(fd.lo)+'–'+Math.round(fd.hi)+'</b><span class="mute small">'+(c.kcalLo&&c.kcalHi?'kcal/day, vet plan':'kcal/day at '+esc(c.target)+' kg')+'</span></div></div>'+
     (fd.dry?'<div class="note">With '+c.wetAllowance+' × '+esc(fd.wet?fd.wet.name:'wet')+', that range works out at <b>'+Math.round(fd.dLo)+'–'+Math.round(fd.dHi)+' g</b> of '+esc(fd.dry.name)+' a day.</div>':'')+
     (fd.plan>fd.hi*1.1?'<div class="note" style="color:var(--warn)">The current plan is above the formula range. That is fine while the scale shows steady loss. Close the gap in steps of about 10% rather than all at once.</div>':'')+
-    '<div class="note" style="color:var(--ink)"><b>Next step:</b> '+fd.step+'</div><div class="note">Uses the standard vet formula (70 × target kg<sup>0.75</sup>, × 0.8–1.0) and the calories on each food. Run changes past the vet, especially for prescription food.</div>'}
+    (function(){var k=c===S.cats.albert?'albert':'milly',o=checkin(k);return o?'<div class="note" style="color:var(--ink)"><b>This week:</b> '+esc(o.tx)+(o.apply?' <button class="b s p" data-a="ciapply" data-k="'+k+'" data-v="'+o.apply+'">Change to '+o.apply+' g</button>':'')+'</div>':'<div class="note" style="color:var(--ink)"><b>Next step:</b> '+fd.step+'</div>'})()+'<div class="note">Uses the standard vet formula (70 × target kg<sup>0.75</sup>, × 0.8–1.0) and the calories on each food. Run changes past the vet, especially for prescription food.</div>'}
 function eatTally(c){var tal={};Object.keys(c.days).forEach(function(k){var x=c.days[k];if(x.meals&&x.meals.length)x.meals.forEach(function(m){var n=tal[m.f]||(tal[m.f]={all:0,some:0,no:0});if(n[m.rx]!=null)n[m.rx]++});else Object.keys(x.react||{}).forEach(function(fid){var r=x.react[fid],n=tal[fid]||(tal[fid]={all:0,some:0,no:0});if(n[r]!=null)n[r]++})});return tal}
 function likesBlock(k,c){var tal=eatTally(c),yes=[],no=[];c.foods.forEach(function(f){var n=tal[f.id];if(!n)return;(n.no>n.all+n.some?no:yes).push(f.name)});
   function list(a,empty){return a.length?'<ul class="kvl">'+a.map(function(x){return'<li>'+esc(x)+'</li>'}).join('')+'</ul>':'<div class="pl mute small">'+empty+'</div>'}
@@ -1460,6 +1558,9 @@ document.addEventListener('click',function(e){
   else if(a==='rrdel'){['albert','milly'].forEach(function(k){var cr2=S.cats[k];if(cr2.rr)cr2.rr=cr2.rr.filter(function(x){return x.id!==v})});change()}
   else if(a==='bedok'){S.bed=S.bed||{};S.bed[nightOf()]=nowHM();change();celebrate();toast('Bedtime routine done',function(){delete S.bed[nightOf()];change()})}
   else if(a==='backup'){backup()}
+  else if(a==='cidone'){try{localStorage.setItem(LS+'-ci',today())}catch(e){}render()}
+  else if(a==='wsdone'){try{localStorage.setItem(LS+'-ws',today())}catch(e){}render()}
+  else if(a==='ciapply'){var kk=t.dataset.k,old0=S.cats[kk].dryAllowance;setDry(kk,+v);change();toast(S.cats[kk].name+': dry now '+v+' g a day',function(){setDry(kk,old0);S.cats[kk].vet.pop();S.cats[kk].vet.pop();change()})}
   else if(a==='quick'){ui.modal=quickSheet;render()}
   else if(a==='qcat2'){ui.cat=v;render()}
   else if(a==='qmeal'){ui.modal=null;render();logUsual('both',v)}
