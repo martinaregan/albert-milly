@@ -108,7 +108,7 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **Calendar file** (Settings › Help › Add dates to my calendar): worming and flea due dates, Saturday weigh-ins, birthdays and bookings, with reminders, for the phone's Calendar app.
 - **Languages** (Settings › This phone): English and Dutch. Text is translated as each screen is drawn, from `lang/<code>.json` (exact phrases plus patterns for phrases with numbers or names). Anything not yet translated stays in English.
 - **No signal?** Everything you log is saved on the phone straight away and uploads when you're back online, even if the app was closed in between.
-- **App icon badge**: Settings › This phone › turn on. The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).
+- **App icon badge**: Settings › This phone › turn on, or off again (per phone). The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).
 - **Lock screen shortcut**: an iPhone Shortcut that opens `…/albert-milly/?log=breakfast` (or `?log=dinner`) logs the usual meal for both cats. Shortcuts open links in Safari, so connect the app once in Safari first.
 - **Backup**: Settings › Data & sync › download everything as one file (photos stay online).
 - **Light and dark mode** follow the phone unless you pick one in Settings. Animations switch off when the iPhone's Reduce Motion is on.

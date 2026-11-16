@@ -825,10 +825,23 @@
     return n;
   }
 
+  // The badge can be switched off per phone (Settings › This phone).
+  function badgeOff() {
+    try {
+      return localStorage.getItem(LS + "-badge") === "off";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function badgeIsOn() {
+    return !!(window.Notification && Notification.permission === "granted") && !badgeOff();
+  }
+
   function badge() {
     try {
       if (!("setAppBadge" in navigator)) return;
-      var n = openCount();
+      var n = badgeOff() ? 0 : openCount();
       if (n) navigator.setAppBadge(n).catch(function () {});
       else navigator.clearAppBadge().catch(function () {});
     } catch (e) {}

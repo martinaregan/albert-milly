@@ -121,8 +121,8 @@
         })
         .join("") +
       "</div></div>" +
-      '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0">A number on the app icon for what\'s still to do today.</div>' + more("Shows a number on the app icon for today's open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday's weigh-in. It updates when the app opens. Only works from the home screen app.") + '<div class="u-mt8"></div><button class="b s" data-a="badgeon">' +
-      (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
+      '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0">A number on the app icon for what\'s still to do today.</div>' + more("Shows a number on the app icon for today's open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday's weigh-in. It updates when the app opens. Only works from the home screen app. Turning it off here only affects this phone, and notes and reminders still come through.") + '<div class="u-mt8"></div><button class="b s" data-a="badgeon">' +
+      (badgeIsOn() ? "Turn off the badge" : "Turn on the badge") +
       "</button></div>" +
       '<div class="card"><h2>⚙️ Language & display</h2><label class="l">Language</label><select data-lang="1">' +
       LANGS.map(function (l) {

@@ -2,6 +2,11 @@
 
 The version number is at the bottom of Settings › Data & sync.
 
+## 16 November 2026, evening (version 54)
+
+- **App icon badge can be turned off** again per phone (Settings › This phone). It used to only turn on.
+- **Weight**: a gap between "Both cats on one chart" and the first cat's card.
+
 ## 16 November 2026, afternoon (versions 33 to 48)
 
 - **Easier to read**: grey text, the calendar's today and future days, and coloured pills now meet the WCAG AA contrast level; every button has a screen-reader name.

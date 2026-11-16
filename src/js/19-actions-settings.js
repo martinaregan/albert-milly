@@ -4,16 +4,25 @@ ACT["backup"] = function (e, t, a, v, c) {
 };
 
 ACT["badgeon"] = function (e, t, a, v, c) {
+  // On: tapping turns it off for this phone and clears the number straight away.
+  if (badgeIsOn()) {
+    try {
+      localStorage.setItem(LS + "-badge", "off");
+    } catch (x) {}
+    badge();
+    render();
+    return toast("Badge off");
+  }
+  try {
+    localStorage.removeItem(LS + "-badge");
+  } catch (x) {}
   if (window.Notification && Notification.requestPermission)
     Notification.requestPermission().then(function (p) {
-      saveState = p === "granted" ? "Badge on" : "Badge needs notification permission";
       badge();
       render();
+      toast(p === "granted" ? "Badge on" : "Badge needs notification permission");
     });
-  else {
-    saveState = "Not supported here";
-    render();
-  }
+  else toast("Not supported here");
 };
 
 ACT["rmphoto"] = function (e, t, a, v, c) {

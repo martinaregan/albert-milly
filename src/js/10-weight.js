@@ -596,7 +596,7 @@
     h +=
       '<button class="b p w u-m0-0-12 u-p16 u-fs17" data-a="wopen">⚖️ Add a weigh-in for both</button>';
     h +=
-      '<details class="nf" data-open="wboth" data-lazy' +
+      '<details class="nf u-mb12" data-open="wboth" data-lazy' +
       isOpen("wboth", false) +
       '><summary><span>📈 Both cats on one chart</span></summary><div class="card u-m0">' +
       (lazyOpen("wboth") ? bothChart() : "") +
