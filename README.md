@@ -111,7 +111,10 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 |---|---|
 | `src/index.html` | Page shell (the HTML), with markers where the CSS and JavaScript go |
 | `src/css/` | Styles, in three files, joined in name order |
-| `src/js/` | The code, in 21 files by area (setup, sync, each tab, clicks, start-up), joined in name order. Each file starts with a one-line note saying what's in it |
+| `src/js/` | The code, in 20 files by area (setup, sync, weight maths, each tab, icons, clicks, start-up), joined in name order. Each file starts with a one-line note saying what's in it |
+| `tests/smoke.py` | Automated checks: every tab in light and dark mode, logging and undo, quick log, search, vet summary, swipe to delete, and the minified build |
+| `tests/sample-data.json` | Made-up cats and logs used by the tests (never the real data) |
+| `package.json` | Shortcuts: `npm run build`, `npm run dev`, `npm test` |
 | `index.html` | The published app, built and minified from `src/` by `tools/build.js`. Don't edit by hand |
 | `tools/build.js` | Build script: `npm i terser csso`, then `node tools/build.js` (add `--dev` for an unminified `dev.html` to test with) |
 | `sw.js` | Service worker: keeps a copy of the app for offline use |
@@ -129,4 +132,5 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 - **Sync**: `pull()` / `push()` talk to the GitHub contents API; `merge3(base, mine, theirs)` merges concurrent edits by item id.
 - **Offline**: `sw.js` caches the app shell. Bump the `SHELL` name in `sw.js` and `APPV` in `index.html` with every release.
 - **Icons and font**: when they change, give the files a new name and update the references, because iOS caches them by file name.
-- **Testing**: load the page in a headless browser with a copy of `data.json` in `localStorage` (`am-tracker-cache`) and a dummy connection (`am-tracker-gh`), and block `api.github.com`.
+- **Formatting**: the source is formatted with Prettier (`npx prettier --write src/js src/css --print-width 110`).
+- **Testing**: `npm test` builds `dev.html` and runs `tests/smoke.py`, which loads the app in a headless browser with the sample data, blocks `api.github.com`, and checks every tab, the main actions, that partial screen updates match a full rebuild, and that the minified build runs. Needs `pip install playwright` and `playwright install chromium`. Run it before every release.

@@ -1,0 +1,15 @@
+{
+  "name": "albert-milly",
+  "private": true,
+  "description": "Home-screen app for two cats: food, weight, health, fights and calm moments.",
+  "scripts": {
+    "build": "node tools/build.js",
+    "dev": "node tools/build.js --dev",
+    "test": "node tools/build.js --dev && python3 tests/smoke.py"
+  },
+  "devDependencies": {
+    "csso": "^5.0.5",
+    "terser": "^5.31.0",
+    "prettier": "^3.3.0"
+  }
+}
