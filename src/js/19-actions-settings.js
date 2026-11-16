@@ -464,3 +464,23 @@ ACT["clcopy"] = function () {
     }
   );
 };
+
+ACT["ics"] = function () {
+  var f = icsFile();
+  if (!f.count) return toast("No dates to add yet");
+  var blob = new Blob([f.text], { type: "text/calendar" });
+  // iPhone: opening the calendar file shows Calendar's "Add All" screen.
+  if (/iPhone|iPad/.test(navigator.userAgent)) {
+    location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(f.text);
+    return;
+  }
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "cat-dates.ics";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () {
+    URL.revokeObjectURL(a.href);
+    a.remove();
+  }, 1000);
+};

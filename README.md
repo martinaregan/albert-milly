@@ -102,6 +102,8 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **This phone** (Settings): Light, Dark or Automatic, and weights in kg or lb. **Tabs**: switch off the ones you don't need; nothing is deleted.
 - **Help** (Settings): the intro again, "When to call a vet" (also the 🚨 Urgent? button on Health) and Report a problem (opens a GitHub issue).
 - **What's new** shows once after an update; a new phone gets a short intro instead.
+- **Fight-time heads-up**: once a pattern shows (3+ of the recent fights with a time in the same 3 hours), Today warns you 90 minutes before, with a nudge to play first.
+- **Calendar file** (Settings › Help › Add dates to my calendar): worming and flea due dates, Saturday weigh-ins, birthdays and bookings, with reminders, for the phone's Calendar app.
 - **No signal?** Everything you log is saved on the phone straight away and uploads when you're back online, even if the app was closed in between.
 - **App icon badge**: Settings › This phone › turn on. The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).
 - **Lock screen shortcut**: an iPhone Shortcut that opens `…/albert-milly/?log=breakfast` (or `?log=dinner`) logs the usual meal for both cats. Shortcuts open links in Safari, so connect the app once in Safari first.

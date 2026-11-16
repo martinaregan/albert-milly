@@ -235,7 +235,7 @@
       t = dayTotals(c, d),
       fd = feed(c);
     var h =
-      (ui.day === today() ? headline() + (DEMO ? "" : GH.local ? localNudge() : notesCard()) + (tabOn("weight") ? checkinCard() : "") + weekCard() : "") +
+      (ui.day === today() ? headline() + fightHeadsUp() + (DEMO ? "" : GH.local ? localNudge() : notesCard()) + (tabOn("weight") ? checkinCard() : "") + weekCard() : "") +
       '<div class="datebar"><button class="b" data-a="day" data-v="-1">‹</button><b>' +
       nice(ui.day) +
       '</b><button class="b" data-a="day" data-v="1" ' +

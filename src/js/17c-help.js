@@ -1,6 +1,7 @@
 /* 17c-help: First-time intro, "What's new" after an update, the emergency vet panel, and report a problem. */
   // Newest first. Add a line here with every release that changes something people will notice.
   var NEWS = [
+    ["45", "Heads-up on Today before the time most fights happen", "📅 Add worming, flea, weigh-ins, birthdays and bookings to your calendar (Settings › Help)"],
     ["44", "Log by chatting with Claude: how to set it up, the risks and costs (Settings › Help)"],
     ["43", "Light, Dark or Automatic (Settings › This phone)"],
     [

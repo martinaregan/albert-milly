@@ -176,3 +176,108 @@
       return '<div class="card nudge"><b>Your data is only on this phone</b><div class="small">Connect GitHub (free) to keep it safe and share it, or download a backup.</div><div class="row u-gap8 u-mt8"><button class="b s p" data-a="connGh">Connect GitHub</button><button class="b s" data-a="backup">Backup</button></div></div>';
     return "";
   }
+
+  // Fight-time heads-up: the busiest 3-hour window for fights (last 90 days, fights with a time).
+  // Shown on Today from 90 minutes before that window until it ends.
+  function fightWindow() {
+    var since = addDays(today(), -90),
+      hrs = [],
+      n = 0;
+    for (var h = 0; h < 24; h++) hrs.push(0);
+    (S.fights || []).forEach(function (f) {
+      if (f.d < since || !/^\d\d:\d\d$/.test(f.m || "")) return;
+      hrs[+f.m.slice(0, 2)]++;
+      n++;
+    });
+    if (n < 4) return null;
+    var best = -1,
+      bs = 0;
+    for (var s = 0; s < 24; s++) {
+      var c = hrs[s] + hrs[(s + 1) % 24] + hrs[(s + 2) % 24];
+      if (c > best) {
+        best = c;
+        bs = s;
+      }
+    }
+    if (best < 3 || best / n < 0.4) return null;
+    return { from: bs, to: (bs + 3) % 24, count: best, n: n };
+  }
+
+  function fightHeadsUp() {
+    if (!tabOn("fights")) return "";
+    var w = fightWindow();
+    if (!w) return "";
+    var d = new Date(),
+      mins = d.getHours() * 60 + d.getMinutes(),
+      start = w.from * 60,
+      rel = (mins - start + 1440) % 1440; // minutes since the window started
+    if (!(rel >= 1440 - 90 || rel < 180)) return "";
+    var hh = function (h) {
+      return ("0" + h).slice(-2) + ":00";
+    };
+    return (
+      '<div class="card nudge"><b>⚠️ Fight time ' +
+      (rel >= 1440 - 90 ? "soon" : "now") +
+      "</b><div class=\"small\">" +
+      w.count +
+      " of the last " +
+      w.n +
+      " fights with a time were between " +
+      hh(w.from) +
+      " and " +
+      hh(w.to) +
+      ". A play session for " +
+      esc(S.cats.albert.name) +
+      " and then food usually takes the edge off.</div></div>"
+    );
+  }
+
+  // Calendar file (.ics): worming and flea due dates, Saturday weigh-ins, birthdays and bookings.
+  // Opening it on iPhone offers "Add All" to the Calendar app, with reminders.
+  function icsFile() {
+    var L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Albert & Milly//EN", "CALSCALE:GREGORIAN"],
+      stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z",
+      n = 0;
+    function esc2(s) {
+      return String(s).replace(/([,;\\])/g, "\\$1").replace(/\n/g, "\\n");
+    }
+    function day(ds) {
+      return ds.replace(/-/g, "");
+    }
+    function ev(ds, title, extra, alarm) {
+      n++;
+      L.push(
+        "BEGIN:VEVENT",
+        "UID:am-" + day(ds) + "-" + n + "-" + title.replace(/\W/g, "").slice(0, 20) + "@albert-milly",
+        "DTSTAMP:" + stamp,
+        "DTSTART;VALUE=DATE:" + day(ds),
+        "DTEND;VALUE=DATE:" + day(addDays(ds, 1)),
+        "SUMMARY:" + esc2(title)
+      );
+      (extra || []).forEach(function (x) {
+        L.push(x);
+      });
+      if (alarm !== false) L.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + esc2(title), "TRIGGER:-PT15H", "END:VALARM");
+      L.push("END:VEVENT");
+    }
+    ["albert", "milly"].forEach(function (k) {
+      var c = S.cats[k];
+      ["Worming", "Flea"].forEach(function (ty) {
+        var d = treatDue(c, ty);
+        if (d && d.next >= today()) ev(d.next, ty + " treatment due: " + c.name);
+      });
+      if (c.born && !c.bornGuess) ev(nextBday(c), c.name + "'s birthday", ["RRULE:FREQ=YEARLY"], false);
+    });
+    if (tabOn("weight")) {
+      var sat = addDays(today(), (6 - parse(today()).getDay() + 7) % 7);
+      ev(sat, "Weigh-in: " + S.cats.albert.name + " & " + S.cats.milly.name, ["RRULE:FREQ=WEEKLY;BYDAY=SA"]);
+    }
+    ((S.info && S.info.bookings) || []).forEach(function (b) {
+      if (!b.from || (b.to || b.from) < today()) return;
+      var nm = b.place || "cat hotel";
+      ev(b.from, "Drop-off at " + nm, b.notes ? ["DESCRIPTION:" + esc2(b.notes)] : []);
+      if (b.to) ev(b.to, "Pick-up from " + nm, b.notes ? ["DESCRIPTION:" + esc2(b.notes)] : []);
+    });
+    L.push("END:VCALENDAR");
+    return { text: L.join("\r\n"), count: n };
+  }
