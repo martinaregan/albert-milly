@@ -4428,3 +4428,48 @@ button.sosc {
 .u-pr40 {
   padding-right: 40px !important;
 }
+
+/* Settings menu */
+.smenu {
+  padding: 4px 0;
+}
+.srow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+}
+.srow:first-child {
+  border-top: 0;
+}
+.srow .sic {
+  font-size: 24px;
+  width: 30px;
+  text-align: center;
+  flex: none;
+}
+.srow b {
+  display: block;
+  font-size: 17px;
+}
+.srow small {
+  display: block;
+  color: var(--mute);
+  font-size: 13px;
+  margin-top: 2px;
+}
+.srow .sarr {
+  margin-left: auto;
+  color: var(--mute);
+  font-size: 22px;
+}
+.sback {
+  margin-bottom: 8px;
+}

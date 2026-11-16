@@ -23,34 +23,74 @@
     }, 1000);
   }
 
+  // Settings: a short menu; each section opens on its own page (ui.sset).
+  var SSECT = [
+    ["cats", "🐱", "Cats", "Looks, names, photos, plans, foods, checklist"],
+    ["phone", "📱", "This phone", "Language, appearance, units, tabs, badge, shortcut"],
+    ["share", "👥", "Sharing & notifications", "Another phone, notes and reminders"],
+    ["data", "💾", "Data", "Backup, restore, connection, privacy"],
+    ["help", "❓", "Help", "How it works, when to call a vet, Claude, report a problem"]
+  ];
+
   function vSettings() {
     var raw = vSettings0(),
       tp = document.createElement("div");
     tp.innerHTML = raw;
-    var G = { Cats: [], Phone: [], Data: [] };
+    var G = { cats: [], phone: [], share: [], data: [], help: [] };
     [].slice.call(tp.children).forEach(function (el) {
       var t = (el.querySelector("h2") || {}).textContent || "";
-      var g = /badge|feeding them|Shortcut/i.test(t)
-        ? "Phone"
-        : /Backup|Connection/i.test(t)
-          ? "Data"
-          : "Cats";
-      G[g].push(el.outerHTML);
+      var g = /badge|Language & display|Tabs/i.test(t)
+        ? "phone"
+        : /feeding them|Notifications/i.test(t)
+          ? "share"
+          : /Backup|Connection|Your data|Privacy/i.test(t)
+            ? "data"
+            : /Help/i.test(t)
+              ? "help"
+              : "cats";
+      if (/Language & display/.test(t)) G[g].unshift(el.outerHTML);
+      else G[g].push(el.outerHTML);
     });
-    G.Phone.push(
-      '<div class="card"><h2>📱 Lock screen shortcut</h2><div class="note u-m0">Shortcuts app › + › Open URLs › paste <b>martinaregan.github.io/albert-milly/?log=breakfast</b> (or ?log=dinner). First open the app once in Safari and connect, because Shortcuts opens links in Safari.</div></div>'
+    G.phone.push(
+      '<div class="card"><h2>📱 Lock screen shortcut</h2><div class="note u-m0">Shortcuts app › + › Open URLs › paste <b>' +
+        esc(location.host + location.pathname) +
+        "?log=breakfast</b> (or ?log=dinner). First open the app once in Safari and connect, because Shortcuts opens links in Safari.</div></div>"
     );
-    return ["Cats", "Phone", "Data"]
-      .map(function (g) {
+    var cur = ui.sset;
+    if (cur && G[cur]) {
+      var sec = SSECT.filter(function (x) {
+        return x[0] === cur;
+      })[0];
+      return (
+        '<button class="b ghost sback" data-a="sset" data-v="">‹ Settings</button><div class="sgh">' +
+        sec[1] +
+        " " +
+        sec[2] +
+        "</div>" +
+        G[cur].join("")
+      );
+    }
+    return (
+      '<div class="card smenu">' +
+      SSECT.map(function (x) {
         return (
-          '<div class="sgh">' +
-          { Cats: "Cats", Phone: "This phone", Data: "Data & sync" }[g] +
-          "</div>" +
-          G[g].join("")
+          '<button class="srow" data-a="sset" data-v="' +
+          x[0] +
+          '"><span class="sic">' +
+          x[1] +
+          "</span><span><b>" +
+          x[2] +
+          "</b><small>" +
+          x[3] +
+          '</small></span><span class="sarr">›</span></button>'
         );
-      })
-      .join("");
+      }).join("") +
+      '</div><div class="note u-ta-center">Version ' +
+      APPV +
+      "</div>"
+    );
   }
+
 
   function vSettings0() {
     var c = cat();
@@ -77,7 +117,7 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
-      '<div class="card"><h2>⚙️ This phone</h2><label class="l">Language</label><select data-lang="1">' +
+      '<div class="card"><h2>⚙️ Language & display</h2><label class="l">Language</label><select data-lang="1">' +
       LANGS.map(function (l) {
         return '<option value="' + l[0] + '"' + (lang() === l[0] ? " selected" : "") + ">" + l[1] + "</option>";
       }).join("") +

@@ -5,6 +5,7 @@ ACT["cat"] = function (e, t, a, v, c) {
 };
 
 ACT["tab"] = function (e, t, a, v, c) {
+  if (v === "settings") ui.sset = null;
   ui.tab = v;
   ui.modal = null;
   render();

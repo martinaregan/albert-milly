@@ -484,3 +484,9 @@ ACT["ics"] = function () {
     a.remove();
   }, 1000);
 };
+
+ACT["sset"] = function (e, t, a, v) {
+  ui.sset = v || null;
+  render();
+  window.scrollTo(0, 0);
+};

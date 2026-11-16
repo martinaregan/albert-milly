@@ -44,8 +44,7 @@
       sent = M.filter(function (m) {
         return m.from === me && !m.done && (m.created || 0) > cut && (m.to || []).indexOf(me) < 0;
       });
-    if (!mine.length && !sent.length)
-      return '<button class="b ghost w notesbtn" data-a="noteNew">✉️ Leave a note or reminder</button>';
+    if (!mine.length && !sent.length) return "";
     function row(m, forMe) {
       return (
         '<div class="note1' +

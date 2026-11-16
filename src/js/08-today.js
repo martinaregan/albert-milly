@@ -234,70 +234,31 @@
       st = status(r, c),
       t = dayTotals(c, d),
       fd = feed(c);
+    // Today: the headline, then only what needs you now. Everything else about the week folds away.
+    var isT = ui.day === today();
     var h =
-      (ui.day === today() ? headline() + fightHeadsUp() + (DEMO ? "" : GH.local ? localNudge() : notesCard()) + (tabOn("weight") ? checkinCard() : "") + weekCard() : "") +
+      (isT
+        ? headline() +
+          fightHeadsUp() +
+          (DEMO ? "" : GH.local ? localNudge() : notesCard()) +
+          (tabOn("weight") ? checkinCard() : "") +
+          '<details class="nf" data-open="tweek" data-lazy' +
+          isOpen("tweek", false) +
+          "><summary><span>📅 This week · who did what</span></summary>" +
+          (isOpen("tweek", false)
+            ? weekStrip() +
+              whoCard() +
+              '<div class="card"><h2>📊 Last 7 days</h2>' +
+              weekSummary() +
+              "</div>"
+            : "") +
+          "</details>"
+        : "") +
       '<div class="datebar"><button class="b" data-a="day" data-v="-1">‹</button><b>' +
       nice(ui.day) +
       '</b><button class="b" data-a="day" data-v="1" ' +
       (ui.day >= today() ? 'disabled style="opacity:.3"' : "") +
       ">›</button></div>";
-    if (
-      new Date().getDay() === 6 &&
-      ui.day === today() &&
-      ["albert", "milly"].some(function (k) {
-        return !S.cats[k].weights.some(function (w) {
-          return w.d === today();
-        });
-      })
-    )
-      h +=
-        '<button class="b p w u-mb12 u-p14" data-a="tab" data-v="weight">⚖️ It\'s Saturday: weigh-in day. Tap to log</button>';
-    var prog =
-      r && r.first.kg > c.target
-        ? Math.max(0, Math.min(100, ((r.first.kg - r.last.kg) / (r.first.kg - c.target)) * 100))
-        : 0;
-    var lows = [];
-    ["albert", "milly"].forEach(function (k) {
-      S.cats[k].foods
-        .filter(function (f) {
-          return f.main;
-        })
-        .forEach(function (f) {
-          var ob = orderBy(k, f);
-          if (ob && ob.days < 7) lows.push(f.name);
-        });
-    });
-    var dueT = S.todos.filter(function (x) {
-      return !x.done && x.due && x.due <= addDays(today(), 3);
-    });
-    ["albert", "milly"].forEach(function (k) {
-      ["Worming", "Flea"].forEach(function (ty) {
-        var du = treatDue(S.cats[k], ty);
-        if (du && du.days <= 3) dueT.push({ text: "" });
-      });
-    });
-    if (lows.length)
-      h +=
-        '<div class="row u-gap6 u-mb10 u-wrap">' +
-        (lows.length ? "" : "") +
-        "" +
-        "</div>";
-    if (0)
-      h +=
-        '<div class="hero mini"><div class="top">' +
-        spot(ui.cat) +
-        '<div class="u-flex1"><div class="row between"><span class="nm">' +
-        esc(c.name) +
-        '</span><span class="wt">' +
-        (r ? r.last.kg.toFixed(2) : "–") +
-        " <small>kg</small></span></div>" +
-        '<div class="track"><div style="width:' +
-        Math.max(prog, 2) +
-        '%"></div></div><div class="ends"><span>' +
-        esc(st[1]) +
-        "</span><span>" +
-        (r && r.toGo > 0 ? wt(r.toGo) + " to go" : "target " + wt(c.target, "t")) +
-        "</span></div></div></div></div>";
     var meals = d.meals || [],
       RXL = { all: ["😋", "Ate it all"], some: ["😐", "Some"], no: ["🙅", "Refused"] };
     function tile(lbl, val, max, txt, k) {
@@ -318,8 +279,6 @@
         ">"
       );
     }
-    if (ui.day === today()) h += weekStrip();
-    if (ui.day === today()) h += whoCard();
     if (ui.day !== today()) {
       var dx0 = peek(c, ui.day),
         lx0 = (S.litter || []).some(function (x) {

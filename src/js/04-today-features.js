@@ -538,6 +538,7 @@
         ? tile("lnew", "Poo", "Poo", "usual for " + esc(cat().name)) + tile("lnew", "Pee", "Pee", "one tap")
         : "") +
       tile("plopen", "", "Play", "minutes or timer") +
+      (DEMO || (GH && GH.local) ? "" : tile("noteNew", "", "Note", "or reminder")) +
       (tabOn("fights")
         ? tile("fnew", "", "Fight", "what happened", "qwarn") +
           tile("calmnew", "", "Calm moment", "something nice", "qok")
