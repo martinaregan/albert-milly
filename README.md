@@ -93,6 +93,8 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **Poo vs food**: how often a poo within a day of each food was soft, against the overall rate.
 - **Bedtime routine**: tick "play + snack before bed" each night; after a few nights the Friendship tab compares fights with and without it.
 - **Cat photos**: Settings › Cats › add a photo to replace the drawn face everywhere.
+- **Birthdays**: Settings › each cat's plan › Birthday. Shows their age on Info, a 🎂 on the calendar, "turns 3" in Coming up, and a birthday headline on the day. Tick "Only roughly known" for a guessed date: you get the age without a birthday.
+- **No signal?** Everything you log is saved on the phone straight away and uploads when you're back online, even if the app was closed in between.
 - **App icon badge**: Settings › This phone › turn on. The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).
 - **Lock screen shortcut**: an iPhone Shortcut that opens `…/albert-milly/?log=breakfast` (or `?log=dinner`) logs the usual meal for both cats. Shortcuts open links in Safari, so connect the app once in Safari first.
 - **Backup**: Settings › Data & sync › download everything as one file (photos stay online).
