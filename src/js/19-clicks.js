@@ -13,7 +13,8 @@ document.addEventListener("click", function (e) {
 });
 
 function confirmBox(msg, act, v) {
-  var lab = act === "ghout2" ? "Disconnect" : act === "cstop" ? "Stop" : "Delete";
+  var lab =
+    { ghout2: "Disconnect", cstop: "Stop", restore2: "Restore", erase2: "Erase" }[act] || "Delete";
   return (
     '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><p>' +
     esc(msg) +

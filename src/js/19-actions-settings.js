@@ -30,54 +30,99 @@ ACT["ghwho"] = function (e, t, a, v, c) {
 
 ACT["ghconnect"] = function (e, t, a, v, c) {
   var tok = document.getElementById("ghtok").value.trim(),
-    rp = ((document.getElementById("ghrepo") || {}).value || "").trim().split("/");
-  if (!tok) {
-    ui.gherr = "Paste your access key first.";
-    render();
-    return;
-  }
-  if (rp.length !== 2 || !rp[0] || !rp[1]) {
-    ui.gherr = "Fill in your data repository as owner/name.";
-    render();
-    return;
-  }
-  var cand = {
-    token: tok,
-    owner: rp[0],
-    repo: rp[1],
-    who: ((document.getElementById("ghname") || {}).value || ui.who || "").trim() || "Me"
-  };
-  var keep = GH;
-  GH = cand;
-  document.getElementById("gherr").textContent = "Connecting…";
-  pull()
-    .then(function (p) {
-      try {
-        localStorage.setItem(LS + "-gh", JSON.stringify(GH));
-      } catch (e) {}
-      ui.gherr = "";
-      INVITE = null;
-      S = null;
-      BASE = null;
-      SHA = null;
-      dirty = false;
-      if (p) {
-        S = p.data;
-        migrate();
-        BASE = p.data;
-        SHA = p.sha;
-        dirty = !eq(S, BASE);
-        persist();
-      }
-      setStatus("Synced");
-      if (!p) return starter();
+    rv = ((document.getElementById("ghrepo") || {}).value || "").trim().replace(/^https?:\/\/github\.com\//, ""),
+    who = ((document.getElementById("ghname") || {}).value || ui.who || "").trim() || "Me",
+    err = function (m) {
+      ui.gherr = m;
+      ui.ghform = { tok: tok, who: who, repo: rv };
       render();
-      if (dirty) push();
+    },
+    hd = { Authorization: "Bearer " + tok, Accept: "application/vnd.github+json" },
+    login = "";
+  if (!tok) return err("Paste your access key first.");
+  if (/^ghp_/.test(tok) === false && /^github_pat_|^gh[ousr]_/.test(tok) === false)
+    return err("That doesn't look like an access key. It should start with github_pat_.");
+  document.getElementById("gherr").textContent = "Checking…";
+  // 1. Is the key valid, and whose account is it?
+  fetch("https://api.github.com/user", { headers: hd, cache: "no-store" })
+    .then(function (r) {
+      if (r.status === 401) throw "That key didn't work: it's wrong, expired or was deleted. Make a new one with step 3.";
+      if (!r.ok) throw "Could not reach GitHub. Check your internet connection.";
+      return r.json();
     })
-    .catch(function (e) {
-      GH = keep;
-      ui.gherr = keyErr(e);
-      render();
+    .then(function (u) {
+      login = u.login || "";
+      var rp = (rv || "cat-data").split("/");
+      if (rp.length === 1) rp = [login, rp[0]];
+      if (!rp[0] || !rp[1]) throw "Fill in the repository name (like cat-data).";
+      // 2. Can it see the repository, and is it private?
+      return fetch("https://api.github.com/repos/" + rp[0] + "/" + rp[1], { headers: hd, cache: "no-store" }).then(
+        function (r) {
+          if (r.status === 404)
+            throw (
+              "Can't see the repository " +
+              rp.join("/") +
+              ". Check the name, and that the key has it under Repository access → Only select repositories."
+            );
+          if (!r.ok) throw "Could not reach GitHub. Check your internet connection.";
+          return r.json().then(function (j) {
+            if (j.private === false)
+              throw "That repository is public, so anyone could read your cats' data. On GitHub open it › Settings › Danger zone › Change visibility › Private, then try again.";
+            return rp;
+          });
+        }
+      );
+    })
+    .then(function (rp) {
+      var keep = GH,
+        wasLocal = GH && GH.local && S;
+      GH = { token: tok, owner: rp[0], repo: rp[1], who: who };
+      // 3. Read the data (or find there isn't any yet).
+      return pull().then(
+        function (p) {
+          try {
+            localStorage.setItem(LS + "-gh", JSON.stringify(GH));
+          } catch (x) {}
+          ui.gherr = "";
+          ui.ghform = null;
+          ui.connect = false;
+          INVITE = null;
+          var local = wasLocal ? S : null,
+            hasLogs =
+              local &&
+              ["albert", "milly"].some(function (k) {
+                return local.cats[k].weights.length || Object.keys(local.cats[k].days || {}).length;
+              });
+          if (p) {
+            // Data already there: it wins, and anything logged on this phone is added to it.
+            S = hasLogs ? merge3({}, p.data, local) : p.data;
+            migrate();
+            BASE = p.data;
+            SHA = p.sha;
+            dirty = !eq(S, BASE);
+          } else if (local) {
+            // New repository: move this phone's data up.
+            BASE = null;
+            SHA = null;
+            dirty = true;
+          } else {
+            S = null;
+            return starter();
+          }
+          persist();
+          setStatus(dirty ? "Saving…" : "Synced");
+          render();
+          if (dirty) push();
+          toast(wasLocal ? "Connected. Your data is now on GitHub too" : "Connected");
+        },
+        function (x) {
+          GH = keep;
+          throw x && x.auth ? "The key can't read the data. Give it Contents: Read and write (step 3)." : keyErr(x);
+        }
+      );
+    })
+    .catch(function (m) {
+      err(typeof m === "string" ? m : "Something went wrong. Try again.");
     });
 };
 
@@ -260,4 +305,68 @@ ACT["pkdone"] = function () {
   ui.modal = null;
   change();
   toast("Done. Check the pattern and eye colour below");
+};
+
+// No-account mode: data stays on this phone until GitHub is connected.
+ACT["startLocal"] = function () {
+  var nm = ((document.getElementById("lname") || {}).value || "").trim() || "Me";
+  GH = { local: true, who: nm };
+  try {
+    localStorage.setItem(LS + "-lastbackup", String(Date.now()));
+    localStorage.setItem(LS + "-gh", JSON.stringify(GH));
+  } catch (x) {}
+  S = null;
+  sync();
+};
+
+ACT["connGh"] = function () {
+  ui.connect = true;
+  ui.gherr = "";
+  render();
+  window.scrollTo(0, 0);
+};
+
+ACT["connBack"] = function () {
+  ui.connect = false;
+  ui.gherr = "";
+  render();
+};
+
+// Restore from a backup file
+ACT["restore"] = function () {
+  var i = document.getElementById("restoreIn");
+  if (i) i.click();
+};
+
+ACT["restore2"] = function () {
+  if (!ui.restore) return;
+  S = ui.restore;
+  ui.restore = null;
+  migrate();
+  ui.modal = null;
+  change();
+  toast("Backup restored");
+};
+
+ACT["erase"] = function () {
+  ui.modal = function () {
+    return confirmBox(
+      "Erase all of the cats' data on this phone? It can't be undone. Download a backup first if you might want it.",
+      "erase2",
+      "x"
+    );
+  };
+  render();
+};
+
+ACT["erase2"] = function () {
+  try {
+    Object.keys(localStorage).forEach(function (k) {
+      if (k.indexOf(LS) === 0) localStorage.removeItem(k);
+    });
+  } catch (x) {}
+  GH = null;
+  S = null;
+  ui.modal = null;
+  render();
 };

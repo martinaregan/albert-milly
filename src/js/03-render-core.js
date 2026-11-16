@@ -3,9 +3,10 @@
     if (S) infoData();
     if (ui.tab === "hows") ui.tab = "fights";
     if (ui.tab === "todo") ui.tab = "calendar";
-    if (!GH || !S) {
+    if (!GH || !S || ui.connect) {
       document.body.className = "albert duo";
-      document.getElementById("root").innerHTML = !GH
+      document.getElementById("root").innerHTML =
+        !GH || ui.connect
         ? setupView()
         : '<div class="hero duo-h u-mt40 u-ta-center"><div class="vs">' +
           spot("albert") +
@@ -352,7 +353,7 @@
   }
 
   function upBtn(kind, ref, label, acc) {
-    return GH
+    return GH && !GH.local
       ? '<button class="b s" data-a="pick" data-k="' +
           kind +
           '" data-v="' +
@@ -506,7 +507,7 @@
   }
 
   function spot(k) {
-    if (S && S.cats && S.cats[k] && S.cats[k].photo && GH)
+    if (S && S.cats && S.cats[k] && S.cats[k].photo && GH && !GH.local)
       return '<img class="spot" data-ph="' + esc(S.cats[k].photo) + '" alt="" data-sph="' + k + '">';
     if (S && S.cats && S.cats[k] && S.cats[k].coat) return coatFace(S.cats[k].coat, S.cats[k].name);
     return spot0(k);

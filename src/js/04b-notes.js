@@ -164,3 +164,15 @@
       "</div>"
     );
   }
+
+  // No-account mode: data lives only on this phone, so keep reminding about a safer home for it.
+  function localNudge() {
+    var ios = /iPhone|iPad/.test(navigator.userAgent),
+      lb = +(localStorage.getItem(LS + "-lastbackup") || 0),
+      old = Date.now() - lb > 14 * 864e5;
+    if (ios && !standalone())
+      return '<div class="card nudge"><b>Add the app to your home screen</b><div class="small">In Safari tap Share › Add to Home Screen. Otherwise iPhone can clear what you\'ve logged after a week without use.</div></div>';
+    if (old)
+      return '<div class="card nudge"><b>Your data is only on this phone</b><div class="small">Connect GitHub (free) to keep it safe and share it, or download a backup.</div><div class="row u-gap8 u-mt8"><button class="b s p" data-a="connGh">Connect GitHub</button><button class="b s" data-a="backup">Backup</button></div></div>';
+    return "";
+  }

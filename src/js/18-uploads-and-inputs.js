@@ -37,6 +37,31 @@
 
   document.addEventListener("change", function (e) {
     var t = e.target;
+    if (t.id === "restoreIn") {
+      var rf = (t.files || [])[0];
+      t.value = "";
+      if (!rf) return;
+      rf.text().then(function (txt) {
+        var d = null;
+        try {
+          d = JSON.parse(txt);
+        } catch (x) {}
+        if (!d || !d.cats || !d.cats.albert || !d.cats.milly) return toast("That isn't a backup from this app");
+        ui.restore = d;
+        ui.modal = function () {
+          return confirmBox(
+            "Replace everything with this backup" +
+              (d.savedAt ? " from " + nice(iso(new Date(d.savedAt))) : "") +
+              "? What's in the app now will be overwritten" +
+              (GH && !GH.local ? ", on every phone." : "."),
+            "restore2",
+            "x"
+          );
+        };
+        render();
+      });
+      return;
+    }
     if (t.id === "coatIn") {
       var cf = (t.files || [])[0];
       if (!cf) return;
@@ -62,6 +87,7 @@
     if (t.id === "fileIn") {
       var files = Array.prototype.slice.call(t.files || []);
       if (!files.length || !GH) return;
+      if (GH.local) return toast("Photos need GitHub. Connect it in Settings");
       if (DEMO) return toast("Photos don't upload in the demo");
       var tg = upTarget;
       saveState = "Uploading…";

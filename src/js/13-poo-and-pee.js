@@ -138,7 +138,7 @@
         '"></div><div><label class="l">Time</label><input type="time" data-lf="m" value="' +
         l.m +
         '"></div></div>' +
-        (GH
+        (GH && !GH.local
           ? '<button class="b w u-p14 u-mt10" data-a="pick" data-k="pend" data-v="litter" data-acc="image/*" data-cap="1">📷 ' +
             (ui.pend.length ? "Take another photo" : "Add a photo (optional)") +
             "</button>"
@@ -184,7 +184,7 @@
       (l.id ? "Edit " : "Log ") +
       (l.type === "Poo" ? "💩 poo" : "💧 pee") +
       "</h2>" +
-      (GH
+      (GH && !GH.local
         ? '<button class="b w u-p16 u-fs16 u-mb6" data-a="pick" data-k="pend" data-v="litter" data-acc="image/*" data-cap="1">📷 ' +
           (ui.pend.length ? "Take another photo" : "Take a photo") +
           "</button>"

@@ -4328,3 +4328,32 @@ body.milly {
 .note1 .x {
   flex: none;
 }
+
+/* Setup screen */
+.ghcard > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.ghcard > summary::-webkit-details-marker {
+  display: none;
+}
+.ghsteps {
+  margin: 0 0 6px;
+  padding-left: 20px;
+}
+.ghsteps li {
+  margin: 8px 0;
+  line-height: 1.45;
+}
+.ghl {
+  font-weight: 800;
+  white-space: nowrap;
+  color: var(--accent);
+}
+.nudge {
+  border: 1.5px dashed var(--accent);
+}
+.nudge .small {
+  margin-top: 4px;
+  line-height: 1.4;
+}

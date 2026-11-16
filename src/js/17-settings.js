@@ -1,5 +1,8 @@
 /* 17-settings: The Settings tab (Cats, This phone, Data & sync) and backup. */
   function backup() {
+    try {
+      localStorage.setItem(LS + "-lastbackup", String(Date.now()));
+    } catch (x) {}
     var name = "albert-milly-backup-" + today() + ".json",
       blob = new Blob([JSON.stringify(S, null, 1)], { type: "application/json" });
     try {
@@ -74,21 +77,28 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
-      (DEMO ? "" : pushCard()) +
-      (DEMO
+      (DEMO || GH.local ? "" : pushCard()) +
+      (DEMO || GH.local
         ? ""
         : '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note u-m0-0-10">Connect their phone in one scan. Everything they log shows their name, and the app stops a second dinner.</div><button class="b s p" data-a="qrshow">Show setup code</button></div>') +
       '<div class="card"><h2>🔒 Privacy</h2><div class="note u-m0">Your data lives in your own private GitHub repository and on this phone. The app has no server, no account, no ads and no tracking. Nobody else, including whoever made the app, can see it. <a href="about/#privacy">More</a></div></div>' +
-      '<div class="card"><h2>💾 Backup</h2><div class="note u-m0-0-10">Everything (both cats, all logs, notes, costs) as one file you can keep in Files, iCloud or email to yourself. Photos stay on GitHub.</div><button class="b s p" data-a="backup">Download a backup</button></div>' +
-      '<div class="card"><h2>🔗 Connection</h2><div class="kv"><span class="k">Data</span><span class="v">' +
+      '<div class="card"><h2>💾 Backup</h2><div class="note u-m0-0-10">Everything (both cats, all logs, notes, costs) as one file you can keep in Files, iCloud or email to yourself. Photos stay on GitHub.</div><div class="row u-gap8"><button class="b s p" data-a="backup">Download a backup</button><button class="b s" data-a="restore">Restore from a backup</button></div><input type="file" id="restoreIn" accept=".json,application/json" hidden></div>' +
+      (GH.local
+        ? '<div class="card"><h2>🔗 Your data</h2><div class="note u-m0-0-10"><b>Only on this phone.</b> If the phone is lost, or the app is deleted, it\'s gone. Connect GitHub (free) to keep it safe and share it with someone, or download a backup now and then.</div><div class="row u-gap8"><button class="b s p" data-a="connGh">Connect GitHub</button><button class="b s ghost" data-a="erase">Erase everything</button></div><div class="note">App version ' +
+          APPV +
+          "</div></div>"
+        : '<div class="card"><h2>🔗 Connection</h2><div class="kv"><span class="k">Data</span><span class="v">' +
       esc(DEMO ? "Demo (made-up data)" : GH.owner + "/" + GH.repo) +
       '</span></div><div class="kv"><span class="k">This phone</span><span class="v">' +
       esc(GH.who || "") +
       '</span></div><div class="kv"><span class="k">Status</span><span class="v">' +
       esc(saveState) +
-      '</span></div><div class="row u-mt10"><button class="b s" data-a="syncnow">Sync now</button><button class="b s ghost" data-a="ghout">Disconnect this phone</button></div><div class="note">App version ' +
+      '</span></div><div class="row u-mt10"><button class="b s" data-a="syncnow">Sync now</button><button class="b s ghost" data-a="ghout">Disconnect this phone</button></div>' +
+            (/Access key|Can\'t save/.test(saveState) ? '<button class="b s p u-mt8" data-a="connGh">Enter a new access key</button>' : "") +
+            '<div class="note">To delete your data completely, disconnect here, then on GitHub open the data repository › Settings › Delete this repository.</div><div class="note">App version ' +
       APPV +
-      "</div></div>" +
+      "</div></div>") +
+      
       '<div class="card"><h2>' +
       esc(c.name) +
       '\'s plan</h2><label class="l">Name</label><input data-rename="' +
