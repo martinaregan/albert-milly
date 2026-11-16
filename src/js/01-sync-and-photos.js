@@ -42,6 +42,8 @@
   function pull() {
     return api("data.json")
       .then(function (r) {
+        // GitHub's rate limit also answers 403, but the key is fine: don't send them to re-enter it.
+        if (r.status === 403 && r.headers.get("x-ratelimit-remaining") === "0") throw { http: 403, limit: 1 };
         if (r.status === 401 || r.status === 403) throw { auth: r.status };
         // 404 means either no access or no data.json yet. A brand-new repository is fine: start from starter.json.
         if (r.status === 404)
@@ -57,6 +59,19 @@
       })
       .then(function (j) {
         if (!j) return null;
+        // Files over 1 MB come back without content: fetch the blob instead (works up to 100 MB).
+        if (!j.content && j.sha)
+          return fetch("https://api.github.com/repos/" + GH.owner + "/" + GH.repo + "/git/blobs/" + j.sha, {
+            headers: { Authorization: "Bearer " + GH.token, Accept: "application/vnd.github+json" },
+            cache: "no-store"
+          })
+            .then(function (r) {
+              if (!r.ok) throw { http: r.status };
+              return r.json();
+            })
+            .then(function (b) {
+              return { data: JSON.parse(b64d(b.content)), sha: j.sha };
+            });
         return { data: JSON.parse(b64d(j.content)), sha: j.sha };
       });
   }
@@ -181,6 +196,8 @@
     })
       .then(function (r) {
         if (r.status === 409 || r.status === 422) return "conflict";
+        // GitHub's rate limit also answers 403, but the key is fine: don't send them to re-enter it.
+        if (r.status === 403 && r.headers.get("x-ratelimit-remaining") === "0") throw { http: 403, limit: 1 };
         if (r.status === 401 || r.status === 403) throw { auth: r.status };
         if (!r.ok) throw { http: r.status };
         return r.json();
@@ -220,7 +237,9 @@
               : "Access key expired or removed"
             : navigator.onLine === false
               ? "Offline, will sync"
-              : "Not synced yet, retrying"
+              : e && e.limit
+                ? "GitHub is busy, will sync"
+                : "Not synced yet, retrying"
         );
         setTimeout(push, 15000);
       });
@@ -303,12 +322,19 @@
         setStatus(dirty ? "Saving…" : "Synced");
       })
       .catch(function (e) {
+        // Only say "Offline" when it really is the connection; a GitHub hiccup or an app error says so.
+        var net = navigator.onLine === false || (e instanceof TypeError && /fetch|network|load/i.test(e.message));
+        if (!(e && (e.auth || e.noaccess || e.http)) && !net && window.console) console.error("Sync failed", e);
         setStatus(
           e && (e.auth || e.noaccess)
             ? "Access key not working"
-            : S
-              ? "Offline, showing saved copy"
-              : "Could not load. Check connection"
+            : !S
+              ? "Could not load. Check connection"
+              : net
+                ? "Offline, showing saved copy"
+                : e && e.limit
+                  ? "GitHub is busy, showing saved copy"
+                  : "Couldn't reach GitHub, showing saved copy"
         );
         if (!S) {
           if (e && (e.auth || e.noaccess)) {
@@ -513,7 +539,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "52";
+  var APPV = "53";
 
   // Links that open GitHub with most of the form already filled in.
   var GH_NEW_REPO =

@@ -113,7 +113,11 @@
     if (!LD || !html) return html;
     return String(html)
       .replace(/>([^<>]+)</g, function (m, t) {
-        return ">" + tr1(t) + "<";
+        // Look phrases up with &amp; and &#39; decoded ("To do & coming up"), then encode again.
+        if (!/&(amp|#39|quot);/.test(t)) return ">" + tr1(t) + "<";
+        var d = t.replace(/&amp;/g, "&").replace(/&#39;/g, "'").replace(/&quot;/g, '"'),
+          o = tr1(d);
+        return ">" + (o === d ? t : o.replace(/&/g, "&amp;").replace(/</g, "&lt;")) + "<";
       })
       .replace(/(placeholder|aria-label|title)="([^"]*)"/g, function (m, a, t) {
         return a + '="' + tr1(t) + '"';

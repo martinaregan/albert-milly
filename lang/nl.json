@@ -416,7 +416,7 @@
 "Why": "Waarom",
 "Worm & flea": "Worm en vlo",
 "Worming": "Ontworming",
-"Worming & flea": "Ontworming en vlooien",
+"Worming & flea": "Ontworming en vlo",
 "Year": "Jaar",
 "Year: ?": "Jaar: ?",
 "Yellow": "Geel",
@@ -590,9 +590,145 @@
 "Delete everything": "Alles verwijderen",
 "Where to find the calories": "Waar je de calorieën vindt",
 "Shorter Settings: the long how-tos fold away behind How this works": "Kortere Instellingen: de lange uitleg zit achter Hoe dit werkt",
-"Darker orange buttons, so the white text is easier to read": "Donkerder oranje knoppen, zodat de witte tekst beter leesbaar is"
+"Darker orange buttons, so the white text is easier to read": "Donkerder oranje knoppen, zodat de witte tekst beter leesbaar is",
+"You paid": "Zelf betaald",
+"fight": "ruzie",
+"weigh-in": "weging",
+"vet": "dierenarts",
+"symptom": "symptoom",
+"poo/pee to check": "poep/plas om te checken",
+"worm/flea": "worm/vlo",
+"ate over plan": "meer gegeten dan gepland",
+"to do": "te doen",
+"note": "notitie",
+"birthday": "verjaardag",
+"hotel drop-off/pick-up": "kattenhotel brengen/ophalen",
+"striped day = at the cat hotel": "gestreepte dag = in het kattenhotel",
+"Already tried": "Al geprobeerd",
+"Background": "Achtergrond",
+"Poo & pee today": "Poep en plas vandaag",
+"Asked for": "Gevraagd",
+"Bring": "Meenemen",
+"Chip & jabs": "Chip en vaccinaties",
+"Claims": "Declaraties",
+"Contact": "Contact",
+"Email": "E-mail",
+"Hours": "Openingstijden",
+"Personality": "Karakter",
+"Phone": "Telefoon",
+"Premium": "Premie",
+"Total": "Totaal",
+"box of 24 cans": "doos van 24 blikjes",
+"GitHub is busy, showing saved copy": "GitHub is druk, bewaarde versie",
+"Couldn't reach GitHub, showing saved copy": "GitHub niet bereikt, bewaarde versie",
+"GitHub is busy, will sync": "GitHub is druk, synchroniseert later",
+"Fixes: the sync status now says why it couldn't sync, more of the app in Dutch, money totals fit small screens": "Verbeteringen: de synchronisatiestatus zegt nu waarom het niet lukte, meer van de app in het Nederlands, bedragen passen op kleine schermen"
 },
 "p": [
+[
+"In (.+) · Out (.+)",
+"Brengen \\1 · Ophalen \\2"
+],
+[
+"(.+): flea due",
+"\\1: vlo gepland"
+],
+[
+"(.+): worming due",
+"\\1: ontworming gepland"
+],
+[
+"(.+): weighed (.+)",
+"\\1: gewogen \\2"
+],
+[
+"(.+): ate over plan",
+"\\1: meer gegeten dan gepland"
+],
+[
+"(.+): vet, (.+)",
+"\\1: dierenarts, \\2"
+],
+[
+"(\\d+) g dry · (\\d+) wet",
+"\\1 g droog · \\2 nat"
+],
+[
+"(\\d+) min play",
+"\\1 min spelen"
+],
+[
+"about (\\d+) kcal",
+"ongeveer \\1 kcal"
+],
+[
+"last visit (.+)",
+"laatste bezoek \\1"
+],
+[
+"Due (.+)",
+"Uiterlijk \\1"
+],
+[
+"next (.+)",
+"volgende \\1"
+],
+[
+"(\\d+) incidents?",
+"\\1 incident(en)"
+],
+[
+"(\\d+) bites? or worse",
+"\\1 beet of erger"
+],
+[
+"(\\d+) total",
+"\\1 in totaal"
+],
+[
+"(\\d+) things? logged",
+"\\1 ding(en) ingevuld"
+],
+[
+"Insurance back (.+)",
+"Terug van verzekering \\1"
+],
+[
+"(.+) a month",
+"\\1 per maand"
+],
+[
+"about (\\d+) years?",
+"ongeveer \\1 jaar"
+],
+[
+"(\\d+) years?",
+"\\1 jaar"
+],
+[
+"(~?\\d+) yrs",
+"\\1 jr"
+],
+[
+"Born around (\\d+)",
+"Geboren rond \\1"
+],
+[
+"jabs (.+)",
+"vaccinaties \\1"
+],
+[
+"(.+) policy",
+"Polis \\1"
+],
+[
+"(.+)'s food",
+"Voer van \\1"
+],
+[
+"Once you have a few days of play logged for (.+), this compares fight counts on high-play and low-play days\\.",
+"Zodra je een paar dagen spelen hebt ingevuld voor \\1, vergelijkt dit het aantal ruzies op dagen met veel en weinig spelen."
+],
 [
 "Saturday (.+)",
 "zaterdag \\1"

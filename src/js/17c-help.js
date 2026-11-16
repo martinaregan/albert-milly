@@ -1,6 +1,7 @@
 /* 17c-help: First-time intro, "What's new" after an update, the emergency vet panel, and report a problem. */
   // Newest first. Add a line here with every release that changes something people will notice.
   var NEWS = [
+    ["53", "Fixes: the sync status now says why it couldn't sync, more of the app in Dutch, money totals fit small screens"],
     ["52", "Shorter Settings: the long how-tos fold away behind How this works", "Darker orange buttons, so the white text is easier to read"],
     ["49", "📖 A full step-by-step guide with pictures (Settings › Help)"],
     ["48", "Easier to read: stronger text contrast in light and dark mode"],

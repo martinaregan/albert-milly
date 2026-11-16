@@ -517,7 +517,7 @@ label.l {
 }
 .grid3 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 .stat {
@@ -526,7 +526,8 @@ label.l {
 }
 .stat b {
   display: block;
-  font-size: 20px;
+  font-size: clamp(15px, 5vw, 20px);
+  white-space: nowrap;
 }
 .list .it {
   padding: 10px 0;

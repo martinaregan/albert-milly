@@ -521,7 +521,11 @@
   };
 
   function eur(n) {
-    return "€" + (Math.round(n * 100) / 100).toFixed(2);
+    try {
+      return new Intl.NumberFormat(LOC(), { style: "currency", currency: "EUR" }).format(Math.round(n * 100) / 100);
+    } catch (e) {
+      return "€" + (Math.round(n * 100) / 100).toFixed(2);
+    }
   }
 
   function upcomingCosts(who) {
