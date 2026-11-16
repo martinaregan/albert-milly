@@ -87,7 +87,7 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 | **Stock** | Shopping list, each food's "order by" date (3 days before it runs out, or before a cat hotel stay), supplements, treats and household items. |
 | **Money** | Month total after insurance, coming up in the next 30 days, where the money went, claims waiting on insurance, monthly repeating costs (like the insurance premium) and totals by day, week, month and year. |
 | **Info** | Vet, insurance, cat hotel, bookings (with a countdown), profiles. |
-| **Settings** | Grouped into **Cats** (photos, plans, foods, checklist, play types), **This phone** (app icon badge, sharing, lock screen shortcut) and **Data & sync** (backup, connection, version). |
+| **Settings** | Grouped into **Cats** (photos, plans, foods, checklist, play types), **This phone** (app icon badge, sharing, shortcuts & widget) and **Data & sync** (backup, connection, version). |
 
 ## Extras
 
@@ -109,7 +109,7 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **Languages** (Settings › This phone): English and Dutch. Text is translated as each screen is drawn, from `lang/<code>.json` (exact phrases plus patterns for phrases with numbers or names). Anything not yet translated stays in English.
 - **No signal?** Everything you log is saved on the phone straight away and uploads when you're back online, even if the app was closed in between.
 - **App icon badge**: Settings › This phone › turn on, or off again (per phone). The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).
-- **Lock screen shortcut**: an iPhone Shortcut that opens `…/albert-milly/?log=breakfast` (or `?log=dinner`) logs the usual meal for both cats. Shortcuts open links in Safari, so connect the app once in Safari first.
+- **Shortcuts & widget**: links that start a log straight from the home screen or lock screen. `…/albert-milly/?log=breakfast` and `?log=dinner` log the usual meal for both cats; `?log=poo`, `pee`, `play`, `fight`, `calm`, `weigh`, `note` and `quick` open that form (add `&cat=milly` to pick the cat for poo and pee). Settings › This phone has a Copy link button for each. On iPhone, put each link in an Open URLs shortcut, keep them in one folder and add the Shortcuts widget. Shortcuts open links in Safari, so connect the app once in Safari first. On Android, hold the app icon.
 - **Backup**: Settings › Data & sync › download everything as one file (photos stay online).
 - **Light and dark mode** follow the phone unless you pick one in Settings. Animations switch off when the iPhone's Reduce Motion is on.
 

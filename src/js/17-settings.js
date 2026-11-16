@@ -28,10 +28,30 @@
     return '<details class="more"><summary><i>?</i>' + (label || "How this works") + '</summary><div class="note">' + html + "</div></details>";
   }
 
+  // Shortcut links: <app address>?log=<key> opens the app and starts that log (handled in 20-start).
+  // An iPhone Shortcuts widget is a grid of these. [key, label, what it does, action, value]
+  // An empty action means "log the usual meal for both cats"; the others tap the same button as the + menu.
+  var DEEP = [
+    ["breakfast", "Breakfast", "logs the usual for both", "", "dry"],
+    ["dinner", "Dinner", "logs the usual for both", "", "wet"],
+    ["poo", "Poo", "opens the poo questions", "lnew", "Poo"],
+    ["pee", "Pee", "opens the pee form", "lnew", "Pee"],
+    ["play", "Play", "minutes or timer", "plopen", ""],
+    ["fight", "Fight", "what happened", "fnew", ""],
+    ["calm", "Calm moment", "something nice", "calmnew", ""],
+    ["weigh", "Weigh-in", "opens the weigh-in form", "wopen", ""],
+    ["note", "Note", "or reminder", "noteNew", ""],
+    ["quick", "Quick log", "opens the + menu", "quick", ""]
+  ];
+
+  function deepLink(k) {
+    return location.origin + location.pathname + "?log=" + k;
+  }
+
   // Settings: a short menu; each section opens on its own page (ui.sset).
   var SSECT = [
     ["cats", "🐱", "Cats", "Looks, names, photos, plans, foods, checklist"],
-    ["phone", "📱", "This phone", "Language, appearance, units, tabs, badge, shortcut"],
+    ["phone", "📱", "This phone", "Language, appearance, units, tabs, badge, shortcuts"],
     ["share", "👥", "Sharing & notifications", "Another phone, notes and reminders"],
     ["data", "💾", "Data", "Backup, restore, connection, privacy"],
     ["help", "❓", "Help", "How it works, when to call a vet, Claude, report a problem"]
@@ -57,10 +77,36 @@
       else G[g].push(el.outerHTML);
     });
     G.phone.push(
-      '<div class="card"><h2>📱 Lock screen shortcut</h2><div class="note u-m0">Log breakfast or dinner straight from the lock screen.</div>' + more(
-        "Shortcuts app › + › Open URLs › paste <b>" +
-        esc(location.host + location.pathname) +
-        "?log=breakfast</b> (or ?log=dinner). First open the app once in Safari and connect, because Shortcuts opens links in Safari.") +
+      '<div class="card"><h2>📱 Shortcuts & widget</h2><div class="note u-m0">One-tap buttons for your home screen or lock screen. Copy a link, then put it in a Shortcut.</div><div class="dl">' +
+        DEEP.filter(function (x) {
+          return (
+            (tabOn("health") || !/^(poo|pee)$/.test(x[0])) &&
+            (tabOn("fights") || !/^(fight|calm)$/.test(x[0])) &&
+            (tabOn("weight") || x[0] !== "weigh") &&
+            (!(GH && (GH.local || GH.demo)) || x[0] !== "note")
+          );
+        })
+          .map(function (x) {
+            return (
+              '<div class="dlr"><div><b>' +
+              x[1] +
+              "</b><small>" +
+              x[2] +
+              '</small></div><button class="b s ghost" data-a="dlcopy" data-v="' +
+              x[0] +
+              '">Copy link</button></div>'
+            );
+          })
+          .join("") +
+        "</div>" +
+        more(
+          "<b>1.</b> Open the app once in Safari and connect it there, because Shortcuts opens links in Safari, not in the home screen app. The quickest way: Settings › Sharing & notifications › Show setup code › Copy link instead, then paste it into Safari." +
+            "<br><b>2.</b> Shortcuts app › + › Open URLs › paste the link. Name it and pick an icon. Make one for each button you want." +
+            "<br><b>3.</b> Put them in one folder in Shortcuts." +
+            "<br><b>4.</b> Hold an empty spot on the home screen › Edit › Add Widget › Shortcuts. The medium size fits 4 buttons, the large one 8. Hold the widget › Edit Widget to choose your folder." +
+            "<br>For poo and pee, add <b>&amp;cat=milly</b> to the end of the link to pick the cat.",
+          "How to make the widget"
+        ) +
         "</div>"
     );
     var cur = ui.sset;

@@ -125,13 +125,19 @@
   loadLang(render);
   render();
 
+  // Shortcut links: ?log=breakfast, ?log=fight… (the list is DEEP in 17-settings), with an optional &cat=milly.
+  // Waits for the newest data, then logs the usual meal or opens the same form as the + menu.
   (function () {
-    var m = location.search.match(/[?&]log=(breakfast|dinner)/);
+    var m = location.search.match(/[?&]log=([a-z]+)/),
+      mc = location.search.match(/[?&]cat=([^&]+)/);
     if (!m) return;
-    var kd = m[1] === "breakfast" ? "dry" : "wet";
+    var d = DEEP.filter(function (x) {
+      return x[0] === m[1];
+    })[0];
     try {
       history.replaceState(null, "", location.pathname);
     } catch (e) {}
+    if (!d) return;
     if (!GH) {
       setTimeout(function () {
         toast("Set up syncing in this browser first (⚙️), then the shortcut works");
@@ -142,8 +148,31 @@
       if (!S) return;
       ui.day = today();
       ui.tab = "today";
-      logUsual("both", kd);
-      render();
+      if (mc) {
+        var want = decodeURIComponent(mc[1]).toLowerCase();
+        Object.keys(S.cats).forEach(function (k) {
+          if (k === want || (S.cats[k].name || "").toLowerCase() === want) ui.cat = k;
+        });
+      }
+      if (!d[3]) {
+        logUsual("both", d[4]);
+        render();
+        return;
+      }
+      // A switched-off tab (or notes without syncing) has no form to open: show the + menu instead.
+      var off =
+        (/^(poo|pee)$/.test(d[0]) && !tabOn("health")) ||
+        (/^(fight|calm)$/.test(d[0]) && !tabOn("fights")) ||
+        (d[0] === "weigh" && !tabOn("weight")) ||
+        (d[0] === "note" && (GH.local || GH.demo));
+      var b = document.createElement("button");
+      b.dataset.a = off ? "quick" : d[3];
+      b.dataset.v = off ? "" : d[4];
+      b.dataset.k = "today";
+      b.style.display = "none";
+      document.body.appendChild(b);
+      b.click();
+      b.remove();
     };
     sync().then(go, go);
   })();

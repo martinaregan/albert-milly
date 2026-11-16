@@ -92,6 +92,25 @@ async def main():
         check(not errors, f"no page errors during actions ({errors[:1]})")
         await page.context.close()
 
+        print("shortcut links")
+        for key, sel, what in [("fight", ".modal", "the fight form"), ("poo&cat=milly", ".modal", "the poo form"), ("quick", ".qsheet", "the quick log")]:
+            page, errors = await open_app(browser, url)
+            await page.goto(url + "?log=" + key); await page.clock.run_for(1500)
+            check(await page.query_selector(sel) is not None, f"?log={key} opens {what}")
+            check("log=" not in await page.evaluate("location.search"), f"?log={key} is cleared from the address")
+            if "cat=" in key:
+                check(await page.evaluate("T.ui.cat") == "milly", "&cat=milly picks Milly")
+            check(not errors, f"no page errors for ?log={key} ({errors[:1]})")
+            await page.context.close()
+        page, errors = await open_app(browser, url)
+        await page.goto(url + "?log=dinner"); await page.clock.run_for(1500)
+        n = await page.evaluate("var d=T.S.cats.albert.days['2026-11-16'];d&&d.f?Object.keys(d.f).length:0")
+        check(n == 1, "?log=dinner logs dinner in one go")
+        await page.evaluate("T.ui.modal=null;T.ui.tab='settings';T.ui.sset='phone';T.render()"); await page.clock.run_for(200)
+        check(await page.evaluate("document.querySelectorAll('[data-a=dlcopy]').length") >= 8, "Settings lists the shortcut links")
+        check(not errors, f"no page errors for ?log=dinner ({errors[:1]})")
+        await page.context.close()
+
         print("built app (index.html)")
         page, errors = await open_app(browser, "file://" + os.path.join(ROOT, "index.html"))
         for tab in ["weight", "health", "calendar", "fights", "stock", "money", "info", "today"]:

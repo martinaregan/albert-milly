@@ -2,6 +2,11 @@
 
 The version number is at the bottom of Settings › Data & sync.
 
+## 16 November 2026, night (version 55)
+
+- **Shortcuts & widget** (Settings › This phone): copyable links that log breakfast or dinner in one tap, or open the poo, pee, play, fight, calm moment, weigh-in, note or quick log form. Put them in iPhone Shortcuts and add the Shortcuts widget to your home screen. Replaces the lock screen shortcut card (the old `?log=breakfast` and `?log=dinner` links still work).
+- **Android**: hold the app icon for Breakfast, Dinner, Fight and Quick log.
+
 ## 16 November 2026, evening (version 54)
 
 - **App icon badge can be turned off** again per phone (Settings › This phone). It used to only turn on.

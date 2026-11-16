@@ -234,6 +234,19 @@ ACT["qrcopy"] = function () {
   );
 };
 
+// Copy a shortcut link (Settings › This phone › Shortcuts & widget) to paste into the Shortcuts app.
+ACT["dlcopy"] = function (e, t, a, v) {
+  var l = deepLink(v);
+  (navigator.clipboard ? navigator.clipboard.writeText(l) : Promise.reject()).then(
+    function () {
+      toast("Link copied. Paste it into an Open URLs shortcut");
+    },
+    function () {
+      prompt("Copy this link", l);
+    }
+  );
+};
+
 // Coat / look: data-v is "field|value". "p|orig" goes back to the original drawing.
 ACT["coatset"] = function (e, t, a, v, c) {
   var p = v.split("|"),
