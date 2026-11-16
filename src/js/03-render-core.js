@@ -19,6 +19,10 @@
       return;
     }
     needRender = false;
+    if (S.fresh && !DEMO && !ui.modal) {
+      ui.sw = ui.sw || { intro: true, cat: 0, step: 0 };
+      ui.modal = setupWiz;
+    }
     applyTheme();
     document.body.className = ui.cat;
     try {

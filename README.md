@@ -60,6 +60,8 @@ The first time you open the app it asks for:
 
 Each phone connects once. To add someone else's phone, open **Settings › This phone › Show setup code** and scan the QR code with their camera. The access key, repository and app open on their phone, and they only type their name. The code contains your access key, so only show it to people you'd trust with the data.
 
+**First-run setup**: a new data repository opens a short setup for both cats: names, look, birthday, current and target weight, their dry and wet food, and a suggested daily dry amount (from the same vet formula as the weight plan). Everything stays editable in Settings.
+
 Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](https://martinaregan.github.io/albert-milly/?demo). It loads made-up cats (with dates moved to today) and never saves anything.
 
 ## Everyday use

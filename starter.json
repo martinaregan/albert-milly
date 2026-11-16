@@ -10,7 +10,7 @@
  "fights": [],
  "cats": {
   "albert": {
-   "name": "Albert",
+   "name": "Cat 1",
    "color": "#e07a2e",
    "target": 6.5,
    "foods": [
@@ -46,11 +46,15 @@
    "plan": "",
    "rr": [],
    "vq": [],
-   "kcalLo": 330,
-   "kcalHi": 370
+   "coat": {
+    "p": "tabby",
+    "a": "#a9a6a0",
+    "b": "#4a4642",
+    "e": "#8fbf5a"
+   }
   },
   "milly": {
-   "name": "Milly",
+   "name": "Cat 2",
    "color": "#2e2e2e",
    "target": 4,
    "foods": [
@@ -85,7 +89,12 @@
    "treat": [],
    "plan": "",
    "rr": [],
-   "vq": []
+   "vq": [],
+   "coat": {
+    "p": "bicolour",
+    "a": "#1e1e1e",
+    "e": "#e2b93b"
+   }
   }
  },
  "info": {
@@ -144,5 +153,6 @@
   }
  ],
  "stock": {},
- "bed": {}
+ "bed": {},
+ "fresh": true
 }
