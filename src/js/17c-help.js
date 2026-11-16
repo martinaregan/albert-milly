@@ -1,6 +1,7 @@
 /* 17c-help: First-time intro, "What's new" after an update, the emergency vet panel, and report a problem. */
   // Newest first. Add a line here with every release that changes something people will notice.
   var NEWS = [
+    ["48", "Easier to read: stronger text contrast in light and dark mode"],
     ["47", "Settings is now a short menu: Cats, This phone, Sharing, Data, Help", "Calmer Today: the week and who did what fold away", "Notes and reminders: tap + › Note"],
     ["46", "Nederlands: the app in Dutch (Settings › This phone › Language)"],
     ["45", "Heads-up on Today before the time most fights happen", "📅 Add worming, flea, weigh-ins, birthdays and bookings to your calendar (Settings › Help)"],

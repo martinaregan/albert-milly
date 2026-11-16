@@ -2,6 +2,19 @@
 
 The version number is at the bottom of Settings › Data & sync.
 
+## 16 November 2026, afternoon (versions 33 to 48)
+
+- **Easier to read**: grey text, the calendar's today and future days, and coloured pills now meet the WCAG AA contrast level; every button has a screen-reader name.
+- **Settings as a short menu**: Cats, This phone, Sharing & notifications, Data, Help.
+- **Calmer Today**: only what needs you now; the week and who did what fold away.
+- **Languages**: Dutch, with a system for adding more. **Appearance**: Automatic, Light or Dark. **kg or lb**. **Tabs** can be switched off.
+- **Start without an account**, connect GitHub later; easier GitHub setup with pre-filled links and clear error messages; restore from a backup; erasing needs a code.
+- **Notes and reminders for each other**, with phone notifications sent by the data repository's workflow.
+- **Your cats, your colours**: editable names, coats, breeds, tap-the-fur colours from a photo, app colours that follow each cat. **First-run setup** for new people.
+- **Care sheet** for a sitter or cat hotel, and **holiday mode** during stays.
+- **Help**: first-time intro, What's new, when to call a vet (🚨 Urgent? on Health), report a problem, log by chatting with Claude (with risks and costs), calendar file.
+- **Fight-time heads-up** before the hours most fights happen.
+
 ## 16 November 2026 (versions 16 to 32)
 
 - **Birthdays**: a birthday per cat, age on the Info tab, 🎂 on the calendar, "turns 3" in Coming up and a birthday headline. Rough birth dates give an age only.

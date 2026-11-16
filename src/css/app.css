@@ -46,7 +46,7 @@
   color: var(--warn) !important;
 }
 .u-c5cb85c {
-  color: #5cb85c !important;
+  color: #2e7d32 !important;
 }
 .u-cols-repeat-3-1fr {
   grid-template-columns: repeat(3,1fr) !important;
@@ -300,7 +300,7 @@
 
 :root {
   --ink: #2b2622;
-  --mute: #8a8079;
+  --mute: #6f665f;
   --albert: #e07a2e;
   --milly: #3b3b3b;
   --ok: #3e9a63;
@@ -1328,7 +1328,7 @@ a.ci:after {
   border-color: var(--accent);
 }
 .cal .d.fut {
-  opacity: 0.45;
+  opacity: 0.72;
 }
 .cal .d.hotel {
   background: repeating-linear-gradient(
@@ -2109,10 +2109,10 @@ b[id^="res-"]:empty {
 }
 .dpill.warn {
   background: #e0a03a;
-  color: #fff;
+  color: #3a2a10;
 }
 .dpill.ok {
-  background: #5cb85c;
+  background: #2e7d32;
   color: #fff;
 }
 details.card > summary {
@@ -2529,7 +2529,7 @@ nav.atend:after {
   transform: scale(0.96);
 }
 .ttile.ok {
-  background: #2f9e5b;
+  background: #1f7a45;
 }
 .ttile.warn {
   background: #d98a1c;
@@ -2552,7 +2552,6 @@ nav.atend:after {
 }
 .tsub {
   font-size: 11px;
-  opacity: 0.85;
   margin-top: 2px;
 }
 .catcard .head .ihic {
@@ -2844,7 +2843,8 @@ nav.atend:after {
 }
 .switch button:not(.on) .nm,
 .switch button:not(.on) .wt {
-  opacity: 0.7;
+  opacity: 1;
+  color: var(--mute);
 }
 .switch button:active {
   transform: scale(0.97);
@@ -2954,8 +2954,8 @@ nav.atend:after {
   margin: 8px 10px 10px;
 }
 .cal .d.today {
-  background: #e8822f !important;
-  border-color: #e8822f !important;
+  background: #b85a1c !important;
+  border-color: #b85a1c !important;
 }
 .cal .d.today .n {
   background: none !important;
@@ -4472,4 +4472,29 @@ button.sosc {
 }
 .sback {
   margin-bottom: 8px;
+}
+
+/* Readability: text contrast at least 4.5:1 (WCAG AA) */
+.switch button:not(.on) .swh {
+  color: #a8501a;
+}
+.tile b small {
+  color: var(--mute);
+}
+.bkp small.bkok {
+  color: #2e7d32;
+}
+@media (prefers-color-scheme: dark) {
+  .u-c5cb85c {
+    color: #6fcf7a !important;
+  }
+  .bkp small.bkok {
+    color: #6fcf7a;
+  }
+  .switch button:not(.on) .swh {
+    color: #f0a46b;
+  }
+}
+.tile b small {
+  opacity: 1 !important;
 }

@@ -148,7 +148,7 @@
           'data-stop="1">',
           'data-stop="1"><button class="xbtn" data-a="close" aria-label="Close">✕</button>'
         );
-    h += '<input type="file" id="fileIn" class="file">';
+    h += '<input type="file" id="fileIn" class="file" aria-label="Add a file">';
     var oldNav = document.querySelector(".navin"),
       navX = oldNav ? oldNav.scrollLeft : null;
     if (navX == null) {
