@@ -224,7 +224,7 @@
 "Next": "Volgende",
 "Next weigh-in": "Volgende weging",
 "Night": "Nacht",
-"Night (22–5)": "Nacht (22–5)",
+"Night (22-5)": "Nacht (22-5)",
 "Night-time is the top trigger": "'s Nachts is de grootste aanleiding",
 "No": "Nee",
 "No expiration": "No expiration",
@@ -505,7 +505,7 @@
 "Balcony": "Balkon",
 "Garden": "Tuin",
 "Uses the standard vet formula (70 × target kg": "Gebruikt de standaardformule van dierenartsen (70 × streefgewicht in kg",
-", × 0.8–1.0) and the calories on each food. Run changes past the vet, especially for prescription food.": ", × 0,8–1,0) en de calorieën van elk voer. Overleg veranderingen met de dierenarts, zeker bij dieetvoer.",
+", × 0.8-1.0) and the calories on each food. Run changes past the vet, especially for prescription food.": ", × 0,8-1,0) en de calorieën van elk voer. Overleg veranderingen met de dierenarts, zeker bij dieetvoer.",
 "box of 24": "doos van 24",
 "bag": "zak",
 "pack": "pak",
@@ -700,8 +700,8 @@
 "Avond (\\1)"
 ],
 [
-"Safe loss for (.+): (.+) a week \\(1–1\\.5% of current weight\\)\\. Faster than that risks fatty liver\\.",
-"Veilig afvallen voor \\1: \\2 per week (1–1,5% van het huidige gewicht). Sneller geeft kans op leververvetting."
+"Safe loss for (.+): (.+) a week \\(1-1\\.5% of current weight\\)\\. Faster than that risks fatty liver\\.",
+"Veilig afvallen voor \\1: \\2 per week (1-1,5% van het huidige gewicht). Sneller geeft kans op leververvetting."
 ],
 [
 "Today 💩 (\\d+) · 💧 (\\d+) · (\\d+) symptoms? in 30 days",

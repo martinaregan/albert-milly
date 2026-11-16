@@ -331,7 +331,7 @@
         "kcal",
         t.kcal,
         fd.hi,
-        Math.round(t.kcal) + "<small>/" + Math.round(fd.lo) + "–" + Math.round(fd.hi) + "</small>"
+        Math.round(t.kcal) + "<small>/" + Math.round(fd.lo) + "-" + Math.round(fd.hi) + "</small>"
       ) +
       "</div>" +
       '<div class="row between u-mt10"><span class="small">Treats: <b>' +

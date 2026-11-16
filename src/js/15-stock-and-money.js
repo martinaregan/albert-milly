@@ -188,7 +188,7 @@
       return { st: st, left: left, days: st && st.days != null ? st.days : null };
     }
     function pill(days) {
-      if (days == null) return '<span class="dpill">–</span>';
+      if (days == null) return '<span class="dpill">-</span>';
       var c = days < 7 ? "bad" : days < 14 ? "warn" : "ok";
       return '<span class="dpill ' + c + '">' + days + "d</span>";
     }

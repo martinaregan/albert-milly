@@ -267,11 +267,11 @@
         ? "No dates"
         : from === to
           ? d1.getDate() + " " + mo(d1)
-          : d1.getDate() + (mo(d1) !== mo(d2) ? " " + mo(d1) : "") + "–" + d2.getDate() + " " + mo(d2);
+          : d1.getDate() + (mo(d1) !== mo(d2) ? " " + mo(d1) : "") + "-" + d2.getDate() + " " + mo(d2);
     var nt = String(b.notes || ""),
       tm = function (re) {
         var m = nt.match(re);
-        return m ? (m[1] + (m[2] ? "–" + m[2] : "")).replace(/\./g, ":") : "";
+        return m ? (m[1] + (m[2] ? "-" + m[2] : "")).replace(/\./g, ":") : "";
       },
       dt = b.dropTime || tm(/drop[\s-]*off[^\n]*?(\d{1,2}[:.]\d{2})(?:\s*(?:to|-|–)\s*(\d{1,2}[:.]\d{2}))?/i),
       pt = b.pickTime || tm(/pick[\s-]*up[^\n]*?(\d{1,2}[:.]\d{2})(?:\s*(?:to|-|–)\s*(\d{1,2}[:.]\d{2}))?/i),

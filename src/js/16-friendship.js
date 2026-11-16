@@ -251,7 +251,7 @@
       mood[2] +
       "</div></div></div>" +
       '<div class="stats3"><div><b>' +
-      (since0 == null ? "–" : since0) +
+      (since0 == null ? "-" : since0) +
       "</b><span>days since</span></div><div><b>" +
       w1 +
       "</b><span>this week</span></div><div><b>" +

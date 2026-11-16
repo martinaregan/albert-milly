@@ -676,7 +676,7 @@
       r = stats(c),
       since = addDays(today(), -30),
       L = [];
-    L.push(c.name + " – summary for the vet (" + short(since) + " to " + short(today()) + ")", "");
+    L.push(c.name + " - summary for the vet (" + short(since) + " to " + short(today()) + ")", "");
     if (r) {
       L.push(
         "Weight: " +
@@ -1359,7 +1359,7 @@
         l = lastTreat(c, ty),
         du = treatDue(c, ty),
         st = du ? (du.days < 0 ? "bad" : du.days <= 7 ? "warn" : "ok") : "none",
-        big = du ? (du.days < 0 ? -du.days + "d over" : du.days === 0 ? "Today" : du.days + " days") : "–",
+        big = du ? (du.days < 0 ? -du.days + "d over" : du.days === 0 ? "Today" : du.days + " days") : "-",
         unit = du
           ? du.days < 0
             ? "days over"

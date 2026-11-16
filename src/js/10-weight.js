@@ -366,7 +366,7 @@
       wt(r.toGo > 0 ? r.toGo : 0) +
       "</b></div>" +
       '<div class="stat"><span class="mute">Per week</span><b>' +
-      (r.kgWeek != null ? wg(r.kgWeek * 1000) : "–") +
+      (r.kgWeek != null ? wg(r.kgWeek * 1000) : "-") +
       "</b></div></div>" +
       '<div class="u-mt12">' +
       chart(c) +
@@ -384,9 +384,9 @@
       esc(c.name) +
       ": " +
       (unit() === "lb" ? ((r.last.kg * 10) / 28.35).toFixed(1) : Math.round(r.last.kg * 10)) +
-      "–" +
+      "-" +
       wg(r.last.kg * 15) +
-      " a week (1–1.5% of current weight). Faster than that risks fatty liver.</div>"
+      " a week (1-1.5% of current weight). Faster than that risks fatty liver.</div>"
     );
   }
 
@@ -437,7 +437,7 @@
       "</span></div>" +
       '<div class="stat"><span class="mute">Loss range</span><b>' +
       Math.round(fd.lo) +
-      "–" +
+      "-" +
       Math.round(fd.hi) +
       '</b><span class="mute small">' +
       (c.kcalLo && c.kcalHi ? "kcal/day, vet plan" : "kcal/day at " + wt(c.target, "t")) +
@@ -449,7 +449,7 @@
           esc(fd.wet ? fd.wet.name : "wet") +
           ", that range works out at <b>" +
           Math.round(fd.dLo) +
-          "–" +
+          "-" +
           Math.round(fd.dHi) +
           " g</b> of " +
           esc(fd.dry.name) +
@@ -476,7 +476,7 @@
               "</div>"
           : '<div class="note u-c-var---ink"><b>Next step:</b> ' + fd.step + "</div>";
       })() +
-      '<div class="note">Uses the standard vet formula (70 × target kg<sup>0.75</sup>, × 0.8–1.0) and the calories on each food. Run changes past the vet, especially for prescription food.</div>'
+      '<div class="note">Uses the standard vet formula (70 × target kg<sup>0.75</sup>, × 0.8-1.0) and the calories on each food. Run changes past the vet, especially for prescription food.</div>'
     );
   }
 

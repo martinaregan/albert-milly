@@ -185,12 +185,12 @@
   function tod(m) {
     var h = +(m || "12").slice(0, 2);
     return h >= 5 && h < 12
-      ? "Morning (5–12)"
+      ? "Morning (5-12)"
       : h < 17 && h >= 12
-        ? "Afternoon (12–17)"
+        ? "Afternoon (12-17)"
         : h >= 17 && h < 22
-          ? "Evening (17–22)"
-          : "Night (22–5)";
+          ? "Evening (17-22)"
+          : "Night (22-5)";
   }
 
   function vFights(embed) {
