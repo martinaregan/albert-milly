@@ -89,7 +89,12 @@
       "</div></div>" +
       '<div class="card"><h2>' +
       esc(c.name) +
-      '\'s plan</h2><label class="l">Target weight (kg)</label><input data-s="target" inputmode="decimal" value="' +
+      '\'s plan</h2><label class="l">Birthday</label><input type="date" data-s="born" value="' +
+      esc(c.born || "") +
+      '"><label class="tickl u-mt6"><input type="checkbox" data-s="bornGuess"' +
+      (c.bornGuess ? " checked" : "") +
+      "> Only roughly known</label>" +
+      '<label class="l">Target weight (kg)</label><input data-s="target" inputmode="decimal" value="' +
       c.target +
       '">' +
       '<div class="grid2"><div><label class="l">Dry allowance (g/day, total)</label><input data-s="dryAllowance" inputmode="decimal" value="' +

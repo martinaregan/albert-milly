@@ -707,7 +707,8 @@
     }
    ],
    "kcalLo": 330,
-   "kcalHi": 370
+   "kcalHi": 370,
+   "born": "2023-11-20"
   },
   "milly": {
    "name": "Milly",
@@ -1305,7 +1306,9 @@
    "plan": "Morning:\n- 35 g Example indoor dry\nEvening (around 19:30):\n- 1 pouch\nRules:\n- Keep Albert away while she eats",
    "rr": [],
    "vq": [],
-   "planFrom": "2026-10-31"
+   "planFrom": "2026-10-31",
+   "born": "2019-03-02",
+   "bornGuess": true
   }
  },
  "info": {

@@ -43,7 +43,15 @@
     return api("data.json")
       .then(function (r) {
         if (r.status === 401 || r.status === 403) throw { auth: 1 };
-        if (r.status === 404) throw { noaccess: 1 };
+        // 404 means either no access or no data.json yet. A brand-new repository is fine: start from starter.json.
+        if (r.status === 404)
+          return fetch("https://api.github.com/repos/" + GH.owner + "/" + GH.repo, {
+            headers: { Authorization: "Bearer " + GH.token, Accept: "application/vnd.github+json" },
+            cache: "no-store"
+          }).then(function (rr) {
+            if (!rr.ok) throw { noaccess: 1 };
+            return null;
+          });
         if (!r.ok) throw { http: r.status };
         return r.json();
       })
@@ -235,6 +243,23 @@
       });
   }
 
+  function starter() {
+    return fetch("starter.json", { cache: "no-cache" })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (d) {
+        S = d;
+        migrate();
+        BASE = null;
+        SHA = null;
+        dirty = true;
+        persist();
+        render();
+        push();
+      });
+  }
+
   function sync() {
     if (DEMO) return S ? Promise.resolve() : loadDemo();
     if (!GH || pushing) return Promise.resolve();
@@ -244,7 +269,7 @@
           if (S) {
             dirty = true;
             push();
-          }
+          } else return starter();
           return;
         }
         if (p.sha === SHA && S) return;
@@ -472,13 +497,13 @@
 
   function keyErr(e) {
     return e && e.noaccess
-      ? "This key can't see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write."
+      ? "This key can't see your data. Make a new key and under Repository access choose Only select repositories → your data repository, then Permissions → Contents: Read and write."
       : e && e.auth
         ? "That key didn't work (wrong or expired). Make a new one and paste it here."
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "29";
+  var APPV = "31";
 
   function setupView() {
     var g = GH || {},

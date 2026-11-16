@@ -225,6 +225,34 @@
     return iso(d);
   }
 
+  // Birthdays: c.born is "YYYY-MM-DD". bornGuess marks a date that's only roughly known.
+  function ageOn(c, ds) {
+    if (!c.born) return null;
+    var a = +ds.slice(0, 4) - +c.born.slice(0, 4);
+    return ds.slice(5) < c.born.slice(5) ? a - 1 : a;
+  }
+
+  function isBday(c, ds) {
+    return !!c.born && ds.slice(5) === c.born.slice(5) && ds > c.born;
+  }
+
+  function nextBday(c) {
+    if (!c.born) return "";
+    var t = today(),
+      d = t.slice(0, 4) + c.born.slice(4);
+    return d < t ? +t.slice(0, 4) + 1 + c.born.slice(4) : d;
+  }
+
+  function ageText(c) {
+    var a = ageOn(c, today());
+    if (a == null) return "";
+    if (a < 1) {
+      var m = Math.floor(daysBetween(c.born, today()) / 30.44);
+      return m + (m === 1 ? " month" : " months");
+    }
+    return (c.bornGuess ? "about " : "") + a + (a === 1 ? " year" : " years");
+  }
+
   function daysBetween(a, b) {
     return Math.round((parse(b) - parse(a)) / 864e5);
   }

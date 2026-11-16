@@ -372,10 +372,10 @@
 
   function profSub(c, k, last) {
     var t = String(S.profiles[k] || ""),
-      age = t.match(/Age\s+(\d+)/i),
+      age = c.born ? [0, ageOn(c, today())] : t.match(/Age\s+(\d+)/i),
       vac = t.match(/Vaccinated\s+(\d{1,2}\s+\w{3,9}(?:\s+\d{4})?)/i),
       bits = [];
-    if (age) bits.push(age[1] + " yrs");
+    if (age) bits.push((c.bornGuess ? "~" : "") + age[1] + " yrs");
     if (last) bits.push((+last.kg).toFixed(2) + " kg");
     if (vac) bits.push("jabs " + vac[1].replace(/\s+\d{4}$/, ""));
     return esc(bits.join(" · ") || "target " + c.target + " kg");
@@ -407,6 +407,14 @@
               "</span>"
           : "";
       })() +
+      (c.born
+        ? '<span class="pchip">🎂 ' +
+          (c.bornGuess ? "Around " : "") +
+          parse(c.born).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) +
+          " · " +
+          esc(ageText(c)) +
+          "</span>"
+        : "") +
       "</div></summary>" +
       profText(S.profiles[k]) +
       '<div class="row u-jc-flex-end u-mt8">' +

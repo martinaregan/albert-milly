@@ -70,6 +70,7 @@ ACT["ghconnect"] = function (e, t, a, v, c) {
         persist();
       }
       setStatus("Synced");
+      if (!p) return starter();
       render();
       if (dirty) push();
     })

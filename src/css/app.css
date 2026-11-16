@@ -4179,3 +4179,17 @@ body.milly {
   width: 100%;
   height: auto;
 }
+
+/* Small checkbox + label (Settings) */
+.tickl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+.tickl input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--accent);
+}

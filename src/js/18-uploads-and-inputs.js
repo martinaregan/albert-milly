@@ -180,7 +180,9 @@
     } else if (t.dataset.s) {
       var k = t.dataset.s,
         v = t.value;
-      if (k === "checks")
+      if (k === "born") c.born = /^\d{4}-\d\d-\d\d$/.test(v) ? v : "";
+      else if (k === "bornGuess") c.bornGuess = t.checked;
+      else if (k === "checks")
         c.checks = v
           .split("\n")
           .map(function (x) {

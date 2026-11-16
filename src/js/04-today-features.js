@@ -237,6 +237,18 @@
             : hr < 12
               ? "Good morning"
               : "Breakfast still to log";
+    var bd = ks.filter(function (k) {
+      return isBday(S.cats[k], t);
+    });
+    if (bd.length)
+      title =
+        "Happy birthday, " +
+        bd
+          .map(function (k) {
+            return esc(S.cats[k].name);
+          })
+          .join(" &amp; ") +
+        " 🎂";
     var dow = parse(t).getDay(),
       wr;
     var weighed = ks.every(function (k) {

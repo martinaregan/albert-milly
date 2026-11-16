@@ -56,6 +56,7 @@
       return l.d === ds && l.who === c.name;
     });
     if (lt.length) ic += lt.some(bad) ? "💩⚠️" : "💩";
+    if (isBday(c, ds)) ic += "🎂";
     if (
       S.info.bookings.some(function (b) {
         return b.cats.indexOf(c.name) >= 0 && b.from && ds >= b.from && ds <= (b.to || b.from);
@@ -150,6 +151,7 @@
         nm = both ? c.name + ": " : "",
         x = peek(c, ds),
         tt = dayTotals(c, x);
+      if (isBday(c, ds)) out.push(["🎂", c.name + "'s birthday, " + (c.bornGuess ? "about " : "") + ageOn(c, ds)]);
       c.weights
         .filter(function (w) {
           return w.d === ds;
@@ -270,7 +272,7 @@
         "</div>";
     }
     h +=
-      '</div><details class="legend2"><summary class="mute small">What the icons mean</summary><div class="small mute u-mt6 u-lh1_8">😾 fight · ⚖️ weigh-in · 🏥 vet · 🩺 symptom · ⚠️ poo/pee to check · 🐛🛡️ worm/flea · 🍽️ ate over plan · ✅ to do · 📝 note · 🏨 hotel drop-off/pick-up · striped day = at the cat hotel</div></details></div>';
+      '</div><details class="legend2"><summary class="mute small">What the icons mean</summary><div class="small mute u-mt6 u-lh1_8">😾 fight · ⚖️ weigh-in · 🏥 vet · 🩺 symptom · ⚠️ poo/pee to check · 🐛🛡️ worm/flea · 🍽️ ate over plan · ✅ to do · 📝 note · 🎂 birthday · 🏨 hotel drop-off/pick-up · striped day = at the cat hotel</div></details></div>';
     h += dayPanel(sel);
     var tdn = (S.todos || []).filter(function (x) {
       return !x.done;
@@ -360,6 +362,12 @@
       });
     open.forEach(function (x) {
       it.push({ d: x.due || "", ic: "✅", tx: x.text, id: x.id });
+    });
+    ["albert", "milly"].forEach(function (k) {
+      var c = S.cats[k],
+        nb = nextBday(c);
+      if (nb && daysBetween(t, nb) <= 60)
+        it.push({ d: nb, ic: "🎂", tx: c.name + " turns " + (c.bornGuess ? "about " : "") + ageOn(c, nb) });
     });
     (S.info.bookings || []).forEach(function (b) {
       var nm = b.place || S.info.hotel.name || "cat hotel";

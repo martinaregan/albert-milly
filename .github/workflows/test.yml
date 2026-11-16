@@ -1,0 +1,29 @@
+# Runs on every push: rebuilds the app, checks the published index.html matches the source,
+# checks the demo and starter data, and runs the browser tests.
+name: Tests
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm install --no-audit --no-fund
+      - name: Build and check index.html is up to date
+        run: |
+          node tools/build.js --dev
+          git diff --exit-code index.html || (echo "index.html is out of date: run npm run build and commit it" && exit 1)
+      - name: Demo and starter data are valid JSON
+        run: python3 -c "import json; [json.load(open(f)) for f in ('demo.json','starter.json','tests/sample-data.json')]"
+      - name: Browser tests
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+          python3 tests/smoke.py

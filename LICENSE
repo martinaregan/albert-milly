@@ -1,0 +1,13 @@
+Copyright (c) 2026 Martina Regan. All rights reserved.
+
+The source code is published so people can see how the app works and try it.
+You may view it and use the hosted app at https://martinaregan.github.io/albert-milly/
+for your own cats. You may not copy, modify, redistribute or sell the code or the
+artwork (including the cat drawings and app icons) without written permission.
+
+Third-party code included in this repository keeps its own licence:
+
+- vendor/qrcode.min.js: QR Code Generator for JavaScript, Copyright (c) 2009
+  Kazuhiko Arase, MIT licence (https://github.com/kazuhikoarase/qrcode-generator).
+- nunito-v1.woff2: Nunito font, Copyright The Nunito Project Authors,
+  SIL Open Font License 1.1 (https://openfontlicense.org).

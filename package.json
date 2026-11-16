@@ -8,8 +8,9 @@
     "test": "node tools/build.js --dev && python3 tests/smoke.py"
   },
   "devDependencies": {
-    "csso": "^5.0.5",
-    "terser": "^5.31.0",
-    "prettier": "^3.3.0"
-  }
+    "csso": "5.0.5",
+    "terser": "5.51.2",
+    "prettier": "3.10.1"
+  },
+  "license": "UNLICENSED"
 }

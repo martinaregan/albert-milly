@@ -2,9 +2,24 @@
 
 A home-screen app for keeping two cats healthy and getting along: food, weight, play, poo and pee, breathing, fights and calm moments, vet notes, stock, costs and bookings.
 
-It was built for Albert (ginger and white, on a vet-supervised weight-loss plan, with a cough being looked into) and Milly (black and white, picky eater, also losing weight), and for one big ongoing question: why does Albert bully Milly, and is it getting better?
+It was built for two real cats: Albert (ginger and white, on a vet-supervised weight-loss plan, with a cough being looked into) and Milly (black and white, picky eater, also losing weight). It was also built for one big ongoing question: why does Albert bully Milly, and is it getting better?
 
-**Open it:** https://martinaregan.github.io/albert-milly/
+**[Open the app](https://martinaregan.github.io/albert-milly/)** · **[Try the demo](https://martinaregan.github.io/albert-milly/?demo)** (made-up data, nothing saved) · **[About](https://martinaregan.github.io/albert-milly/about/)**
+
+<p>
+<img src="docs/screens/today-light.png" width="200" alt="Food & play tab">
+<img src="docs/screens/weight-light.png" width="200" alt="Weight tab">
+<img src="docs/screens/health-light.png" width="200" alt="Health tab">
+<img src="docs/screens/fights-light.png" width="200" alt="Friendship tab">
+</p>
+<p>
+<img src="docs/screens/calendar-light.png" width="200" alt="Calendar tab">
+<img src="docs/screens/money-light.png" width="200" alt="Money tab">
+<img src="docs/screens/today-dark.png" width="200" alt="Food & play in dark mode">
+<img src="docs/log-breakfast.gif" width="200" alt="Logging breakfast for both cats in one tap">
+</p>
+
+**Privacy:** your data lives in your own private GitHub repository and on your phone. There's no server, no account, no ads and no tracking, and nobody else (including whoever made the app) can see it.
 
 ---
 
@@ -17,9 +32,11 @@ It was built for Albert (ginger and white, on a vet-supervised weight-loss plan,
 5. [Extras](#extras)
 6. [How the weight plan works](#how-the-weight-plan-works)
 7. [How data and sync work](#how-data-and-sync-work)
-8. [Updates](#updates)
-9. [Files in this repo](#files-in-this-repo)
-10. [For developers](#for-developers)
+8. [Privacy](#privacy)
+9. [Updates](#updates)
+10. [Files in this repo](#files-in-this-repo)
+11. [For developers](#for-developers)
+12. [Licence](#licence)
 
 ---
 
@@ -33,12 +50,17 @@ The home screen icon is saved when you add the app and never refreshes by itself
 
 ## Connect it to your data
 
-The first time you open the app it asks for two things:
+You need a free GitHub account and one **private** repository to hold your data (for example `albert-milly-data`). It can start empty: the app creates `data.json` the first time it connects.
 
-- **An access key**: a GitHub fine-grained personal access token with access to **only** the `albert-milly-data` repository, permission **Contents: Read and write**.
+The first time you open the app it asks for:
+
+- **An access key**: a GitHub fine-grained personal access token with access to **only** your data repository, permission **Contents: Read and write**. The setup screen walks you through making one.
 - **Your name**: shown next to everything you log, so you can see who fed whom.
+- **Your data repository** (`owner/name`). It's filled in for you when the app is on your own `github.io` address.
 
-Each phone connects once. Someone else feeding the cats can connect their own phone the same way (Settings › This phone › "Someone else feeding them?").
+Each phone connects once. To add someone else's phone, open **Settings › This phone › Show setup code** and scan the QR code with their camera. The access key, repository and app open on their phone, and they only type their name. The code contains your access key, so only show it to people you'd trust with the data.
+
+Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](https://martinaregan.github.io/albert-milly/?demo). It loads made-up cats (with dates moved to today) and never saves anything.
 
 ## Everyday use
 
@@ -99,6 +121,14 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 - The screen never redraws while you're touching or scrolling; new data waits until you stop.
 - Claude can also log things from chat by editing `data.json` directly, using the same merge rules.
 
+## Privacy
+
+- Everything you log is saved in `data.json` in **your own private GitHub repository**, and a copy is kept on each connected phone so the app works offline.
+- The app talks to two places only: this website (for the app itself) and `api.github.com` (to read and save your data, using your access key).
+- No server, no account with the app, no analytics, no ads, no cookies, no tracking. Nobody else can see your data, including whoever made the app.
+- Your access key is stored only on your phone. A setup link puts it after `#`, the part of a web address that browsers never send to a server, and the app wipes it from the address as soon as it opens.
+- To remove everything: Settings › Data & sync › Disconnect this phone, then delete the access key on GitHub and the data repository if you want.
+
 ## Updates
 
 - The version number is at the bottom of **Settings › Data & sync**.
@@ -115,6 +145,13 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 | `src/js/19-actions-*.js` | What every button does, grouped by area (today, health, weight, money…). Each is `ACT["name"]`, run when a `data-a="name"` button is tapped |
 | `tests/smoke.py` | Automated checks: every tab in light and dark mode, logging and undo, quick log, search, vet summary, swipe to delete, and the minified build |
 | `tests/sample-data.json` | Made-up cats and logs used by the tests (never the real data) |
+| `demo.json` | The same made-up data for `?demo`. `demoAnchor` is the date its dates are moved from |
+| `starter.json` | Empty starting data, used when a new data repository has no `data.json` yet |
+| `about/` | The landing page (screenshots, features, privacy) |
+| `docs/` | Screenshots and the GIF used here and on the landing page |
+| `vendor/qrcode.min.js` | QR code maker (MIT licence), only loaded when you open the setup code |
+| `.github/workflows/test.yml` | Runs the build check and the tests on GitHub after every push |
+| `CHANGELOG.md` | What changed in each version |
 | `package.json` | Shortcuts: `npm run build`, `npm run dev`, `npm test` |
 | `index.html` | The published app, built and minified from `src/` by `tools/build.js`. Don't edit by hand |
 | `tools/build.js` | Build script: `npm i terser csso`, then `node tools/build.js` (add `--dev` for an unminified `dev.html` to test with) |
@@ -122,7 +159,6 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 | `manifest.webmanifest` | Name, colours and icons for "Add to Home Screen" |
 | `icon-*-v5.png`, `apple-touch-icon-v5.png` | App icons. The version number is in the name so phones fetch new ones |
 | `nunito-v1.woff2` | The app's font, stored here so it loads instantly and offline |
-| `beta/` | A test copy of the app |
 
 ## For developers
 
@@ -134,4 +170,8 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 - **Offline**: `sw.js` caches the app shell. Bump the `SHELL` name in `sw.js` and `APPV` in `index.html` with every release.
 - **Icons and font**: when they change, give the files a new name and update the references, because iOS caches them by file name.
 - **Formatting**: the source is formatted with Prettier (`npx prettier --write src/js src/css --print-width 110`).
-- **Testing**: `npm test` builds `dev.html` and runs `tests/smoke.py`, which loads the app in a headless browser with the sample data, blocks `api.github.com`, and checks every tab, the main actions, that partial screen updates match a full rebuild, and that the minified build runs. Needs `pip install playwright` and `playwright install chromium`. Run it before every release.
+- **Testing**: `npm test` builds `dev.html` and runs `tests/smoke.py`, which loads the app in a headless browser with the sample data, blocks `api.github.com`, and checks every tab, the main actions, that partial screen updates match a full rebuild, and that the minified build runs. Needs `pip install playwright` and `playwright install chromium`. Run it before every release. The same checks run on GitHub after every push (see the Actions tab), and they also fail if `index.html` wasn't rebuilt after a change to `src/`.
+
+## Licence
+
+Copyright © 2026 Martina Regan. All rights reserved: you're welcome to read the code and use the hosted app for your own cats, but please don't copy or redistribute the code or artwork. See [LICENSE](LICENSE). The QR code library and the Nunito font keep their own open licences.

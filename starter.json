@@ -1,0 +1,148 @@
+{
+ "v": 2,
+ "savedAt": 0,
+ "playTypes": [
+  "Wand",
+  "Laser",
+  "Fetch",
+  "Basket play"
+ ],
+ "fights": [],
+ "cats": {
+  "albert": {
+   "name": "Albert",
+   "color": "#e07a2e",
+   "target": 6.5,
+   "foods": [
+    {
+     "id": "a-dry",
+     "name": "Example diet dry",
+     "kind": "dry",
+     "kcal": 370,
+     "main": true,
+     "price": 30,
+     "buy": "bag"
+    },
+    {
+     "id": "a-wet",
+     "name": "Example diet wet (150 g can)",
+     "kind": "wet",
+     "kcal": 170,
+     "main": true,
+     "price": 40,
+     "buy": "box of 24"
+    }
+   ],
+   "dryAllowance": 50,
+   "wetAllowance": 1,
+   "treatAllowance": 0,
+   "treatKcal": 5,
+   "checks": [],
+   "weights": [],
+   "days": {},
+   "health": [],
+   "vet": [],
+   "treat": [],
+   "plan": "",
+   "rr": [],
+   "vq": [],
+   "kcalLo": 330,
+   "kcalHi": 370
+  },
+  "milly": {
+   "name": "Milly",
+   "color": "#2e2e2e",
+   "target": 4,
+   "foods": [
+    {
+     "id": "m-dry",
+     "name": "Example indoor dry",
+     "kind": "dry",
+     "kcal": 375,
+     "main": true,
+     "price": 30,
+     "buy": "bag"
+    },
+    {
+     "id": "m-wet",
+     "name": "Example fish pouch (85 g)",
+     "kind": "wet",
+     "kcal": 60,
+     "main": true,
+     "price": 7,
+     "buy": "pack"
+    }
+   ],
+   "dryAllowance": 35,
+   "wetAllowance": 1,
+   "treatAllowance": 0,
+   "treatKcal": 5,
+   "checks": [],
+   "weights": [],
+   "days": {},
+   "health": [],
+   "vet": [],
+   "treat": [],
+   "plan": "",
+   "rr": [],
+   "vq": []
+  }
+ },
+ "info": {
+  "insurance": {
+   "provider": "",
+   "policy": "",
+   "phone": "",
+   "email": "",
+   "notes": "",
+   "att": [],
+   "policyAlbert": "",
+   "policyMilly": "",
+   "yearAlbert": "",
+   "yearMilly": ""
+  },
+  "vet": {
+   "clinic": "",
+   "address": "",
+   "phone": "",
+   "email": "",
+   "hours": "",
+   "notes": "",
+   "att": []
+  },
+  "hotel": {
+   "name": "",
+   "address": "",
+   "phone": "",
+   "email": "",
+   "notes": "",
+   "att": []
+  },
+  "bookings": []
+ },
+ "profiles": {
+  "albert": "",
+  "milly": "",
+  "ages": ""
+ },
+ "notes": {},
+ "litter": [],
+ "mailSeen": [],
+ "costs": [],
+ "calm": [],
+ "todos": [],
+ "extraStock": [
+  {
+   "id": "x2",
+   "name": "Cat litter",
+   "qty": 0,
+   "unit": "bags",
+   "group": "home",
+   "price": 20,
+   "buy": "bag",
+   "need": false
+  }
+ ],
+ "stock": {},
+ "bed": {}
+}
