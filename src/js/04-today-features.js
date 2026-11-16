@@ -35,7 +35,7 @@
     var el = document.createElement("div");
     el.id = "toast";
     el.className = "toast";
-    el.innerHTML = "<span>" + esc(msg) + "</span>" + (undoFn ? '<button type="button">Undo</button>' : "");
+    el.innerHTML = tr("<span>" + esc(msg) + "</span>" + (undoFn ? '<button type="button">Undo</button>' : ""));
     document.body.appendChild(el);
     requestAnimationFrame(function () {
       el.classList.add("on");
@@ -147,7 +147,7 @@
             '<span class="wsh' +
             (d === t ? " now" : "") +
             '">' +
-            parse(d).toLocaleDateString("en-GB", { weekday: "narrow" }) +
+            parse(d).toLocaleDateString(LOC(), { weekday: "narrow" }) +
             "</span>"
           );
         })
@@ -271,7 +271,7 @@
         "At " +
         esc((stay.place || "the cat hotel").replace(/'s Kattenhotel$/, "'s")) +
         ", home " +
-        parse(stay.to || stay.from).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+        parse(stay.to || stay.from).toLocaleDateString(LOC(), { weekday: "short", day: "numeric", month: "short" });
     var bd = ks.filter(function (k) {
       return isBday(S.cats[k], t);
     });
@@ -363,7 +363,7 @@
       (zz ? sleepyCat() : "") +
       '<div class="hld">' +
       parse(t)
-        .toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" })
+        .toLocaleDateString(LOC(), { weekday: "long", day: "numeric", month: "short" })
         .toUpperCase() +
       '</div><div class="hlt">' +
       title +

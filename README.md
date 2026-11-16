@@ -104,6 +104,7 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **What's new** shows once after an update; a new phone gets a short intro instead.
 - **Fight-time heads-up**: once a pattern shows (3+ of the recent fights with a time in the same 3 hours), Today warns you 90 minutes before, with a nudge to play first.
 - **Calendar file** (Settings › Help › Add dates to my calendar): worming and flea due dates, Saturday weigh-ins, birthdays and bookings, with reminders, for the phone's Calendar app.
+- **Languages** (Settings › This phone): English and Dutch. Text is translated as each screen is drawn, from `lang/<code>.json` (exact phrases plus patterns for phrases with numbers or names). Anything not yet translated stays in English.
 - **No signal?** Everything you log is saved on the phone straight away and uploads when you're back online, even if the app was closed in between.
 - **App icon badge**: Settings › This phone › turn on. The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).
 - **Lock screen shortcut**: an iPhone Shortcut that opens `…/albert-milly/?log=breakfast` (or `?log=dinner`) logs the usual meal for both cats. Shortcuts open links in Safari, so connect the app once in Safari first.
@@ -164,6 +165,7 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 | `vendor/qrcode.min.js` | QR code maker (MIT licence), only loaded when you open the setup code |
 | `.github/workflows/test.yml` | Runs the build check and the tests on GitHub after every push |
 | `CHANGELOG.md` | What changed in each version |
+| `lang/` | Translations (`nl.json` = Dutch). Each is loaded only when chosen |
 | `package.json` | Shortcuts: `npm run build`, `npm run dev`, `npm test` |
 | `index.html` | The published app, built and minified from `src/` by `tools/build.js`. Don't edit by hand |
 | `tools/build.js` | Build script: `npm i terser csso`, then `node tools/build.js` (add `--dev` for an unminified `dev.html` to test with) |

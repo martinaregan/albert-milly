@@ -369,11 +369,11 @@
     var t = today();
     if (s === t) return "Today";
     if (s === addDays(t, -1)) return "Yesterday";
-    return parse(s).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+    return parse(s).toLocaleDateString(LOC(), { weekday: "short", day: "numeric", month: "short" });
   }
 
   function short(s) {
-    return s ? parse(s).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "No date";
+    return s ? parse(s).toLocaleDateString(LOC(), { day: "numeric", month: "short" }) : "No date";
   }
 
   function esc(t) {

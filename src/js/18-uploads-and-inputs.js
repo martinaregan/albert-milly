@@ -72,6 +72,14 @@
       render();
       return;
     }
+    if (t.dataset.lang) {
+      try {
+        localStorage.setItem(LS + "-lang", t.value);
+      } catch (x) {}
+      loadLang(render);
+      render();
+      return;
+    }
     if (t.dataset.coatbreed) {
       var br = BREEDS.filter(function (x) {
         return x[0] === t.value;

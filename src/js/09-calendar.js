@@ -228,7 +228,7 @@
     var h = "";
     h +=
       '<div class="card calcard"><div class="calhead"><button class="rnd" data-a="mon" data-v="-1">‹</button><div><div class="mname">' +
-      first.toLocaleDateString("en-GB", { month: "long" }) +
+      first.toLocaleDateString(LOC(), { month: "long" }) +
       '</div><div class="yname">' +
       y +
       '</div></div><button class="rnd" data-a="mon" data-v="1">›</button></div>';
@@ -295,7 +295,7 @@
       '<details class="nf" data-open="mrecap"' +
       isOpen("mrecap", false) +
       "><summary><span>📖 What happened in " +
-      first.toLocaleDateString("en-GB", { month: "long" }) +
+      first.toLocaleDateString(LOC(), { month: "long" }) +
       (month.length ? ' <span class="nfc">' + month.length + "</span>" : "") +
       '</span></summary><div class="card u-m0">' +
       (month.length
@@ -309,7 +309,7 @@
                 '"><div class="mdate"><b>' +
                 dt.getDate() +
                 "</b><span>" +
-                dt.toLocaleDateString("en-GB", { weekday: "short" }) +
+                dt.toLocaleDateString(LOC(), { weekday: "short" }) +
                 '</span></div><div class="mitems">' +
                 r[1]
                   .map(function (b) {
@@ -461,7 +461,7 @@
             var dt = x.d ? parse(x.d) : null,
               sub =
                 dt && (g[0] === "week" || g[0] === "later" || g[0] === "late")
-                  ? dt.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" })
+                  ? dt.toLocaleDateString(LOC(), { weekday: "short", day: "numeric", month: "short" })
                   : "";
             return (
               '<div class="agr">' +
@@ -500,9 +500,9 @@
       '><summary class="dayttl"><div class="dnum">' +
       parse(ds).getDate() +
       '</div><div class="u-flex1"><div class="dw">' +
-      parse(ds).toLocaleDateString("en-GB", { weekday: "long" }) +
+      parse(ds).toLocaleDateString(LOC(), { weekday: "long" }) +
       '</div><div class="mute small">' +
-      parse(ds).toLocaleDateString("en-GB", { month: "long" }) +
+      parse(ds).toLocaleDateString(LOC(), { month: "long" }) +
       (nb ? " · " + nb + " thing" + (nb > 1 ? "s" : "") + " logged" : " · tap to see the day") +
       "</div></div></summary>";
     cats.forEach(function (k) {

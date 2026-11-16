@@ -343,7 +343,7 @@
             "Nothing logged for " +
               esc(c.name) +
               " on " +
-              parse(ui.day).toLocaleDateString("en-GB", { weekday: "long" }),
+              parse(ui.day).toLocaleDateString(LOC(), { weekday: "long" }),
             "Fill it in if you remember. Every day helps the averages.",
             '<div class="row u-gap8 u-jc-center"><button class="b s p" data-a="mopen" data-v="dry">Add breakfast</button><button class="b s" data-a="mopen" data-v="wet">Add dinner</button></div>'
           ) +

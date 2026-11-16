@@ -5,7 +5,7 @@
     if (ui.tab === "todo") ui.tab = "calendar";
     if (!GH || !S || ui.connect) {
       document.body.className = "albert duo";
-      document.getElementById("root").innerHTML =
+      document.getElementById("root").innerHTML = tr(
         !GH || ui.connect
         ? setupView()
         : '<div class="hero duo-h u-mt40 u-ta-center"><div class="vs">' +
@@ -16,7 +16,8 @@
           esc(saveState === "Synced" ? "Loading…" : saveState) +
           '</div></div><div class="row u-jc-center u-gap8"><button class="b" data-a="syncnow">Try again</button><button class="b ghost" data-a="ghout2">Re-enter access key</button></div><div class="note u-ta-center">Version ' +
           APPV +
-          "</div>";
+          "</div>"
+      );
       return;
     }
     needRender = false;
@@ -162,7 +163,7 @@
     rt.style.minHeight = rt.offsetHeight + "px";
     (function () {
       var tmp = document.createElement("div");
-      tmp.innerHTML = iconizeHTML(h);
+      tmp.innerHTML = iconizeHTML(tr(h));
       var pw = document.createElement("div");
       pw.id = "pg";
       [].slice.call(tmp.childNodes).forEach(function (n) {

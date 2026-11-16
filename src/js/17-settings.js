@@ -77,7 +77,11 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
-      '<div class="card"><h2>⚙️ This phone</h2><label class="l">Appearance</label><div class="seg u-cols-repeat-3-1fr">' +
+      '<div class="card"><h2>⚙️ This phone</h2><label class="l">Language</label><select data-lang="1">' +
+      LANGS.map(function (l) {
+        return '<option value="' + l[0] + '"' + (lang() === l[0] ? " selected" : "") + ">" + l[1] + "</option>";
+      }).join("") +
+      '</select><label class="l">Appearance</label><div class="seg u-cols-repeat-3-1fr">' +
       [
         ["auto", "Automatic"],
         ["light", "Light"],

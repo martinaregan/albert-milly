@@ -580,7 +580,7 @@
                 : "<b>" +
                   parse(x.d).getDate() +
                   "</b>" +
-                  parse(x.d).toLocaleDateString("en-GB", { month: "short" })) +
+                  parse(x.d).toLocaleDateString(LOC(), { month: "short" })) +
             '</span><span class="agi">' +
             x.ic +
             '</span><span class="agt">' +
@@ -714,7 +714,7 @@
       "</div>";
     h +=
       '<div class="hero money"><div class="row between"><button class="rnd u-bg-rgba-255-255-255-_2 u-c-fff" data-a="fmon" data-v="-1">‹</button><div class="u-ta-center"><div class="sub">' +
-      first.toLocaleDateString("en-GB", { month: "long", year: "numeric" }) +
+      first.toLocaleDateString(LOC(), { month: "long", year: "numeric" }) +
       '</div><div class="wt u-mt4">' +
       eur(spent - back) +
       '</div><div class="sub">you paid after insurance</div></div><button class="rnd' +
@@ -780,7 +780,7 @@
       '<details class="card list mlist" data-open="mlist"' +
       isOpen("mlist", false) +
       "><summary><span><b>" +
-      first.toLocaleDateString("en-GB", { month: "long" }) +
+      first.toLocaleDateString(LOC(), { month: "long" }) +
       '</b><span class="mute small"> · ' +
       inM.length +
       " cost" +

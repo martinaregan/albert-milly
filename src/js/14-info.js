@@ -261,7 +261,7 @@
     var d1 = from ? parse(from) : null,
       d2 = to ? parse(to) : null,
       mo = function (d) {
-        return d.toLocaleDateString("en-GB", { month: "short" });
+        return d.toLocaleDateString(LOC(), { month: "short" });
       },
       range = !from
         ? "No dates"
@@ -276,7 +276,7 @@
       dt = b.dropTime || tm(/drop[\s-]*off[^\n]*?(\d{1,2}[:.]\d{2})(?:\s*(?:to|-|–)\s*(\d{1,2}[:.]\d{2}))?/i),
       pt = b.pickTime || tm(/pick[\s-]*up[^\n]*?(\d{1,2}[:.]\d{2})(?:\s*(?:to|-|–)\s*(\d{1,2}[:.]\d{2}))?/i),
       wd = function (d) {
-        return d.toLocaleDateString("en-GB", { weekday: "short" });
+        return d.toLocaleDateString(LOC(), { weekday: "short" });
       };
     var cost = parseFloat(String(b.cost || "").replace(",", ".")),
       est =
@@ -411,7 +411,7 @@
         ? '<span class="pchip">🎂 ' +
           (c.bornGuess
             ? "Born around " + c.born.slice(0, 4)
-            : parse(c.born).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })) +
+            : parse(c.born).toLocaleDateString(LOC(), { day: "numeric", month: "short", year: "numeric" })) +
           " · " +
           esc(ageText(c)) +
           "</span>"

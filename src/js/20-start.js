@@ -122,6 +122,7 @@
     document.addEventListener("touchcancel", end, { passive: true });
   })();
 
+  loadLang(render);
   render();
 
   (function () {

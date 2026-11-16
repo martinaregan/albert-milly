@@ -239,7 +239,7 @@
       s += '<circle cx="' + X(p.d) + '" cy="' + Y(p.kg) + '" r="4.5" fill="' + c.color + '"/>';
     });
     function mon(d) {
-      return parse(d).toLocaleDateString("en-GB", { month: "short", year: "2-digit" });
+      return parse(d).toLocaleDateString(LOC(), { month: "short", year: "2-digit" });
     }
     s +=
       '<text x="' +
@@ -377,7 +377,7 @@
           " reaches " +
           wt(c.target, "t") +
           " around <b>" +
-          parse(r.eta).toLocaleDateString("en-GB", { month: "long", year: "numeric" }) +
+          parse(r.eta).toLocaleDateString(LOC(), { month: "long", year: "numeric" }) +
           "</b>.</div>"
         : "") +
       '<div class="note">Safe loss for ' +

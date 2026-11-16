@@ -35,7 +35,7 @@
       B = [],
       I = S.info || {},
       longD = function (d) {
-        return parse(d).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+        return parse(d).toLocaleDateString(LOC(), { weekday: "short", day: "numeric", month: "short" });
       };
     if (st)
       B.push({
