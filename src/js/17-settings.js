@@ -140,7 +140,7 @@
         })
         .join("") +
       '</div><div class="note">Food stays in grams. Stored in kg either way, so the other phone can use its own setting.</div></div>' +
-      '<div class="card"><h2>❓ Help</h2><div class="row u-gap8 u-wrap"><button class="b s" data-a="helpintro">How the app works</button><button class="b s" data-a="sos">🚨 When to call a vet</button><button class="b s" data-a="report">Report a problem</button><button class="b s" data-a="ics">📅 Add dates to my calendar</button>' +
+      '<div class="card"><h2>❓ Help</h2><div class="row u-gap8 u-wrap"><button class="b s" data-a="guide">📖 Full guide</button><button class="b s" data-a="helpintro">Quick intro</button><button class="b s" data-a="sos">🚨 When to call a vet</button><button class="b s" data-a="report">Report a problem</button><button class="b s" data-a="ics">📅 Add dates to my calendar</button>' +
       (GH && !GH.local && !DEMO ? '<button class="b s" data-a="claude">🤖 Log by chatting with Claude</button>' : "") +
       '</div><div class="note">Reporting opens GitHub (free account needed). Don\'t include anything private.</div></div>' +
       '<div class="card"><h2>🗂️ Tabs</h2><div class="note u-m0-0-10">Switch off what you don\'t need. Nothing is deleted: switch a tab back on and it\'s all there.</div><div class="chips">' +

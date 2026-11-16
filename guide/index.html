@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How to use Albert &amp; Milly</title>
+<meta name="description" content="Step-by-step guide to the Albert &amp; Milly cat app: setup, daily logging, weigh-ins, health, friendship and settings.">
+<meta name="theme-color" content="#f6f1ea">
+<link rel="icon" href="../icon-192-v5.png">
+<style>
+@font-face { font-family: Nunito; src: url(../nunito-v1.woff2) format("woff2"); font-weight: 200 1000; font-display: swap; }
+:root {
+  --bg: #f6f1ea; --card: #fffdf9; --ink: #2b2622; --mute: #7a6f66; --line: #e8dfd4;
+  --accent: #e07a2e; --accent2: #c9611c; --dark: #262220; --onaccent: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #181513; --card: #24201d; --ink: #f3ece4; --mute: #a99d92; --line: #3a332e; --dark: #0f0d0c; }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 Nunito, system-ui, -apple-system, sans-serif; }
+a { color: var(--accent); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+header.top { display: flex; align-items: center; gap: 12px; padding: 18px 0; }
+header.top img { width: 40px; height: 40px; border-radius: 10px; }
+header.top b { font-size: 19px; font-weight: 900; }
+header.top nav { margin-left: auto; display: flex; gap: 18px; font-weight: 700; font-size: 15px; }
+header.top nav a { color: var(--mute); text-decoration: none; }
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding: 30px 0 50px; }
+h1 { font-size: clamp(36px, 6vw, 58px); line-height: 1.05; margin: 0 0 16px; font-weight: 900; letter-spacing: -0.02em; }
+h1 span { color: var(--accent); }
+.lead { font-size: 20px; color: var(--mute); margin: 0 0 26px; max-width: 34em; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; padding: 14px 22px; border-radius: 999px; font-weight: 800; text-decoration: none; font-size: 17px; }
+.btn.p { background: var(--accent); color: var(--onaccent); box-shadow: 0 6px 18px rgba(224,122,46,.3); }
+.btn.g { background: var(--card); color: var(--ink); border: 1.5px solid var(--line); }
+.small { font-size: 14px; color: var(--mute); margin-top: 12px; }
+.phones { position: relative; height: 560px; }
+.phones img { position: absolute; width: 250px; border-radius: 34px; border: 8px solid var(--dark); box-shadow: 0 24px 60px rgba(40,25,10,.22); background: var(--dark); }
+.phones img:nth-child(1) { left: 0; top: 30px; transform: rotate(-4deg); }
+.phones img:nth-child(2) { right: 0; top: 0; transform: rotate(3deg); }
+section { padding: 50px 0; }
+h2 { font-size: 32px; line-height: 1.15; font-weight: 900; margin: 0 0 10px; letter-spacing: -0.01em; }
+.sub { color: var(--mute); margin: 0 0 28px; font-size: 18px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px; }
+.card h3 { margin: 0 0 6px; font-size: 18px; font-weight: 900; }
+.card p { margin: 0; color: var(--mute); font-size: 16px; }
+.card .ic { font-size: 26px; margin-bottom: 8px; }
+.strip { display: flex; gap: 16px; overflow-x: auto; padding: 4px 2px 18px; scroll-snap-type: x mandatory; }
+.strip figure { margin: 0; flex: none; width: 220px; scroll-snap-align: start; text-align: center; }
+.strip img { width: 100%; border-radius: 22px; border: 6px solid var(--dark); background: var(--dark); }
+.strip figcaption { font-weight: 800; font-size: 15px; margin-top: 8px; }
+.steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.steps .card { position: relative; padding-top: 52px; }
+.steps .card::before { counter-increment: s; content: counter(s); position: absolute; top: 16px; left: 20px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 900; display: grid; place-items: center; font-size: 15px; }
+.privacy { background: var(--dark); color: #f3ece4; border-radius: 28px; padding: 36px; }
+.privacy h2 { color: #fff; }
+.privacy ul { margin: 0; padding-left: 20px; }
+.privacy li { margin: 8px 0; }
+.privacy a { color: #f3a46b; }
+.faq details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; margin-bottom: 10px; }
+.faq summary { font-weight: 800; cursor: pointer; }
+.faq p { color: var(--mute); margin: 10px 0 0; }
+footer { padding: 30px 0 50px; color: var(--mute); font-size: 14px; border-top: 1px solid var(--line); margin-top: 30px; }
+@media (max-width: 820px) {
+  .hero { grid-template-columns: 1fr; padding-top: 10px; }
+  .phones { height: 470px; max-width: 420px; margin: 0 auto; width: 100%; }
+  .phones img { width: 205px; }
+  .grid, .steps { grid-template-columns: 1fr; }
+  header.top nav { display: none; }
+  .privacy { padding: 26px 22px; }
+}
+</style>
+<style>
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}.toc a{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:800;font-size:15px;text-decoration:none;color:var(--ink)}
+section{padding:34px 0}
+.step{display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:start;margin:22px 0 34px}
+.step .shot{display:flex;gap:12px}
+.step img{width:240px;border-radius:26px;border:6px solid var(--dark);background:var(--dark)}
+.step .shot img+img{display:none}
+.step h3{margin:6px 0 8px;font-size:22px;font-weight:900}
+.step p{margin:0 0 10px;font-size:17px}
+.step ul{margin:0;padding-left:20px;color:var(--mute)}
+.step li{margin:6px 0}
+@media (max-width:820px){.step{grid-template-columns:1fr;gap:14px}.step img{width:min(260px,70vw)}.step .shot{justify-content:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><img src="../icon-192-v5.png" alt=""><b>Albert &amp; Milly</b><nav><a href="../about/">About</a><a href="../">Open the app</a></nav></header>
+  <h1 style="font-size:clamp(32px,6vw,48px)">How to use it</h1>
+  <p class="lead">Everything in about five minutes. The screenshots use the demo's made-up cats.</p>
+  <div class="toc"><a href="#start">1. Getting started</a><a href="#daily">2. Every day</a><a href="#weekly">3. Every Saturday: weigh-in</a><a href="#health">4. Health and the vet</a><a href="#friendship">5. Friendship</a><a href="#plan">6. Calendar, stock, costs and info</a><a href="#settings">7. Make it yours</a><a href="#tips">8. Good to know</a></div>
+</div>
+<section id="start"><div class="wrap"><h2>1. Getting started</h2><div class="step"><div class="shot"><img src="../docs/guide/setup.png" alt="Add it to your home screen" loading="lazy"></div><div class="txt"><h3>Add it to your home screen</h3><p>Open the app in <b>Safari</b> on your iPhone, tap <b>Share › Add to Home Screen</b>, then always open it from that icon. It runs full screen, works offline, and iPhone won't clear what you've logged.</p><ul><li><b>New here?</b> Type your name and tap <b>Start</b>. Everything is saved on your phone straight away.</li><li>Want it on two phones, or backed up? Tap <b>Connect GitHub</b> (free). The setup walks you through it in 4 steps, with the GitHub pages already filled in.</li><li>Just looking? <b>Try the demo</b> has made-up cats and saves nothing.</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/settings-cats.png" alt="Tell it about your cats" loading="lazy"></div><div class="txt"><h3>Tell it about your cats</h3><p>A short setup asks for each cat's name, look, birthday, weight, target weight and food, then suggests a daily amount. You can change all of it later in <b>Settings › Cats</b>.</p><ul><li><b>Look</b>: pick a coat or breed, or tap <b>From a photo</b> and tap their fur. The face and the app's colours follow.</li><li>Ask your vet about the target weight and food amounts, especially for prescription diets.</li></ul></div></div></div></section><section id="daily"><div class="wrap"><h2>2. Every day</h2><div class="step"><div class="shot"><img src="../docs/guide/today.png" alt="The top card tells you what's left" loading="lazy"></div><div class="txt"><h3>The top card tells you what's left</h3><p><b>Food & play</b> opens with today's breakfast, dinner and weigh-in, plus the one thing that needs doing (an order, a to-do, a cat hotel drop-off).</p><ul><li>Tap <b>Log both</b> to log the usual meal for both cats. It can't be logged twice, so nobody double-feeds.</li><li>Logged the wrong thing? Tap <b>Undo</b> on the message that pops up.</li><li>Notes from your partner and the weekly check-in appear under the card until you deal with them.</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/quick.png" alt="The + button logs anything else" loading="lazy"></div><div class="txt"><h3>The + button logs anything else</h3><p>Tap the round <b>+</b> for big buttons: breakfast, dinner, poo, pee, play, fight, calm moment and a note or reminder for someone else.</p><ul><li>It guesses the meal from the time of day.</li><li>Poo and pee open already filled in with what's usual for that cat, so it's one tap.</li><li>Choose which cat at the bottom.</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/today-day.png" alt="The day's details" loading="lazy"></div><div class="txt"><h3>The day's details</h3><p>Scroll down for today's totals (dry, wet, calories, treats), the daily checklist (supplements), play with a timer, and a note with photos.</p><ul><li>Use ‹ › at the top to look at or fill in another day.</li><li>Swipe left on a meal or a poo/pee entry to delete it.</li><li><b>📅 This week · who did what</b> folds out the week at a glance.</li></ul></div></div></div></section><section id="weekly"><div class="wrap"><h2>3. Every Saturday: weigh-in</h2><div class="step"><div class="shot"><img src="../docs/guide/weighin.png" alt="Weigh yourself, then hold each cat" loading="lazy"></div><div class="txt"><h3>Weigh yourself, then hold each cat</h3><p>Tap <b>Weigh now</b> (or <b>Weight › Add a weigh-in for both</b>). Weigh yourself, then step on again holding each cat. The app subtracts and saves their weight.</p><ul><li>Got a pet scale? Use <b>Weighed them on a pet scale instead?</b></li><li>Weights can be shown in kg or lb (Settings › This phone).</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/weight.png" alt="See the progress" loading="lazy"></div><div class="txt"><h3>See the progress</h3><p>The <b>Weight</b> tab shows each cat's progress, a chart against a safe 1% a week, and when they'll reach the target at this pace.</p><ul><li>After each weigh-in a <b>weekly check-in</b> on Today says whether to keep the food the same or change it.</li><li>Losing more than 1.5% a week is too fast: the app tells you to feed a bit more and ring the vet.</li></ul></div></div></div></section><section id="health"><div class="wrap"><h2>4. Health and the vet</h2><div class="step"><div class="shot"><img src="../docs/guide/health.png" alt="Log symptoms, poo and pee" loading="lazy"></div><div class="txt"><h3>Log symptoms, poo and pee</h3><p>On <b>Health</b>, tap <b>Log a symptom</b> (cough, vomit, off food…) and answer one question at a time. Each cat has Today, Trends and Vet tabs.</p><ul><li><b>Keep an eye on</b> lists each cat's ongoing problems.</li><li>The <b>breathing counter</b>: tap once per breath while the cat sleeps, for 30 seconds. Over 30 a minute is flagged.</li><li>Worming and flea dates count down and remind you.</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/vet-summary.png" alt="Before a vet visit" loading="lazy"></div><div class="txt"><h3>Before a vet visit</h3><p>Tap <b>Vet summary</b> for weight, food, symptoms, poo and pee, breathing and treatments in one page. Share it or print it to PDF.</p><ul><li>Add questions for the vet as you think of them (Health › Vet), and they appear at the top.</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/urgent.png" alt="When it can't wait" loading="lazy"></div><div class="txt"><h3>When it can't wait</h3><p><b>🚨 Urgent?</b> on Health lists the signs that mean call a vet now, with a button to ring yours.</p><ul><li>Out of hours, ring your vet anyway: the message usually gives the emergency number.</li></ul></div></div></div></section><section id="friendship"><div class="wrap"><h2>5. Friendship</h2><div class="step"><div class="shot"><img src="../docs/guide/friendship.png" alt="Fights and calm moments" loading="lazy"></div><div class="txt"><h3>Fights and calm moments</h3><p>Log every fight and every nice moment. After a few, <b>Friendship</b> shows who starts it, when, what sets it off and what seems to help.</p><ul><li>Logging calm moments matters as much as fights: that's how you see things improving.</li><li>If fights cluster at one time of day, Today warns you beforehand so you can play with them first.</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/fight.png" alt="One question at a time" loading="lazy"></div><div class="txt"><h3>One question at a time</h3><p>Who started it, what was going on, how bad, where. Add a photo or video if you have one.</p></div></div></div></section><section id="plan"><div class="wrap"><h2>6. Calendar, stock, costs and info</h2><div class="step"><div class="shot"><img src="../docs/guide/calendar.png" alt="Calendar" loading="lazy"></div><div class="txt"><h3>Calendar</h3><p>Every day with icons (fights, weigh-ins, vet, symptoms), to-dos, and a summary of each month. Tap a day to see or fill it in.</p><ul><li><b>Settings › Help › Add dates to my calendar</b> puts worming, flea, weigh-ins, birthdays and bookings in your phone's calendar.</li></ul></div></div><div class="step"><div class="shot"><img src="../docs/guide/stock.png" alt="Stock" loading="lazy"></div><div class="txt"><h3>Stock</h3><p>How long each food lasts and the date to order by, including before a cat hotel stay. Tap <b>✓ Bought</b> when it arrives.</p></div></div><div class="step"><div class="shot"><img src="../docs/guide/costs.png" alt="Costs" loading="lazy"></div><div class="txt"><h3>Costs</h3><p>What you spent this month after insurance, what's coming up, insurance claims and monthly costs like the premium.</p></div></div><div class="step"><div class="shot"><img src="../docs/guide/info.png" alt="Info, bookings and the care sheet" loading="lazy"><img src="../docs/guide/care-sheet.png" alt="Care sheet" loading="lazy"></div><div class="txt"><h3>Info, bookings and the care sheet</h3><p>Vet, insurance, cat hotel and each cat's profile. Add a <b>booking</b> and the app goes into holiday mode while they're away.</p><ul><li><b>📄 Care sheet</b> makes a one-page sheet for the sitter or cat hotel: food, rules, health, vet. Print it or share it.</li></ul></div></div></div></section><section id="settings"><div class="wrap"><h2>7. Make it yours</h2><div class="step"><div class="shot"><img src="../docs/guide/settings.png" alt="Settings" loading="lazy"></div><div class="txt"><h3>Settings</h3><p><b>Cats</b> (looks, names, plans, foods, checklist), <b>This phone</b> (language, light or dark, kg or lb, which tabs you see), <b>Sharing & notifications</b>, <b>Data</b> (backup, restore, privacy) and <b>Help</b>.</p><ul><li><b>Add another phone</b>: Sharing › Show setup code, and they scan it.</li><li><b>Notifications</b>: Sharing › Turn on notifications (from the home screen app). Then leave each other notes and reminders with + › Note.</li><li>Switch off tabs you don't need: nothing is deleted.</li></ul></div></div></div></section>
+<section id="tips" class="faq"><div class="wrap"><h2>8. Good to know</h2>
+<details><summary>No signal?</summary><p>Keep logging. It's saved on the phone straight away and uploads when you're back online, even if you close the app.</p></details>
+<details><summary>How do I get the latest version?</summary><p>Close the app fully (swipe it away) and open it again. What's new shows once after an update. Settings › Data shows the version.</p></details>
+<details><summary>Can two people use it at once?</summary><p>Yes. Changes from both phones are merged, never overwritten, and everything shows who logged it.</p></details>
+<details><summary>Backups</summary><p>With GitHub connected, every change is already kept there. You can also download everything as one file (Settings › Data › Download a backup) and restore it later.</p></details>
+<details><summary>Privacy</summary><p>Your data lives on your phone and in your own private GitHub repository. No server, no app account, no ads, no tracking. <a href="../about/#privacy">More</a></p></details>
+<details><summary>Something's wrong</summary><p>Settings › Help › Report a problem. Don't include anything private.</p></details>
+</div></section>
+<div class="wrap"><footer>© 2026 Martina Regan · <a href="../about/">About</a> · <a href="../?demo">Try the demo</a></footer></div>
+</body>
+</html>

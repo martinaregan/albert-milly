@@ -4,7 +4,7 @@ A home-screen app for keeping two cats healthy and getting along: food, weight, 
 
 It was built for two real cats: Albert (ginger and white, on a vet-supervised weight-loss plan, with a cough being looked into) and Milly (black and white, picky eater, also losing weight). It was also built for one big ongoing question: why does Albert bully Milly, and is it getting better?
 
-**[Open the app](https://martinaregan.github.io/albert-milly/)** · **[Try the demo](https://martinaregan.github.io/albert-milly/?demo)** (made-up data, nothing saved) · **[About](https://martinaregan.github.io/albert-milly/about/)**
+**[Open the app](https://martinaregan.github.io/albert-milly/)** · **[How to use it](https://martinaregan.github.io/albert-milly/guide/)** · **[Try the demo](https://martinaregan.github.io/albert-milly/?demo)** (made-up data, nothing saved) · **[About](https://martinaregan.github.io/albert-milly/about/)**
 
 <p>
 <img src="docs/screens/today-light.png" width="200" alt="Food & play tab">

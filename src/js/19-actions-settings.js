@@ -490,3 +490,7 @@ ACT["sset"] = function (e, t, a, v) {
   render();
   window.scrollTo(0, 0);
 };
+
+ACT["guide"] = function () {
+  window.open("guide/", "_blank", "noopener");
+};
