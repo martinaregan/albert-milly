@@ -10,6 +10,23 @@
     GH = JSON.parse(localStorage.getItem(LS + "-gh") || "null");
   } catch (e) {}
 
+  // Appearance (this phone): "auto" follows the phone; "light"/"dark" set a class on <html> (see tools/build.js).
+  function appearance() {
+    try {
+      return localStorage.getItem(LS + "-look") || "auto";
+    } catch (e) {
+      return "auto";
+    }
+  }
+
+  function applyLook() {
+    var a = appearance(),
+      h = document.documentElement;
+    h.classList.toggle("light", a === "light");
+    h.classList.toggle("dark", a === "dark");
+  }
+  applyLook();
+
   var S = null,
     BASE = null,
     SHA = null,

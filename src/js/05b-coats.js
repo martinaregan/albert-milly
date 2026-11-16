@@ -192,19 +192,31 @@
         " 60%," +
         mix(d, "#000000", 0.18) +
         " 100%)}" +
-        "@media (prefers-color-scheme: dark){:root{--g-" +
-        k +
-        ":linear-gradient(135deg," +
-        mix(d, "#000000", 0.55) +
-        " 0%," +
-        mix(d, "#000000", 0.65) +
-        " 60%," +
-        mix(d, "#000000", 0.72) +
-        " 100%)}body." +
-        k +
-        "{--accent:" +
-        mix(d, "#ffffff", 0.25) +
-        "!important;--onaccent:#fff!important}}" +
+        (function () {
+          // Dark-mode colours: for Automatic (inside the media query) and for a forced Dark setting.
+          var dk = function (c) {
+            return (
+              ":root:where(" +
+              c +
+              "){--g-" +
+              k +
+              ":linear-gradient(135deg," +
+              mix(d, "#000000", 0.55) +
+              " 0%," +
+              mix(d, "#000000", 0.65) +
+              " 60%," +
+              mix(d, "#000000", 0.72) +
+              " 100%)}:where(html" +
+              c +
+              ") body." +
+              k +
+              "{--accent:" +
+              mix(d, "#ffffff", 0.25) +
+              "!important;--onaccent:#fff!important}"
+            );
+          };
+          return "@media (prefers-color-scheme: dark){" + dk(":not(.light)") + "}" + dk(".dark");
+        })() +
         "body." +
         k +
         "{--accent:" +

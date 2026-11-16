@@ -77,7 +77,19 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
-      '<div class="card"><h2>⚙️ This phone</h2><label class="l">Weight in</label><div class="seg u-cols1fr-1fr">' +
+      '<div class="card"><h2>⚙️ This phone</h2><label class="l">Appearance</label><div class="seg u-cols-repeat-3-1fr">' +
+      [
+        ["auto", "Automatic"],
+        ["light", "Light"],
+        ["dark", "Dark"]
+      ]
+        .map(function (o) {
+          return (
+            '<button class="' + (appearance() === o[0] ? "on" : "") + '" data-a="lookset" data-v="' + o[0] + '">' + o[1] + "</button>"
+          );
+        })
+        .join("") +
+      '</div><label class="l">Weight in</label><div class="seg u-cols1fr-1fr">' +
       ["kg", "lb"]
         .map(function (u) {
           return '<button class="' + (unit() === u ? "on" : "") + '" data-a="unitset" data-v="' + u + '">' + u + "</button>";

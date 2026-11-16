@@ -1,6 +1,7 @@
 /* 17c-help: First-time intro, "What's new" after an update, the emergency vet panel, and report a problem. */
   // Newest first. Add a line here with every release that changes something people will notice.
   var NEWS = [
+    ["43", "Light, Dark or Automatic (Settings › This phone)"],
     [
       "42",
       '🚨 "Urgent?" on Health: when to call a vet now',

@@ -434,3 +434,12 @@ ACT["callvet"] = function (e, t, a, v) {
 ACT["report"] = function () {
   window.open(reportLink(), "_blank", "noopener");
 };
+
+ACT["lookset"] = function (e, t, a, v) {
+  try {
+    localStorage.setItem(LS + "-look", v);
+  } catch (x) {}
+  applyLook();
+  lastTheme = null;
+  render();
+};
