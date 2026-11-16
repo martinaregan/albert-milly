@@ -77,6 +77,22 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
+      '<div class="card"><h2>🗂️ Tabs</h2><div class="note u-m0-0-10">Switch off what you don\'t need. Nothing is deleted: switch a tab back on and it\'s all there.</div><div class="chips">' +
+      Object.keys(TAB_NAMES)
+        .map(function (t) {
+          return (
+            '<button class="chip' +
+            (tabOn(t) ? " on" : "") +
+            '" data-a="tabtog" data-v="' +
+            t +
+            '">' +
+            (tabOn(t) ? "✓ " : "") +
+            TAB_NAMES[t] +
+            "</button>"
+          );
+        })
+        .join("") +
+      "</div></div>" +
       (DEMO || GH.local ? "" : pushCard()) +
       (DEMO || GH.local
         ? ""

@@ -377,10 +377,8 @@
             : '<button class="hlbtn" data-a="bedok">Done</button>') +
           "</span></div>"
         : "") +
-      '<div class="hlrow"><span>Weigh-in</span><span class="hlr">' +
-      wr +
-      "</span></div>" +
-      (act
+      (tabOn("weight") ? '<div class="hlrow"><span>Weigh-in</span><span class="hlr">' + wr + "</span></div>" : "") +
+      (act && tabOn(act[1])
         ? '<button class="hlact" data-a="tab" data-v="' +
           act[1] +
           '"><span>' +
@@ -536,11 +534,14 @@
         : "") +
       '<div class="qgrid">' +
       mt +
-      tile("lnew", "Poo", "Poo", "usual for " + esc(cat().name)) +
-      tile("lnew", "Pee", "Pee", "one tap") +
+      (tabOn("health")
+        ? tile("lnew", "Poo", "Poo", "usual for " + esc(cat().name)) + tile("lnew", "Pee", "Pee", "one tap")
+        : "") +
       tile("plopen", "", "Play", "minutes or timer") +
-      tile("fnew", "", "Fight", "what happened", "qwarn") +
-      tile("calmnew", "", "Calm moment", "something nice", "qok") +
+      (tabOn("fights")
+        ? tile("fnew", "", "Fight", "what happened", "qwarn") +
+          tile("calmnew", "", "Calm moment", "something nice", "qok")
+        : "") +
       "</div>" +
       '<div class="seg u-cols1fr-1fr u-m12-0-0">' +
       ks
@@ -809,6 +810,7 @@
     if (hr >= 20 && miss("wet")) n++;
     if (
       parse(t).getDay() === 6 &&
+      tabOn("weight") &&
       !ks.every(function (k) {
         return awayAt(k, t);
       }) &&

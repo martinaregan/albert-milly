@@ -370,3 +370,11 @@ ACT["erase2"] = function () {
   ui.modal = null;
   render();
 };
+
+ACT["tabtog"] = function (e, t, a, v) {
+  S.tabsOff = S.tabsOff || [];
+  var i = S.tabsOff.indexOf(v);
+  if (i >= 0) S.tabsOff.splice(i, 1);
+  else S.tabsOff.push(v);
+  change();
+};

@@ -98,6 +98,21 @@
       .replace(/\u0001/g, S.cats.albert.name);
   }
 
+  // Tabs can be switched off in Settings (S.tabsOff). Food & play and Settings always stay.
+  var TAB_NAMES = {
+    weight: "Weight",
+    health: "Health",
+    calendar: "Calendar",
+    fights: "Friendship",
+    stock: "Stock",
+    money: "Costs",
+    info: "Info"
+  };
+
+  function tabOn(t) {
+    return !S || !S.tabsOff || S.tabsOff.indexOf(t) < 0;
+  }
+
   function keyOfName(n) {
     return S && n === S.cats.milly.name ? "milly" : S && n === S.cats.albert.name ? "albert" : null;
   }

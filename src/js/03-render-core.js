@@ -20,6 +20,7 @@
       return;
     }
     needRender = false;
+    if (!tabOn(ui.tab)) ui.tab = "today";
     if (S.fresh && !DEMO && !ui.modal) {
       ui.sw = ui.sw || { intro: true, cat: 0, step: 0 };
       ui.modal = setupWiz;
@@ -83,7 +84,7 @@
       money: vMoney,
       hows: vHows
     }[ui.tab]();
-    if (["today", "fights", "health"].indexOf(ui.tab) >= 0 && !ui.modal)
+    if (["today", "fights", "health"].indexOf(ui.tab) >= 0 && tabOn(ui.tab) && !ui.modal)
       h += '<button class="fab" data-a="quick" aria-label="Quick log">+</button>';
     h +=
       '<nav><div class="navin">' +
@@ -117,6 +118,9 @@
           "Info"
         ]
       ]
+        .filter(function (t) {
+          return tabOn(t[0]);
+        })
         .map(function (t) {
           return (
             '<button data-a="tab" data-v="' +

@@ -26,11 +26,12 @@
       var quick = Date.now() - sw.t < 600;
       sw = null;
       if (!quick || Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
-      var i = TABS.indexOf(ui.tab);
+      var TT = TABS.filter(tabOn),
+        i = TT.indexOf(ui.tab);
       if (i < 0) return;
       var ni = i + (dx < 0 ? 1 : -1);
-      if (ni < 0 || ni >= TABS.length) return;
-      ui.tab = TABS[ni];
+      if (ni < 0 || ni >= TT.length) return;
+      ui.tab = TT[ni];
       render();
       window.scrollTo(0, 0);
     },
