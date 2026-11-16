@@ -69,7 +69,7 @@
         v +
         "%</text>";
     L.forEach(function (x, i) {
-      var col = x.k === "albert" ? "#e07a2e" : "var(--ink)";
+      var col = colOf(x.k);
       s +=
         '<line x1="' +
         P +
@@ -117,7 +117,7 @@
       L.map(function (x, i) {
         return (
           '<span><b style="color:' +
-          (x.k === "albert" ? "#e07a2e" : "var(--ink)") +
+          (colOf(x.k)) +
           '">━</b> ' +
           esc(x.c.name) +
           " " +

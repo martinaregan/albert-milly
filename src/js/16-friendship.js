@@ -360,9 +360,9 @@
       "><summary><b>📊 Full breakdown (60 days)</b></summary>" +
       '<h3>Who starts it</h3><div class="split"><div style="width:' +
       pct(wo.a, n) +
-      '%;background:#e8822f"></div><div style="width:' +
+      '%;background:' + colOf("albert") + '"></div><div style="width:' +
       pct(wo.m, n) +
-      '%;background:#3a3a3a"></div><div style="width:' +
+      '%;background:' + colOf("milly") + '"></div><div style="width:' +
       pct(wo["Not sure"], n) +
       '%;background:#b9b0a6"></div></div>' +
       '<div class="row between small u-fw800"><span>' +

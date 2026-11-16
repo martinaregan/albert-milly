@@ -52,6 +52,7 @@
   function vSettings0() {
     var c = cat();
     return (
+      coatCard(ui.cat) +
       '<div class="card"><h2>📷 Cat photos</h2><div class="note u-m0-0-10">Used instead of the drawn faces everywhere in the app. A close-up of the face works best.</div><div class="row u-gap8 u-wrap">' +
       ["albert", "milly"]
         .map(function (k) {

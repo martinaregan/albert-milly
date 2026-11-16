@@ -19,6 +19,7 @@
       return;
     }
     needRender = false;
+    applyTheme();
     document.body.className = ui.cat;
     try {
       localStorage.setItem(LS + "-ui", JSON.stringify({ cat: ui.cat, tab: ui.tab, calWho: ui.calWho }));
@@ -503,6 +504,12 @@
   function spot(k) {
     if (S && S.cats && S.cats[k] && S.cats[k].photo && GH)
       return '<img class="spot" data-ph="' + esc(S.cats[k].photo) + '" alt="" data-sph="' + k + '">';
+    if (S && S.cats && S.cats[k] && S.cats[k].coat) return coatFace(S.cats[k].coat, S.cats[k].name);
+    return spot0(k);
+  }
+
+  // The original hand-drawn Albert (ginger cap) and Milly (black patches) faces.
+  function spot0(k) {
     var c = k === "albert" ? "#e8822f" : "#1e1e1e",
       patch =
         k === "albert"

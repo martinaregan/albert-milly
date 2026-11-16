@@ -92,6 +92,7 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **Breathing counter**: tap once per breath while the cat sleeps, for 30 seconds. Over 30 a minute is flagged; over 40 says to call the vet.
 - **Poo vs food**: how often a poo within a day of each food was soft, against the overall rate.
 - **Bedtime routine**: tick "play + snack before bed" each night; after a few nights the Friendship tab compares fights with and without it.
+- **Your cats, your colours** (Settings › each cat's look): rename the cats, pick a coat (one colour, colour & white, tuxedo, tabby, tortoiseshell, calico, colourpoint, van) or a breed, or tap their fur on a photo. The little face, the cat's colour and the app colours all follow. "Original" keeps the hand-drawn Albert and Milly.
 - **Cat photos**: Settings › Cats › add a photo to replace the drawn face everywhere.
 - **Care sheet** (Info › Bookings › Care sheet): one page for a cat hotel or sitter with each cat's food plan, supplements, health, personality, vet and insurance details, plus your own "Important" notes. Print it, save it as a PDF or share it as text. It's built from the live data, so it's never out of date.
 - **Holiday mode**: while the cats are at a booked cat hotel, Today shows "At Betty's, home Tue 29 Dec" instead of meals to log, the app icon badge and the week strip stop counting missed meals, and the weekly summary counts only days at home. Breakfast on drop-off day and dinner on pick-up day still count.

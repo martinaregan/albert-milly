@@ -179,3 +179,85 @@ ACT["qrcopy"] = function () {
     }
   );
 };
+
+// Coat / look: data-v is "field|value". "p|orig" goes back to the original drawing.
+ACT["coatset"] = function (e, t, a, v, c) {
+  var p = v.split("|"),
+    cc = cat();
+  if (p[0] === "p" && p[1] === "orig") delete cc.coat;
+  else {
+    cc.coat = cc.coat || { p: "solid", a: "#8d9198", e: "#8fbf5a" };
+    cc.coat[p[0]] = p[1];
+    if (p[0] === "p" && /^(tabby|tortie|calico|point)$/.test(p[1]) && !cc.coat.b)
+      cc.coat.b = p[1] === "tortie" || p[1] === "calico" ? "#e8822f" : "#4a3628";
+    if (p[0] !== "t") delete cc.coat.breed;
+  }
+  change();
+};
+
+ACT["coatphoto"] = function () {
+  var i = document.getElementById("coatIn");
+  if (i) i.click();
+};
+
+// Tap on the photo: average a small square of pixels under the finger.
+ACT["pktap"] = function (e, t) {
+  // The photo is letterboxed (object-fit: contain), so work out where it really sits.
+  var r = t.getBoundingClientRect(),
+    sc = Math.min(r.width / t.naturalWidth, r.height / t.naturalHeight),
+    ox = r.left + (r.width - t.naturalWidth * sc) / 2,
+    oy = r.top + (r.height - t.naturalHeight * sc) / 2,
+    x = (e.clientX - ox) / sc,
+    y = (e.clientY - oy) / sc;
+  if (x < 0 || y < 0 || x > t.naturalWidth || y > t.naturalHeight) return;
+  var
+    s = Math.max(4, Math.round(t.naturalWidth / 60)),
+    cv = document.createElement("canvas");
+  cv.width = cv.height = s;
+  var cx = cv.getContext("2d");
+  cx.drawImage(t, x - s / 2, y - s / 2, s, s, 0, 0, s, s);
+  var d = cx.getImageData(0, 0, s, s).data,
+    m = [0, 0, 0],
+    n = 0;
+  for (var i = 0; i < d.length; i += 4) {
+    m[0] += d[i];
+    m[1] += d[i + 1];
+    m[2] += d[i + 2];
+    n++;
+  }
+  m = m.map(function (q) {
+    return q / n;
+  });
+  // Photos indoors are usually dim: lift mid-tone fur so ginger looks ginger, but leave black black.
+  var mx = Math.max(m[0], m[1], m[2]),
+    f = mx > 45 && mx < 225 ? Math.min(1.6, 225 / mx) : 1;
+  ui.pick.cols.push(
+    hexOf.apply(
+      null,
+      m.map(function (q) {
+        return Math.min(255, Math.round(q * f));
+      })
+    )
+  );
+  if (ui.pick.cols.length >= 2) return ACT.pkdone();
+  render();
+};
+
+ACT["pkundo"] = function () {
+  ui.pick.cols.pop();
+  render();
+};
+
+ACT["pkdone"] = function () {
+  var pk = ui.pick,
+    g = guessCoat(pk.cols),
+    cc = S.cats[pk.k],
+    old = cc.coat || {};
+  cc.coat = { p: g.p, a: g.a, b: g.b || "", e: old.e || "#8fbf5a" };
+  if (old.t) cc.coat.t = old.t;
+  URL.revokeObjectURL(pk.url);
+  ui.pick = null;
+  ui.modal = null;
+  change();
+  toast("Done. Check the pattern and eye colour below");
+};

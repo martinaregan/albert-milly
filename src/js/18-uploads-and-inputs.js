@@ -37,6 +37,28 @@
 
   document.addEventListener("change", function (e) {
     var t = e.target;
+    if (t.id === "coatIn") {
+      var cf = (t.files || [])[0];
+      if (!cf) return;
+      if (ui.pick) URL.revokeObjectURL(ui.pick.url);
+      ui.pick = { k: t.dataset.k, url: URL.createObjectURL(cf), cols: [] };
+      ui.modal = pickSheet;
+      t.value = "";
+      render();
+      return;
+    }
+    if (t.dataset.coatbreed) {
+      var br = BREEDS.filter(function (x) {
+        return x[0] === t.value;
+      })[0];
+      if (!br) return;
+      var cc0 = cat(),
+        tt0 = cc0.coat && cc0.coat.t;
+      cc0.coat = { p: br[1], a: br[2], b: br[3], e: br[4], breed: br[0] };
+      if (tt0) cc0.coat.t = tt0;
+      change();
+      return;
+    }
     if (t.id === "fileIn") {
       var files = Array.prototype.slice.call(t.files || []);
       if (!files.length || !GH) return;
