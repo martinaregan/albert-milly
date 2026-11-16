@@ -141,6 +141,11 @@
       change();
       return;
     }
+    if (t.dataset.sitnote) {
+      S.sitterNote = t.value;
+      change();
+      return;
+    }
     if (t.dataset.prof) {
       S.profiles[t.dataset.prof] = t.value;
       change();

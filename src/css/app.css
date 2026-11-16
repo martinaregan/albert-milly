@@ -4193,3 +4193,37 @@ body.milly {
   margin: 0;
   accent-color: var(--accent);
 }
+
+/* Care sheet for a sitter or cat hotel */
+.sit .sitb {
+  border-top: 1px solid var(--line);
+  padding: 10px 0 4px;
+  margin-top: 10px;
+  break-inside: avoid;
+}
+.sit h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+.sit h3 .spot {
+  width: 28px;
+  height: 28px;
+}
+.sit h4 {
+  margin: 8px 0 2px;
+  font-size: 15px;
+}
+.sit ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.sit .sitl {
+  margin: 2px 0;
+}
+.sit textarea {
+  width: 100%;
+  margin-top: 6px;
+}

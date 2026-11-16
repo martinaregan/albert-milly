@@ -93,6 +93,8 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **Poo vs food**: how often a poo within a day of each food was soft, against the overall rate.
 - **Bedtime routine**: tick "play + snack before bed" each night; after a few nights the Friendship tab compares fights with and without it.
 - **Cat photos**: Settings › Cats › add a photo to replace the drawn face everywhere.
+- **Care sheet** (Info › Bookings › Care sheet): one page for a cat hotel or sitter with each cat's food plan, supplements, health, personality, vet and insurance details, plus your own "Important" notes. Print it, save it as a PDF or share it as text. It's built from the live data, so it's never out of date.
+- **Holiday mode**: while the cats are at a booked cat hotel, Today shows "At Betty's, home Tue 29 Dec" instead of meals to log, the app icon badge and the week strip stop counting missed meals, and the weekly summary counts only days at home. Breakfast on drop-off day and dinner on pick-up day still count.
 - **Birthdays**: Settings › each cat's plan › Birthday. Shows their age on Info, a 🎂 on the calendar, "turns 3" in Coming up, and a birthday headline on the day. Tick "Only roughly known" for a guessed date: you get the age without a birthday.
 - **No signal?** Everything you log is saved on the phone straight away and uploads when you're back online, even if the app was closed in between.
 - **App icon badge**: Settings › This phone › turn on. The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).

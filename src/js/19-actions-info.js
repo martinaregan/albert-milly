@@ -66,3 +66,8 @@ ACT["bdel2"] = function (e, t, a, v, c) {
   ui.modal = null;
   change();
 };
+
+ACT["sitter"] = function () {
+  ui.modal = sitterSheet;
+  render();
+};

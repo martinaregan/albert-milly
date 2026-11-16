@@ -479,7 +479,7 @@
         "</div>";
     else h += ["albert", "milly"].map(profileCard).join("");
     h +=
-      '<div class="card"><div class="row between"><h2 class="u-m0">🏨 Bookings</h2><button class="b s p" data-a="bnew">+ Booking</button></div>' +
+      '<div class="card"><div class="row between"><h2 class="u-m0">🏨 Bookings</h2><span class="row u-gap6"><button class="b s" data-a="sitter">📄 Care sheet</button><button class="b s p" data-a="bnew">+ Booking</button></span></div>' +
       (up.length
         ? up
             .map(function (b) {

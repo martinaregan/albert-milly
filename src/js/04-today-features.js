@@ -1,4 +1,22 @@
 /* 04-today-features: Usual meals, undo toast, headline card, quick log, search, who did what, app badge, celebrations, empty states. */
+  // Holiday mode: the booking (cat hotel stay) that covers this cat on this day.
+  // With a meal kind: drop-off day still has breakfast at home, pick-up day has dinner at home.
+  // Without: only the full days in between count as away.
+  function awayAt(k, d, kind) {
+    var nm = S.cats[k].name;
+    return (
+      ((S.info && S.info.bookings) || []).filter(function (b) {
+        if (!b.from || ((b.cats || []).length && b.cats.indexOf(nm) < 0)) return false;
+        var to = b.to || b.from;
+        if (d < b.from || d > to) return false;
+        if (!kind) return d > b.from && d < to;
+        if (d === b.from) return kind !== "dry";
+        if (d === to) return kind === "dry";
+        return true;
+      })[0] || null
+    );
+  }
+
   function usualMeal(k, kind) {
     var c = S.cats[k],
       f = c.foods.filter(function (x) {
@@ -156,6 +174,7 @@
                   var on = has(c, d, q),
                     miss =
                       !on &&
+                      !(q !== "play" && awayAt(k, d, q)) &&
                       (past ||
                         (d === t &&
                           ((q === "dry" && new Date().getHours() >= 10) ||
@@ -199,10 +218,15 @@
           return done(k, kind);
         }),
         m = ks.filter(function (k) {
-          return !done(k, kind) && usualMeal(k, kind);
+          return !done(k, kind) && usualMeal(k, kind) && !awayAt(k, t, kind);
         });
-      var right;
-      if (!m.length)
+      var right,
+        aw = ks.filter(function (k) {
+          return awayAt(k, t, kind) && !done(k, kind);
+        });
+      if (!m.length && aw.length && !d.length)
+        right = '<span class="hlmute">🏨 ' + esc((awayAt(aw[0], t, kind).place || "Cat hotel").split(" ")[0]) + "</span>";
+      else if (!m.length)
         right = '<span class="hlok">✓ ' + (d.length > 1 ? "Both" : esc(S.cats[d[0]].name)) + "</span>";
       else if (later) right = '<span class="hlmute">' + later + "</span>";
       else
@@ -220,10 +244,10 @@
     var plan = String(S.cats.albert.plan || ""),
       dt = (plan.match(/Evening[^\n]*?(\d{1,2}[:.]\d{2})/) || [])[1] || "19:30";
     var bDone = ks.every(function (k) {
-        return done(k, "dry") || !usualMeal(k, "dry");
+        return done(k, "dry") || !usualMeal(k, "dry") || awayAt(k, t, "dry");
       }),
       dDone = ks.every(function (k) {
-        return done(k, "wet") || !usualMeal(k, "wet");
+        return done(k, "wet") || !usualMeal(k, "wet") || awayAt(k, t, "wet");
       });
     var title =
       bDone && dDone && ((hr < 21 && hr >= 4) || (S.bed || {})[nightOf()])
@@ -237,6 +261,17 @@
             : hr < 12
               ? "Good morning"
               : "Breakfast still to log";
+    var stay = ks.every(function (k) {
+      return awayAt(k, t);
+    })
+      ? awayAt("albert", t)
+      : null;
+    if (stay)
+      title =
+        "At " +
+        esc((stay.place || "the cat hotel").replace(/'s Kattenhotel$/, "'s")) +
+        ", home " +
+        parse(stay.to || stay.from).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
     var bd = ks.filter(function (k) {
       return isBday(S.cats[k], t);
     });
@@ -256,8 +291,9 @@
         return w.d === t;
       });
     });
-    wr =
-      dow === 6
+    wr = stay
+      ? '<span class="hlmute">After the stay</span>'
+      : dow === 6
         ? weighed
           ? '<span class="hlok">✓ Done</span>'
           : '<button class="hlbtn" data-a="tab" data-v="weight">Weigh now</button>'
@@ -300,7 +336,7 @@
             (b.place || "Cat hotel").split(" ")[0] +
               " drop-off " +
               (dd === 0 ? "today" : dd === 1 ? "tomorrow" : "in " + dd + " days") +
-              ": check the packing list",
+              ": care sheet & packing",
             "info"
           ];
         }
@@ -404,6 +440,7 @@
           x = peek(c, t);
         return (
           usualMeal(k, kind) &&
+          !awayAt(k, t, kind) &&
           !(
             x &&
             c.foods.some(function (f) {
@@ -755,6 +792,7 @@
           x = peek(c, t);
         return (
           usualMeal(k, kind) &&
+          !awayAt(k, t, kind) &&
           !(
             x &&
             c.foods.some(function (f) {
@@ -771,6 +809,9 @@
     if (hr >= 20 && miss("wet")) n++;
     if (
       parse(t).getDay() === 6 &&
+      !ks.every(function (k) {
+        return awayAt(k, t);
+      }) &&
       !ks.every(function (k) {
         return S.cats[k].weights.some(function (w) {
           return w.d === t;

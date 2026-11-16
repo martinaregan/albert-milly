@@ -67,12 +67,14 @@
         lw = wk[wk.length - 1],
         pw = prev[prev.length - 1];
       var meals = 0,
+        home = 0,
         kc = 0,
         kn = 0,
         pl = 0;
       for (var i = 0; i < 7; i++) {
         var d = addDays(s0, i),
           x = peek(c, d);
+        if (!awayAt(k, d)) home++;
         if (!x) continue;
         var tt = dayTotals(c, x);
         if (tt.dry > 0 && tt.wet > 0) meals++;
@@ -115,7 +117,9 @@
           "</li>" +
           "<li>Both meals logged on " +
           meals +
-          " of 7 days" +
+          " of " +
+          home +
+          (home < 7 ? " days at home" : " days") +
           (kn ? ", about " + Math.round(kc / kn) + " kcal a day" : "") +
           "</li>" +
           "<li>Play: " +

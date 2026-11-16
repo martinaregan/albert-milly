@@ -174,7 +174,7 @@ ACT["vrprint"] = function (e, t, a, v, c) {
 
 ACT["vrshare"] = function (e, t, a, v, c) {
   var tx2 = ui.vrtext || "";
-  if (navigator.share) navigator.share({ title: "Vet summary", text: tx2 }).catch(function () {});
+  if (navigator.share) navigator.share({ title: v || "Vet summary", text: tx2 }).catch(function () {});
   else if (navigator.clipboard)
     navigator.clipboard.writeText(tx2).then(function () {
       alert("Copied");
