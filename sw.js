@@ -1,5 +1,5 @@
 // Offline shell for the Albert & Milly app. Data and photos sync through GitHub, not this cache.
-const SHELL = 'am-shell-v63';
+const SHELL = 'am-shell-v64';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192-v5.png', './icon-512-v5.png', './apple-touch-icon-v5.png', './nunito-v1.woff2'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(SHELL).then(c => c.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener('activate', e => {
@@ -20,4 +20,19 @@ self.addEventListener('fetch', e => {
     return;
   }
   e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+});
+// Notifications sent by the data repo's notify workflow (notes and reminders).
+self.addEventListener('push', e => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (x) { d = { title: 'Albert & Milly', body: e.data && e.data.text() }; }
+  e.waitUntil(self.registration.showNotification(d.title || 'Albert & Milly', {
+    body: d.body || '', tag: d.tag, icon: 'icon-192-v5.png', badge: 'icon-192-v5.png', data: { url: './?notes=1' }
+  }));
+});
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(cs => {
+    for (const c of cs) if ('focus' in c) return c.focus();
+    return self.clients.openWindow((e.notification.data && e.notification.data.url) || './');
+  }));
 });

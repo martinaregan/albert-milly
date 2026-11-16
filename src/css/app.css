@@ -4300,3 +4300,31 @@ body.milly {
   border-radius: 50%;
   border: 2px solid var(--line);
 }
+
+/* Notes for each other */
+.notesbtn {
+  margin-bottom: 14px;
+}
+.note1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.note1:first-of-type {
+  border-top: 0;
+}
+.n1t {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+}
+.note1.done .n1t {
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+.note1 .b,
+.note1 .x {
+  flex: none;
+}

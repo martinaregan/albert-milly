@@ -239,7 +239,7 @@
       t = dayTotals(c, d),
       fd = feed(c);
     var h =
-      (ui.day === today() ? headline() + checkinCard() + weekCard() : "") +
+      (ui.day === today() ? headline() + (DEMO ? "" : notesCard()) + checkinCard() + weekCard() : "") +
       '<div class="datebar"><button class="b" data-a="day" data-v="-1">‹</button><b>' +
       nice(ui.day) +
       '</b><button class="b" data-a="day" data-v="1" ' +

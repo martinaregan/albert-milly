@@ -168,7 +168,7 @@
     api("data.json", {
       method: "PUT",
       body: JSON.stringify({
-        message: "Update from " + (GH.who || "phone"),
+        message: "Update from " + (GH.who || "phone") + (notifyNext ? " [notify]" : ""),
         content: b64e(JSON.stringify(snap, null, 1)),
         sha: SHA || undefined
       })
@@ -196,6 +196,7 @@
           });
         }
         tries = 0;
+        notifyNext = false;
         SHA = res.content.sha;
         BASE = snap;
         dirty = !eq(S, snap);
@@ -503,7 +504,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "36";
+  var APPV = "37";
 
   function setupView() {
     var g = GH || {},

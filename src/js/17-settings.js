@@ -74,6 +74,7 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
+      (DEMO ? "" : pushCard()) +
       (DEMO
         ? ""
         : '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note u-m0-0-10">Connect their phone in one scan. Everything they log shows their name, and the app stops a second dinner.</div><button class="b s p" data-a="qrshow">Show setup code</button></div>') +
