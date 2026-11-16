@@ -93,6 +93,7 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 
 - Everything is stored in **`data.json`** in a separate **private** repository, `albert-milly-data`. Photos go in its `photos/` folder.
 - The app reads and writes that file through the GitHub API with the access key. Nothing goes anywhere else.
+- Photos are saved twice: the full photo and a small preview (`-t.jpg`). Lists show the preview; tapping opens the full one.
 - Every phone keeps a copy, so the app opens instantly and works offline. Changes are saved locally straight away and uploaded about a second later.
 - Every 20 seconds (and whenever the app comes back to the front) it pulls the latest version. If two phones changed things at the same time, the changes are **merged**, not overwritten.
 - The screen never redraws while you're touching or scrolling; new data waits until you stop.
@@ -108,7 +109,9 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 
 | File | What it is |
 |---|---|
-| `index.html` | The whole app: HTML, CSS and JavaScript in one file |
+| `src/index.html` | **The app's source**: HTML, CSS and JavaScript in one readable file. Edit this one |
+| `index.html` | The published app, minified from `src/index.html` by `tools/build.js`. Don't edit by hand |
+| `tools/build.js` | Build script: `npm i terser csso`, then `node tools/build.js` |
 | `sw.js` | Service worker: keeps a copy of the app for offline use |
 | `manifest.webmanifest` | Name, colours and icons for "Add to Home Screen" |
 | `icon-*-v5.png`, `apple-touch-icon-v5.png` | App icons. The version number is in the name so phones fetch new ones |
@@ -117,9 +120,9 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 
 ## For developers
 
-- **No build step, no framework.** Plain JavaScript in one `<script>` block, wrapped in a function so nothing leaks into the page.
+- **No framework.** Plain JavaScript in one `<script>` block, wrapped in a function so nothing leaks into the page. Edit `src/index.html`, then run `node tools/build.js` to produce the minified `index.html` that GitHub Pages serves.
 - **State**: one object `S` (the contents of `data.json`) plus `ui` for screen state (tab, selected cat, open sections, open sheet).
-- **Rendering**: each view is a function that returns an HTML string (`vToday`, `vWeight`, `vHealth`, `vCal`, `vTogether`, `vStock`, `vMoney`, `vInfo`, `vSettings`). `render()` builds the page, swaps emoji for line icons, and restores the scroll position. Collapsed sections marked `data-lazy` are only built when opened.
+- **Rendering**: each view is a function that returns an HTML string (`vToday`, `vWeight`, `vHealth`, `vCal`, `vTogether`, `vStock`, `vMoney`, `vInfo`, `vSettings`). `render()` builds the page, swaps emoji for line icons, then updates only the parts of the screen that changed (a small DOM diff, `morphKids`), so taps are quick and the scroll position stays put. Switching tabs does a full rebuild. Collapsed sections marked `data-lazy` are only built when opened.
 - **Actions**: buttons carry `data-a="action"` and `data-v="value"`; one click handler routes them. `change()` saves locally, redraws and schedules the upload.
 - **Sync**: `pull()` / `push()` talk to the GitHub contents API; `merge3(base, mine, theirs)` merges concurrent edits by item id.
 - **Offline**: `sw.js` caches the app shell. Bump the `SHELL` name in `sw.js` and `APPV` in `index.html` with every release.
