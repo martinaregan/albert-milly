@@ -19,7 +19,7 @@ It was built for two real cats: Albert (ginger and white, on a vet-supervised we
 <img src="docs/log-breakfast.gif" width="200" alt="Logging breakfast for both cats in one tap">
 </p>
 
-**[Watch the one-minute video](https://martinaregan.github.io/albert-milly/docs/how-to-use.mp4)**
+**Videos:** [how to use it in a minute](https://martinaregan.github.io/albert-milly/docs/how-to-use.mp4) · [the full three-minute tour](https://martinaregan.github.io/albert-milly/docs/full-tour.mp4)
 
 **Privacy:** your data lives in your own private GitHub repository and on your phone. There's no server, no account, no ads and no tracking, and nobody else (including whoever made the app) can see it.
 
