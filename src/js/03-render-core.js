@@ -50,7 +50,7 @@
           .map(function (k) {
             var c = S.cats[k],
               w = sorted(c),
-              lw = w.length ? w[w.length - 1].kg.toFixed(2) + " kg" : "";
+              lw = w.length ? wt(w[w.length - 1].kg) : "";
             return (
               '<button data-a="cat" data-v="' +
               k +
@@ -63,8 +63,8 @@
               '</span><span class="wt">' +
               lw +
               " → " +
-              c.target +
-              ' kg</span><span class="swh">' +
+              wt(c.target, "t") +
+              '</span><span class="swh">' +
               (ui.cat === k ? "Showing now" : "Tap to switch ›") +
               "</span></span></button>"
             );

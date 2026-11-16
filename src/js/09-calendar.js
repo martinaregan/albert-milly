@@ -157,7 +157,7 @@
           return w.d === ds;
         })
         .forEach(function (w) {
-          out.push(["⚖️", nm + "weighed " + w.kg.toFixed(2) + " kg"]);
+          out.push(["⚖️", nm + "weighed " + wt(w.kg)]);
         });
       c.vet
         .filter(function (e) {
@@ -540,7 +540,7 @@
           return w.d === ds;
         })
         .forEach(function (w) {
-          rows.push(["⚖️", w.kg.toFixed(2) + " kg", "weigh-in"]);
+          rows.push(["⚖️", wt(w.kg), "weigh-in"]);
         });
       S.litter
         .filter(function (l) {

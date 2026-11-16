@@ -378,3 +378,10 @@ ACT["tabtog"] = function (e, t, a, v) {
   else S.tabsOff.push(v);
   change();
 };
+
+ACT["unitset"] = function (e, t, a, v) {
+  try {
+    localStorage.setItem(LS + "-unit", v);
+  } catch (x) {}
+  render();
+};

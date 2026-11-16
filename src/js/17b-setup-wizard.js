@@ -60,10 +60,10 @@
         now = w.length ? w[w.length - 1].kg : "";
       q = "How much does " + esc(c.name) + " weigh?";
       body =
-        '<div class="grid2"><div><label class="l">Now (kg)</label><input id="swnow" inputmode="decimal" value="' +
-        (now || "") +
-        '"></div><div><label class="l">Target (kg)</label><input id="swtarget" inputmode="decimal" value="' +
-        (c.target || "") +
+        '<div class="grid2"><div><label class="l">Now (' + UL() + ')</label><input id="swnow" inputmode="decimal" value="' +
+        (now ? wn(now) : "") +
+        '"></div><div><label class="l">Target (' + UL() + ')</label><input id="swtarget" inputmode="decimal" value="' +
+        (c.target ? wn(c.target) : "") +
         '"></div></div><div class="note">Not sure of the target? Ask your vet. If they\'re a healthy weight, put the same number twice. Safe weight loss is about 1% of their weight a week.</div>';
     } else if (st === "food") {
       var dry = firstOf(c, "dry") || {},
@@ -98,12 +98,12 @@
           : "") +
         (g.losing
           ? '<div class="note">Aim: about ' +
-            wkg +
-            " g a week (1%), so roughly " +
+            wg(wkg) +
+            " a week (1%), so roughly " +
             weeks +
             " weeks to reach " +
-            c.target +
-            " kg. Weigh every Saturday and the app checks the pace and suggests changes.</div>"
+            wt(c.target, "t") +
+            ". Weigh every Saturday and the app checks the pace and suggests changes.</div>"
           : "") +
         '<div class="note">A starting point from the standard vet formula, not veterinary advice. Check it with your vet, especially for prescription diets.</div>';
     }

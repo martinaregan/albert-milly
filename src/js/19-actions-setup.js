@@ -18,9 +18,9 @@ function swRead() {
     c.bornGuess = !!(document.getElementById("swguess") || {}).checked;
   }
   if (st === "weight") {
-    var now = n("swnow"),
-      tg = n("swtarget");
-    if (!now || now < 0.5 || now > 15) return "Fill in their weight in kg";
+    var now = toKg($("swnow")),
+      tg = toKg($("swtarget"));
+    if (!now || now < 0.5 || now > 15) return "Fill in their weight in " + UL();
     c.target = tg && tg > 0.5 && tg < 15 ? tg : now;
     c.weights = c.weights.filter(function (w) {
       return w.d !== today();

@@ -112,7 +112,7 @@
     if (last.kg <= c.target)
       return {
         tone: "ok",
-        head: c.name + " has reached " + c.target + " kg",
+        head: c.name + " has reached " + wt(c.target, "t"),
         tx: "Ask the vet about switching to maintenance amounts. Keep weighing weekly."
       };
     if (!iv.length)
@@ -131,7 +131,7 @@
         tone: "neutral",
         head: c.name + ": new amount, first week",
         tx:
-          (r0.g >= 0 ? "Down " + r0.g + " g" : "Up " + -r0.g + " g") +
+          (r0.g >= 0 ? "Down " : "Up ") + wg(r0.g) +
           " since " +
           short(r0.from.d) +
           ", mostly before the change to " +
@@ -148,7 +148,7 @@
       slow = 0;
     for (var i = 0; i < iv.length && iv[i].rate < 0.5; i++) slow++;
     var ch =
-      (r.g >= 0 ? "Down " + r.g + " g" : "Up " + -r.g + " g") +
+      (r.g >= 0 ? "Down " : "Up ") + wg(r.g) +
       " since " +
       short(r.from.d) +
       " (" +

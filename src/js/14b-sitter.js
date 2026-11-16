@@ -61,7 +61,7 @@
         l = [];
       var about = [];
       if (c.born) about.push(ageText(c) + " old");
-      if (lw) about.push((+lw.kg).toFixed(1) + " kg");
+      if (lw) about.push(wt(lw.kg, 1));
       if (chip) about.push("microchip " + chip[1].replace(/\s/g, ""));
       if (about.length) l.push(about.join(" · "));
       secsOf(c.plan)

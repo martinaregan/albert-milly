@@ -77,6 +77,13 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
+      '<div class="card"><h2>⚙️ This phone</h2><label class="l">Weight in</label><div class="seg u-cols1fr-1fr">' +
+      ["kg", "lb"]
+        .map(function (u) {
+          return '<button class="' + (unit() === u ? "on" : "") + '" data-a="unitset" data-v="' + u + '">' + u + "</button>";
+        })
+        .join("") +
+      '</div><div class="note">Food stays in grams. Stored in kg either way, so the other phone can use its own setting.</div></div>' +
       '<div class="card"><h2>🗂️ Tabs</h2><div class="note u-m0-0-10">Switch off what you don\'t need. Nothing is deleted: switch a tab back on and it\'s all there.</div><div class="chips">' +
       Object.keys(TAB_NAMES)
         .map(function (t) {
@@ -126,8 +133,8 @@
       '"><label class="tickl u-mt6"><input type="checkbox" data-s="bornGuess"' +
       (c.bornGuess ? " checked" : "") +
       "> Only roughly known</label>" +
-      '<label class="l">Target weight (kg)</label><input data-s="target" inputmode="decimal" value="' +
-      c.target +
+      '<label class="l">Target weight (' + UL() + ')</label><input data-s="target" inputmode="decimal" value="' +
+      (unit() === "lb" ? wn(c.target) : c.target) +
       '">' +
       '<div class="grid2"><div><label class="l">Dry allowance (g/day, total)</label><input data-s="dryAllowance" inputmode="decimal" value="' +
       c.dryAllowance +

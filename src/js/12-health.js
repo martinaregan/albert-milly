@@ -680,18 +680,18 @@
     if (r) {
       L.push(
         "Weight: " +
-          r.first.kg.toFixed(2) +
-          " kg (" +
+          wt(r.first.kg) +
+          " (" +
           short(r.first.d) +
           ") → " +
-          r.last.kg.toFixed(2) +
-          " kg (" +
+          wt(r.last.kg) +
+          " (" +
           short(r.last.d) +
           "), " +
           r.pct.toFixed(1) +
           "% lost. Target " +
-          c.target +
-          " kg."
+          wt(c.target, "t") +
+          "."
       );
       if (r.rate != null)
         L.push(
@@ -982,14 +982,13 @@
       return (
         short(x.d) +
         ": " +
-        (+x.kg).toFixed(2) +
-        " kg" +
-        (p ? " (" + (x.kg - p.kg >= 0 ? "+" : "") + Math.round((x.kg - p.kg) * 1000) + " g)" : "")
+        wt(x.kg) +
+        (p ? " (" + (x.kg - p.kg >= 0 ? "+" : "−") + wg((x.kg - p.kg) * 1000) + ")" : "")
       );
     });
     if (w.length)
       wl.push(
-        "Target " + c.target + " kg, " + Math.max(0, w[w.length - 1].kg - c.target).toFixed(2) + " kg to go"
+        "Target " + wt(c.target, "t") + ", " + wt(Math.max(0, w[w.length - 1].kg - c.target)) + " to go"
       );
     sec(
       "Questions to ask",
@@ -1310,7 +1309,7 @@
             return ["🩺", x];
           });
         if (lw && c.target && lw - c.target > 0.05)
-          items.push(["⚖️", (lw - c.target).toFixed(2) + " kg to lose"]);
+          items.push(["⚖️", wt(lw - c.target) + " to lose"]);
         var sy = {};
         (c.health || [])
           .filter(function (e) {

@@ -376,9 +376,9 @@
       vac = t.match(/Vaccinated\s+(\d{1,2}\s+\w{3,9}(?:\s+\d{4})?)/i),
       bits = [];
     if (age) bits.push((c.bornGuess ? "~" : "") + age[1] + " yrs");
-    if (last) bits.push((+last.kg).toFixed(2) + " kg");
+    if (last) bits.push(wt(last.kg));
     if (vac) bits.push("jabs " + vac[1].replace(/\s+\d{4}$/, ""));
-    return esc(bits.join(" · ") || "target " + c.target + " kg");
+    return esc(bits.join(" · ") || "target " + wt(c.target, "t"));
   }
 
   function profileCard(k) {

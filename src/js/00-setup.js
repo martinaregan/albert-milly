@@ -307,6 +307,43 @@
     return (c.bornGuess ? "about " : "") + a + (a === 1 ? " year" : " years");
   }
 
+  // Weight units (this phone): data is always stored in kg; lb is only for showing and typing.
+  function unit() {
+    try {
+      return localStorage.getItem(LS + "-unit") || "kg";
+    } catch (e) {
+      return "kg";
+    }
+  }
+
+  function UL() {
+    return unit() === "lb" ? "lb" : "kg";
+  }
+
+  // Number in the chosen unit (for inputs and figures).
+  function wn(kg, d) {
+    kg = +kg;
+    return unit() === "lb" ? (kg * 2.20462).toFixed(1) : kg.toFixed(d == null ? 2 : d);
+  }
+
+  // Number + unit, e.g. "8.48 kg" or "18.7 lb". d=null keeps a target as typed.
+  function wt(kg, d) {
+    return (unit() !== "lb" && d === "t" ? String(+kg) : wn(kg, d === "t" ? 1 : d)) + " " + UL();
+  }
+
+  // Body-weight change given in grams: "70 g" or "2.5 oz".
+  function wg(g) {
+    g = Math.abs(Math.round(g));
+    return unit() === "lb" ? (g / 28.35).toFixed(1) + " oz" : g + " g";
+  }
+
+  // A typed weight, in the chosen unit, back to kg.
+  function toKg(v) {
+    v = parseFloat(String(v).replace(",", "."));
+    if (isNaN(v)) return NaN;
+    return unit() === "lb" ? Math.round((v / 2.20462) * 100) / 100 : v;
+  }
+
   function daysBetween(a, b) {
     return Math.round((parse(b) - parse(a)) / 864e5);
   }

@@ -248,7 +248,7 @@
           })
           .filter(Boolean);
       else {
-        var n = parseFloat(v.replace(",", "."));
+        var n = k === "target" ? toKg(v) : parseFloat(v.replace(",", "."));
         if (!isNaN(n) && n >= 0) c[k] = n;
       }
       change();
@@ -276,12 +276,12 @@
   function wcalc() {
     var W = ui.w;
     if (!W) return;
-    var me = parseFloat(String(W.me).replace(",", "."));
+    var me = toKg(W.me);
     ["albert", "milly"].forEach(function (k) {
       var el = document.getElementById("res-" + k),
         cm = document.getElementById("cmp-" + k);
       if (!el) return;
-      var tot = parseFloat(String(W[k]).replace(",", "."));
+      var tot = toKg(W[k]);
       if (isNaN(me) || isNaN(tot)) {
         el.textContent = "";
         cm.textContent = "";
@@ -295,7 +295,7 @@
         return;
       }
       el.style.color = "";
-      el.textContent = "= " + cw.toFixed(2) + " kg";
+      el.textContent = "= " + wt(cw);
       var prev = sorted(S.cats[k])
         .filter(function (x) {
           return x.d < W.d;
@@ -303,11 +303,11 @@
         .pop();
       cm.textContent = prev
         ? (cw < prev.kg ? "Down " : cw > prev.kg ? "Up " : "Same as ") +
-          (cw !== prev.kg ? Math.round(Math.abs(cw - prev.kg) * 1000) + " g since " : "") +
+          (cw !== prev.kg ? wg((cw - prev.kg) * 1000) + " since " : "") +
           short(prev.d) +
           " (" +
-          prev.kg.toFixed(2) +
-          " kg)"
+          wt(prev.kg) +
+          ")"
         : "";
     });
   }

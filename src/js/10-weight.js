@@ -177,7 +177,7 @@
         '" stroke="var(--line)"/><text x="2" y="' +
         (Y(k) + 4) +
         '">' +
-        k.toFixed(1) +
+        wn(k, 1) +
         "</text>";
     s +=
       '<line x1="' +
@@ -193,8 +193,8 @@
       '" y="' +
       (Y(c.target) + 15) +
       '" style="fill:var(--ok)">target ' +
-      c.target +
-      " kg</text>";
+      wt(c.target, "t") +
+      "</text>";
     if (planEnd) {
       var pts = [];
       for (var wk = 0; wk <= Math.ceil(planWk); wk++) {
@@ -288,7 +288,7 @@
       '" max="' +
       today() +
       '">' +
-      '<label class="l">1. You on your own (kg)</label><input data-w="me" inputmode="decimal" placeholder="e.g. 62.4" value="' +
+      '<label class="l">1. You on your own (' + UL() + ")</label>" + '<input data-w="me" inputmode="decimal" placeholder="e.g. 62.4" value="' +
       esc(W.me) +
       '">' +
       ["albert", "milly"]
@@ -298,7 +298,7 @@
             spot(k) +
             " You holding " +
             S.cats[k].name +
-            ' (kg)</label><div class="row u-nowrap"><input data-w="' +
+            " (" + UL() + ')</label><div class="row u-nowrap"><input data-w="' +
             k +
             '" inputmode="decimal" placeholder="leave blank to skip" value="' +
             esc(W[k]) +
@@ -321,7 +321,7 @@
             k +
             '" inputmode="decimal" placeholder="' +
             esc(S.cats[k].name) +
-            '\'s weight (kg)"><button class="b" data-a="addw" data-cat="' +
+            "'s weight (" + UL() + ')"><button class="b" data-a="addw" data-cat="' +
             k +
             '">Save</button></div>'
           );
@@ -358,15 +358,15 @@
       Math.max(frac * 100, 2) +
       '%"></div></div>' +
       '<div class="grid3 u-mt10"><div class="stat"><span class="mute">Lost</span><b>' +
-      r.lost.toFixed(2) +
-      ' kg</b><span class="mute small">' +
+      wt(r.lost) +
+      '</b><span class="mute small">' +
       r.pct.toFixed(1) +
       "%</span></div>" +
       '<div class="stat"><span class="mute">To go</span><b>' +
-      (r.toGo > 0 ? r.toGo.toFixed(2) : "0") +
-      " kg</b></div>" +
+      wt(r.toGo > 0 ? r.toGo : 0) +
+      "</b></div>" +
       '<div class="stat"><span class="mute">Per week</span><b>' +
-      (r.kgWeek != null ? Math.round(r.kgWeek * 1000) + " g" : "–") +
+      (r.kgWeek != null ? wg(r.kgWeek * 1000) : "–") +
       "</b></div></div>" +
       '<div class="u-mt12">' +
       chart(c) +
@@ -375,18 +375,18 @@
         ? '<div class="note">At this rate ' +
           esc(c.name) +
           " reaches " +
-          esc(c.target) +
-          " kg around <b>" +
+          wt(c.target, "t") +
+          " around <b>" +
           parse(r.eta).toLocaleDateString("en-GB", { month: "long", year: "numeric" }) +
           "</b>.</div>"
         : "") +
       '<div class="note">Safe loss for ' +
       esc(c.name) +
       ": " +
-      Math.round(r.last.kg * 10) +
+      (unit() === "lb" ? ((r.last.kg * 10) / 28.35).toFixed(1) : Math.round(r.last.kg * 10)) +
       "–" +
-      Math.round(r.last.kg * 15) +
-      " g a week (1–1.5% of current weight). Faster than that risks fatty liver.</div>"
+      wg(r.last.kg * 15) +
+      " a week (1–1.5% of current weight). Faster than that risks fatty liver.</div>"
     );
   }
 
@@ -409,8 +409,8 @@
             " " +
             parse(x.d).getFullYear() +
             "</span><span><b>" +
-            (+x.kg).toFixed(2) +
-            ' kg</b><button class="x" data-a="wedit" data-cat="' +
+            wt(x.kg) +
+            '</b><button class="x" data-a="wedit" data-cat="' +
             k +
             '" data-v="' +
             x.d +
@@ -440,7 +440,7 @@
       "–" +
       Math.round(fd.hi) +
       '</b><span class="mute small">' +
-      (c.kcalLo && c.kcalHi ? "kcal/day, vet plan" : "kcal/day at " + esc(c.target) + " kg") +
+      (c.kcalLo && c.kcalHi ? "kcal/day, vet plan" : "kcal/day at " + wt(c.target, "t")) +
       "</span></div></div>" +
       (fd.dry
         ? '<div class="note">With ' +
@@ -618,12 +618,11 @@
           esc(c.name) +
           "</b><span>" +
           (r
-            ? (+r.last.kg).toFixed(2) +
-              " kg → " +
-              esc(c.target) +
-              " kg" +
-              (r.toGo > 0 ? " · " + r.toGo.toFixed(2) + " to go" : " · target reached")
-            : "target " + esc(c.target) + " kg") +
+            ? wt(r.last.kg) +
+              " → " +
+              wt(c.target, "t") +
+              (r.toGo > 0 ? " · " + wt(r.toGo) + " to go" : " · target reached")
+            : "target " + wt(c.target, "t")) +
           "</span>" +
           (function () {
             var sp = r ? r.lost + Math.max(r.toGo, 0) : 0,

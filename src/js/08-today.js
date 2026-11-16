@@ -108,11 +108,7 @@
           "</b></div><ul>" +
           "<li>Weight: " +
           (lw
-            ? (+lw.kg).toFixed(2) +
-              " kg" +
-              (pw
-                ? " (" + (lw.kg <= pw.kg ? "−" : "+") + Math.abs(Math.round((lw.kg - pw.kg) * 1000)) + " g)"
-                : "")
+            ? wt(lw.kg) + (pw ? " (" + (lw.kg <= pw.kg ? "−" : "+") + wg((lw.kg - pw.kg) * 1000) + ")" : "")
             : "no weigh-in this week") +
           "</li>" +
           "<li>Both meals logged on " +
@@ -300,7 +296,7 @@
         '%"></div></div><div class="ends"><span>' +
         esc(st[1]) +
         "</span><span>" +
-        (r && r.toGo > 0 ? r.toGo.toFixed(2) + " kg to go" : "target " + c.target + " kg") +
+        (r && r.toGo > 0 ? wt(r.toGo) + " to go" : "target " + wt(c.target, "t")) +
         "</span></div></div></div></div>";
     var meals = d.meals || [],
       RXL = { all: ["😋", "Ate it all"], some: ["😐", "Some"], no: ["🙅", "Refused"] };

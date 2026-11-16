@@ -12,11 +12,11 @@ ACT["wopen"] = function (e, t, a, v, c) {
 
 ACT["addw2"] = function (e, t, a, v, c) {
   var W = ui.w,
-    me = parseFloat(String(W.me).replace(",", ".")),
+    me = toKg(W.me),
     saved = 0,
     bad = false;
   ["albert", "milly"].forEach(function (k) {
-    var tot = parseFloat(String(W[k]).replace(",", "."));
+    var tot = toKg(W[k]);
     if (isNaN(tot)) return;
     var cw = Math.round((tot - me) * 100) / 100;
     if (isNaN(me) || cw < 1 || cw > 20) {
@@ -46,7 +46,7 @@ ACT["addw2"] = function (e, t, a, v, c) {
 
 ACT["addw"] = function (e, t, a, v, c) {
   var wkid = document.getElementById("wk-" + ui.cat) ? "wk-" + ui.cat : "wk",
-    kg = num(wkid),
+    kg = toKg((document.getElementById(wkid) || {}).value || ""),
     dd = (ui.w && ui.w.d) || today();
   if (!kg || kg < 1 || kg > 20) {
     flash(wkid);
@@ -64,7 +64,7 @@ ACT["wedit"] = function (e, t, a, v, c) {
   var wo = c.weights.filter(function (x) {
     return x.d === v;
   })[0];
-  ui.we = { old: v, d: v, kg: String(wo.kg) };
+  ui.we = { old: v, d: v, kg: wn(wo.kg) };
   ui.modal = function () {
     return (
       '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">Edit ' +
@@ -73,7 +73,7 @@ ACT["wedit"] = function (e, t, a, v, c) {
       ui.we.d +
       '" max="' +
       today() +
-      '"></div><div><label class="l">Weight (kg)</label><input data-we="kg" inputmode="decimal" value="' +
+      '"></div><div><label class="l">Weight (' + UL() + ')</label><input data-we="kg" inputmode="decimal" value="' +
       esc(ui.we.kg) +
       '"></div></div><div class="row u-mt14"><button class="b p" data-a="wsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
@@ -83,7 +83,7 @@ ACT["wedit"] = function (e, t, a, v, c) {
 
 ACT["wsave"] = function (e, t, a, v, c) {
   var we = ui.we,
-    nk = parseFloat(String(we.kg).replace(",", "."));
+    nk = toKg(we.kg);
   if (isNaN(nk) || nk < 1 || nk > 20) {
     var ki = document.querySelector("[data-we=kg]");
     if (ki) ki.style.borderColor = "var(--bad)";
