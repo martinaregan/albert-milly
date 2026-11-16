@@ -4425,3 +4425,6 @@ button.sosc {
   background: var(--bad) !important;
   color: #fff !important;
 }
+.u-pr40 {
+  padding-right: 40px !important;
+}

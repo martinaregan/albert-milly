@@ -443,3 +443,24 @@ ACT["lookset"] = function (e, t, a, v) {
   lastTheme = null;
   render();
 };
+
+ACT["claude"] = function () {
+  ui.modal = claudeSheet;
+  render();
+};
+
+ACT["clcopy"] = function () {
+  var t = claudeText();
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+    function () {
+      toast("Copied");
+    },
+    function () {
+      var el = document.getElementById("cltext");
+      if (el) {
+        el.focus();
+        el.select();
+      }
+    }
+  );
+};

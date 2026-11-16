@@ -1,6 +1,7 @@
 /* 17c-help: First-time intro, "What's new" after an update, the emergency vet panel, and report a problem. */
   // Newest first. Add a line here with every release that changes something people will notice.
   var NEWS = [
+    ["44", "Log by chatting with Claude: how to set it up, the risks and costs (Settings › Help)"],
     ["43", "Light, Dark or Automatic (Settings › This phone)"],
     [
       "42",
@@ -173,5 +174,43 @@
           navigator.userAgent +
           "\n(Please don't include access keys or anything private.)"
       )
+    );
+  }
+
+  // Optional: logging by chatting with Claude, which edits data.json in the data repository.
+  function claudeText() {
+    var repo = GH && GH.owner ? GH.owner + "/" + GH.repo : "your-name/cat-data";
+    return (
+      "You help me log my cats in my cat app. The app's data is the file data.json in my private GitHub repository " +
+      repo +
+      ".\n\nWhen I tell you something about my cats (meals, weigh-ins, poo and pee, symptoms, play, fights, calm moments, vet visits, costs, bookings), add it to data.json:\n" +
+      "- Always fetch the latest data.json first and only add or change what I told you. Never remove or rewrite my own entries.\n" +
+      "- Copy the shape of existing entries exactly (same field names, dates as YYYY-MM-DD, times as HH:MM). Give new entries a new random id.\n" +
+      "- Only ever edit data.json in " +
+      repo +
+      ". Never touch any other file or repository, and never change the app's code.\n" +
+      "- If you're not sure what I mean or where something goes, ask before saving.\n" +
+      "- After saving, tell me in one line what you added."
+    );
+  }
+
+  function claudeSheet() {
+    return (
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0 u-pr40">🤖 Log by chatting with Claude</h2>' +
+      '<div class="pl">Optional. Tell Claude things like "Milly had a soft poo at 8" or "Albert weighed 8.3 kg today" and it adds them to your app.</div>' +
+      "<h3>How</h3><ol class=\"ghsteps\"><li>In Claude's settings, connect your GitHub account and give it access to <b>your data repository only</b>, never to anything else.</li>" +
+      "<li>Copy the instructions below and paste them into Claude (for example as the instructions of a Claude project you use for your cats).</li>" +
+      "<li>Then just tell Claude what happened. Check the entry shows up in the app.</li></ol>" +
+      '<textarea readonly rows="7" id="cltext">' +
+      esc(claudeText()) +
+      '</textarea><button class="b s u-mt6" data-a="clcopy">Copy instructions</button>' +
+      "<h3>Risks</h3><ul class=\"newsl\"><li>Claude can <b>read and change everything</b> in that repository: all logs, notes and photos.</li>" +
+      "<li>It can <b>make mistakes</b>, like the wrong cat, date or amount. Glance at what it added.</li>" +
+      "<li>Every change is saved in GitHub's history, so a mistake can be undone there.</li>" +
+      "<li>What you tell Claude is processed by Anthropic under its privacy policy, like any chat.</li>" +
+      "<li>Only give it your data repository. It can't change the app itself.</li></ul>" +
+      "<h3>Costs</h3><ul class=\"newsl\"><li>The app and GitHub stay free.</li>" +
+      "<li>Claude is a separate service. Connecting it to GitHub usually needs a paid plan. Claude Pro was about $20 a month (less if paid yearly) in 2026. Check claude.com/pricing for today's price and limits.</li>" +
+      "<li>Usage limits apply: lots of logging in one go can hit them.</li></ul></div></div>"
     );
   }
