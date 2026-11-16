@@ -3,7 +3,7 @@ ACT["phdel"] = function (e, t, a, v, c) {
   ui.phd = { k: t.dataset.k, v: v };
   ui.phPrev = ui.modal || null;
   ui.modal = function () {
-    return '<div class="modal" data-a="phcancel"><div class="sheet" data-stop="2"><p style="font-weight:800;font-size:17px">Remove this photo or file?</p><div class="row"><button class="b" style="background:var(--bad);color:#fff" data-a="phdel2">Remove</button><button class="b" data-a="phcancel">Keep it</button></div></div></div>';
+    return '<div class="modal" data-a="phcancel"><div class="sheet" data-stop="2"><p class="u-fw800 u-fs17">Remove this photo or file?</p><div class="row"><button class="b u-bg-var---bad u-c-fff" data-a="phdel2">Remove</button><button class="b" data-a="phcancel">Keep it</button></div></div></div>';
   };
   render();
 };
@@ -62,7 +62,7 @@ ACT["view"] = function (e, t, a, v, c) {
       (isV
         ? '<video data-phv="' + esc(v) + '" controls playsinline autoplay></video>'
         : '<img data-ph="' + esc(v) + '" alt="">') +
-      '<button class="b w" style="margin-top:12px" data-a="vclose">Close</button></div></div>'
+      '<button class="b w u-mt12" data-a="vclose">Close</button></div></div>'
     );
   };
   render();

@@ -52,7 +52,7 @@
             "what"
           )
         : sumRow("What happened?", x.what, "cmgo", 0) +
-          '<div class="grid2" style="margin-top:10px"><div><label class="l">Date</label><input type="date" data-cm="d" value="' +
+          '<div class="grid2 u-mt10"><div><label class="l">Date</label><input type="date" data-cm="d" value="' +
           x.d +
           '" max="' +
           today() +
@@ -62,13 +62,13 @@
           esc(x.n) +
           '">' +
           (ui.pend && ui.pend.length ? thumbs(ui.pend, "pend") : "") +
-          '<div style="margin-top:10px">' +
+          '<div class="u-mt10">' +
           upBtn("pend", "calm", "📷 Add photo or video", "image/*,video/*").replace(
             'class="b s"',
             'class="b w upbig"'
           ) +
           "</div>" +
-          '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="cmsave">Save calm moment</button>';
+          '<button class="b p w u-mt14 u-p16 u-fs17" data-a="cmsave">Save calm moment</button>';
     return wizFrame(
       "😊 Calm moment",
       x.step,
@@ -133,7 +133,7 @@
       (since0 == null ? "–" : since0) +
       "</span><small>days since</small></div></div>" +
       (fd.length > 1
-        ? '<div class="small mute" style="margin:-4px 4px 12px;text-align:right">' +
+        ? '<div class="small mute u-m4-4-12 u-ta-right">' +
           (since0 >= best && since0 > 0
             ? (function () {
                 try {
@@ -166,9 +166,9 @@
       h +=
         '<details class="nf" data-open="fpatt"' +
         isOpen("fpatt", false) +
-        '><summary><span>📊 Patterns · 30 days</span></summary><div class="card" style="margin:0">' +
+        '><summary><span>📊 Patterns · 30 days</span></summary><div class="card u-m0">' +
         pat.replace(
-          '<div class="card"><div class="row between"><h2 style="margin:0">Patterns · 30 days</h2></div>',
+          '<div class="card"><div class="row between"><h2 class="u-m0">Patterns · 30 days</h2></div>',
           ""
         ) +
         "</details>";
@@ -180,7 +180,7 @@
         .replace('<details class="card" data-open="hhelp"', '<details class="nf" data-open="hhelp"')
         .replace(
           "<summary><b>😊 What seems to help</b></summary>",
-          '<summary><span>😊 What seems to help</span></summary><div class="card" style="margin:0">'
+          '<summary><span>😊 What seems to help</span></summary><div class="card u-m0">'
         )
         .replace(/<\/details>$/, "</div></details>");
     }
@@ -189,7 +189,7 @@
       .replace('<details class="card"', '<details class="nf" data-open="fbg"')
       .replace(
         "<summary><b>Background &amp; what you've tried</b></summary>",
-        '<summary><span>📝 Background &amp; what you\'ve tried</span></summary><div class="card" style="margin:0">'
+        '<summary><span>📝 Background &amp; what you\'ve tried</span></summary><div class="card u-m0">'
       )
       .replace(/<\/details>$/, "</div></details>");
     return h;
@@ -238,9 +238,9 @@
                 w1 + " fight" + (w1 !== 1 ? "s" : "") + " this week, same as the week before."
               ];
     var h =
-      '<div class="hero duo-h hmini"><div class="row" style="gap:12px;flex-wrap:nowrap;align-items:center"><div style="font-size:34px">' +
+      '<div class="hero duo-h hmini"><div class="row u-gap12 u-nowrap u-ai-center"><div class="u-fs34">' +
       mood[0] +
-      '</div><div><div style="font-size:21px;font-weight:900">' +
+      '</div><div><div class="u-fs21 u-fw900">' +
       mood[1] +
       '</div><div class="sub">' +
       mood[2] +
@@ -253,7 +253,7 @@
       calm7 +
       "</b><span>calm</span></div></div></div>";
     h +=
-      '<div class="row" style="gap:8px;margin-bottom:12px;flex-wrap:nowrap"><button class="b p" style="flex:1;padding:14px" data-a="calmnew">😊 Log a calm moment</button><button class="b ghost" style="flex:1;padding:14px" data-a="fnew">😾 Log a fight</button></div>';
+      '<div class="row u-gap8 u-mb12 u-nowrap"><button class="b p u-flex1 u-p14" data-a="calmnew">😊 Log a calm moment</button><button class="b ghost u-flex1 u-p14" data-a="fnew">😾 Log a fight</button></div>';
     if (!n) {
       return (
         h +
@@ -361,7 +361,7 @@
       '%;background:#3a3a3a"></div><div style="width:' +
       pct(wo["Not sure"], n) +
       '%;background:#b9b0a6"></div></div>' +
-      '<div class="row between small" style="font-weight:800"><span>Albert ' +
+      '<div class="row between small u-fw800"><span>Albert ' +
       wo.Albert +
       "</span><span>Milly " +
       wo.Milly +
@@ -393,7 +393,7 @@
     var x = ui.cm;
     if (x.step != null) return calmWiz();
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">😊 Calm moment</h2><div class="chips">' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">😊 Calm moment</h2><div class="chips">' +
       [
         "Lying together",
         "Groomed without biting",
@@ -425,11 +425,11 @@
       esc(x.n) +
       '">' +
       (ui.pend && ui.pend.length ? thumbs(ui.pend, "pend") : "") +
-      '<div style="margin-top:10px">' +
+      '<div class="u-mt10">' +
       upBtn("pend", "calm", "📷 Add photo or video", "image/*,video/*").replace(
         'class="b s"',
         'class="b w upbig"'
       ) +
-      '</div><div class="row" style="margin-top:14px"><button class="b p" data-a="cmsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '</div><div class="row u-mt14"><button class="b p" data-a="cmsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   }

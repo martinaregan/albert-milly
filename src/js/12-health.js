@@ -16,7 +16,7 @@
               return (
                 '<div class="vqr"><button class="tick" data-a="vqdone" data-v="' +
                 x.id +
-                '" aria-label="Mark asked"></button><div style="flex:1"><div>' +
+                '" aria-label="Mark asked"></button><div class="u-flex1"><div>' +
                 esc(x.t) +
                 '</div><div class="small mute">Added ' +
                 short(x.d) +
@@ -26,12 +26,12 @@
               );
             })
             .join("")
-        : '<div class="small mute" style="margin-bottom:6px">Nothing yet. Add things as they come up and they\'ll be on the vet summary.</div>') +
+        : '<div class="small mute u-mb6">Nothing yet. Add things as they come up and they\'ll be on the vet summary.</div>') +
       '<div class="addrow"><input id="vq-' +
       k +
       '" placeholder="e.g. ask about the cough after running"><button class="b p" data-a="vqadd">Add</button></div>' +
       (done.length
-        ? '<details style="margin-top:6px"><summary class="small mute">Asked (' +
+        ? '<details class="u-mt6"><summary class="small mute">Asked (' +
           done.length +
           ")</summary>" +
           done
@@ -39,7 +39,7 @@
               return (
                 '<div class="vqr done"><button class="tick" data-a="vqdone" data-v="' +
                 x.id +
-                '">✓</button><div style="flex:1">' +
+                '">✓</button><div class="u-flex1">' +
                 esc(x.t) +
                 '</div><button class="x" data-a="vqdel" data-v="' +
                 x.id +
@@ -162,9 +162,9 @@
           : ""
       : "";
     return (
-      '<div class="hsec"><div class="row between"><h2 style="margin:0">🫁 Sleeping breathing rate</h2><button class="b s p" data-a="rrnew">Count now</button></div>' +
+      '<div class="hsec"><div class="row between"><h2 class="u-m0">🫁 Sleeping breathing rate</h2><button class="b s p" data-a="rrnew">Count now</button></div>' +
       (last
-        ? '<div class="grid2" style="margin-top:8px"><div class="stat"><span class="mute">Last</span><b style="color:' +
+        ? '<div class="grid2 u-mt8"><div class="stat"><span class="mute">Last</span><b style="color:' +
           (last.bpm > 30 ? "var(--bad)" : "inherit") +
           '">' +
           last.bpm +
@@ -205,7 +205,7 @@
                 })
                 .join("")) +
           "</details>"
-        : '<div class="small mute" style="margin-top:6px">Count while ' +
+        : '<div class="small mute u-mt6">Count while ' +
           esc(c.name) +
           " is fast asleep, not purring or dreaming. Under 30 a minute is normal. A few counts a week builds a picture the vet can use.</div>") +
       "</div>"
@@ -219,24 +219,24 @@
     var body = R.done
       ? '<div class="rrbig"><b>' +
         R.taps * 2 +
-        '</b><span>breaths a minute</span></div><div class="note" style="text-align:center">' +
+        '</b><span>breaths a minute</span></div><div class="note u-ta-center">' +
         R.taps +
         " breaths in 30 seconds × 2</div>"
-      : '<div class="note" style="margin-top:0">Watch ' +
+      : '<div class="note u-mt0">Watch ' +
         esc(c.name) +
         '\'s side rise and fall. Tap once for every breath in (one rise and fall = one tap). The 30-second timer starts on your first tap.</div><button class="rrtap" data-a="rrtap"><span id="rrc">' +
         R.taps +
         '</span><small id="rrt">' +
         (R.start ? 30 - sec + "s left" : "Tap to start") +
         "</small></button>" +
-        '<details style="margin-top:10px"><summary class="small mute">Counted another way? Type it in</summary><div class="addrow"><input id="rrman" inputmode="numeric" placeholder="breaths per minute"><button class="b" data-a="rrman">Use</button></div></details>';
+        '<details class="u-mt10"><summary class="small mute">Counted another way? Type it in</summary><div class="addrow"><input id="rrman" inputmode="numeric" placeholder="breaths per minute"><button class="b" data-a="rrman">Use</button></div></details>';
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">🫁 ' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><div class="row between u-nowrap"><h2 class="u-m0">🫁 ' +
       esc(c.name) +
       ' asleep</h2><button class="x" data-a="rrx" aria-label="Close">✕</button></div>' +
       body +
       (R.done
-        ? '<div class="row" style="margin-top:14px"><button class="b p" data-a="rrsave">Save</button><button class="b" data-a="rrnew">Count again</button></div>'
+        ? '<div class="row u-mt14"><button class="b p" data-a="rrsave">Save</button><button class="b" data-a="rrnew">Count again</button></div>'
         : "") +
       "</div></div>"
     );
@@ -287,7 +287,7 @@
           return T[b].s / T[b].n - T[a].s / T[a].n;
         });
     return (
-      '<div class="hsec"><h2>💩 Poo vs food · 45 days</h2><div class="small mute" style="margin-bottom:8px">' +
+      '<div class="hsec"><h2>💩 Poo vs food · 45 days</h2><div class="small mute u-mb8">' +
       P.length +
       " poos, " +
       Math.round(base * 100) +
@@ -324,7 +324,7 @@
     var catL = ["albert", "milly"].map(function (k) {
       return [
         k,
-        '<span style="display:flex;align-items:center;gap:10px">' +
+        '<span class="u-d-flex u-ai-center u-gap10">' +
           spot(k).replace('class="spot"', 'class="spot" style="width:30px;height:30px"') +
           esc(S.cats[k].name) +
           "</span>"
@@ -344,7 +344,7 @@
             )
           : sumRow("Which cat?", y.cat ? S.cats[y.cat].name : "", "sygo", 0) +
             sumRow("What happened?", y.t, "sygo", 1) +
-            '<div class="grid2" style="margin-top:10px"><div><label class="l">Date</label><input type="date" data-sy="d" value="' +
+            '<div class="grid2 u-mt10"><div><label class="l">Date</label><input type="date" data-sy="d" value="' +
             y.d +
             '" max="' +
             today() +
@@ -355,13 +355,13 @@
             esc(y.n) +
             "</textarea>" +
             (ui.pend.length ? thumbs(ui.pend, "pend") : "") +
-            '<div style="margin-top:10px">' +
+            '<div class="u-mt10">' +
             upBtn("pend", "health", "📷 Add photo or video", "image/*,video/*").replace(
               'class="b s"',
               'class="b w upbig"'
             ) +
             "</div>" +
-            '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="sysave">Save symptom</button>';
+            '<button class="b p w u-mt14 u-p16 u-fs17" data-a="sysave">Save symptom</button>';
     return wizFrame(
       "Log a symptom",
       y.step,
@@ -377,10 +377,10 @@
       since = addDays(today(), -30),
       hf = ui.hf || (ui.hf = {});
     var h = !ui.hedit
-      ? '<button class="b w" style="margin-bottom:10px;padding:12px" data-a="vrep">📋 Vet summary for ' +
+      ? '<button class="b w u-mb10 u-p12" data-a="vrep">📋 Vet summary for ' +
         esc(c.name) +
         '</button><button class="symbtn fbtn" data-a="hnew">🩺 Log a symptom</button>'
-      : '<details class="card flog" id="hform" data-open="hform" open><summary><span class="symbtn">✎ Edit symptom</span></summary><div style="margin-top:6px"><label class="l">Which cat?</label><div class="seg" style="grid-template-columns:1fr 1fr;margin:0">' +
+      : '<details class="card flog" id="hform" data-open="hform" open><summary><span class="symbtn">✎ Edit symptom</span></summary><div class="u-mt6"><label class="l">Which cat?</label><div class="seg u-cols1fr-1fr u-m0">' +
         ["albert", "milly"]
           .map(function (k) {
             return (
@@ -415,7 +415,7 @@
         esc(hf.n || "") +
         "</textarea>" +
         (ui.pendFor === "health" && ui.pend.length ? thumbs(ui.pend, "pend") : "") +
-        '<div class="row" style="margin-top:10px">' +
+        '<div class="row u-mt10">' +
         upBtn("pend", "health", "📷 Photo / video", "image/*,video/*") +
         '<button class="b p" data-a="addh">' +
         (ui.hedit ? "Update" : "Save") +
@@ -438,7 +438,7 @@
         P.trends +=
           '<div class="hsec"><h2>Last 30 days</h2>' +
           (recent.length ? hbars(counts) : '<span class="mute">Nothing logged</span>') +
-          '<button class="b w" style="margin-top:10px" data-a="vet">📋 Summary to send the vet</button></div>';
+          '<button class="b w u-mt10" data-a="vet">📋 Summary to send the vet</button></div>';
         P.trends +=
           '<div class="hsec list"><h2>Symptom history</h2>' +
           (c.health.length
@@ -482,7 +482,7 @@
           }).length +
           "</h2>" +
           (lt.length ? '<div class="list">' + lt.map(litterLine).join("") + "</div>" : "") +
-          '<div class="row" style="margin-top:8px"><button class="b" data-a="lnew" data-v="Poo" data-k="today">💩 Log poo</button><button class="b" data-a="lnew" data-v="Pee" data-k="today">💧 Log pee</button></div><div class="note">Tap Log poo, then 📷 Take a photo.</div></div>';
+          '<div class="row u-mt8"><button class="b" data-a="lnew" data-v="Poo" data-k="today">💩 Log poo</button><button class="b" data-a="lnew" data-v="Pee" data-k="today">💧 Log pee</button></div><div class="note">Tap Log poo, then 📷 Take a photo.</div></div>';
         var ls = litterSummary(c);
         P.trends +=
           '<div class="hsec"><h2>Poo &amp; pee, last 30 days</h2>' +
@@ -519,7 +519,7 @@
                 .slice(0, 60)
                 .map(function (x) {
                   return (
-                    '<div class="mute small" style="margin-top:6px">' + short(x.d) + "</div>" + litterLine(x)
+                    '<div class="mute small u-mt6">' + short(x.d) + "</div>" + litterLine(x)
                   );
                 })
                 .join("") +
@@ -530,9 +530,9 @@
         P.trends += pooFood(k);
         P.vet += vqSection(k);
         P.vet +=
-          '<div class="hsec"><div class="row between"><h2 style="margin:0">Vet notes &amp; files</h2><button class="b s p" data-a="vnew">+ Add</button></div>';
+          '<div class="hsec"><div class="row between"><h2 class="u-m0">Vet notes &amp; files</h2><button class="b s p" data-a="vnew">+ Add</button></div>';
         P.vet +=
-          '<div style="margin-top:6px">' +
+          '<div class="u-mt6">' +
           (c.vet.length
             ? c.vet
                 .slice()
@@ -545,26 +545,26 @@
                     v.id +
                     '"' +
                     isOpen("vet" + v.id, false) +
-                    '><summary><div class="row between" style="flex-wrap:nowrap;gap:8px"><b class="ell">' +
+                    '><summary><div class="row between u-nowrap u-gap8"><b class="ell">' +
                     esc(v.reason || "Vet note") +
-                    '</b><span class="mute small" style="flex:none">' +
+                    '</b><span class="mute small u-flex-none">' +
                     (v.d ? short(v.d) + " " + parse(v.d).getFullYear() : "No date") +
                     "</span></div>" +
                     (v.next
-                      ? '<div class="small" style="margin-top:2px">Follow-up ' + short(v.next) + "</div>"
+                      ? '<div class="small u-mt2">Follow-up ' + short(v.next) + "</div>"
                       : "") +
-                    '</summary><div style="padding-top:6px">' +
+                    '</summary><div class="u-pt6">' +
                     (v.clinic ? '<div class="small mute">' + esc(v.clinic) + "</div>" : "") +
                     (v.notes
-                      ? '<div class="small" style="white-space:pre-wrap">' + esc(v.notes) + "</div>"
+                      ? '<div class="small u-ws-pre-wrap">' + esc(v.notes) + "</div>"
                       : "") +
                     (v.email
-                      ? '<details><summary class="small mute">Email</summary><div class="small" style="white-space:pre-wrap">' +
+                      ? '<details><summary class="small mute">Email</summary><div class="small u-ws-pre-wrap">' +
                         esc(v.email) +
                         "</div></details>"
                       : "") +
                     (v.att.length ? thumbs(v.att) : "") +
-                    '<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="x" data-a="vedit" data-v="' +
+                    '<div class="row u-jc-flex-end u-mt6"><button class="x" data-a="vedit" data-v="' +
                     v.id +
                     '">Edit</button></div></div></details>'
                   );
@@ -637,7 +637,7 @@
   function vetSheet() {
     var v = ui.v;
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">' +
       (v.isNew ? "New vet note" : "Edit vet note") +
       "</h2>" +
       '<div class="grid2"><div><label class="l">Date</label><input type="date" data-vf="d" value="' +
@@ -659,14 +659,14 @@
       "</textarea>" +
       '<label class="l">Files</label>' +
       (v.att.length ? thumbs(v.att, "v") : "") +
-      '<div class="row" style="margin-top:8px">' +
+      '<div class="row u-mt8">' +
       upBtn("vet", "", "📎 PDF, photo or screenshot", "image/*,application/pdf") +
       "</div>" +
       '<div class="note">For an email with attachments: save the PDFs to Files on your iPhone and add them here, or screenshot the email.</div>' +
-      '<div class="row" style="margin-top:14px"><button class="b p" data-a="vsave">Save</button><button class="b" data-a="close">Cancel</button>' +
+      '<div class="row u-mt14"><button class="b p" data-a="vsave">Save</button><button class="b" data-a="close">Cancel</button>' +
       (v.isNew
         ? ""
-        : '<button class="b" style="background:var(--bad);color:#fff" data-a="vdel">Delete</button>') +
+        : '<button class="b u-bg-var---bad u-c-fff" data-a="vdel">Delete</button>') +
       "</div></div></div>"
     );
   }
@@ -833,15 +833,15 @@
     var el = Date.now() - T.start,
       txt = T.dur ? mmss(T.dur * 60000 - el) + " left" : mmss(el);
     return (
-      '<div class="card" style="border:2px solid var(--accent);position:sticky;top:calc(env(safe-area-inset-top) + 34px);z-index:4"><div class="row between"><div>' +
+      '<div class="card u-b2-solid-var---accent u-pos-sticky u-top-calc-env-safe-area-inset-top-34 u-z4"><div class="row between"><div>' +
       spot(T.cat) +
       " <b>" +
       esc(T.type) +
-      '</b><div class="big" id="tmr" style="font-variant-numeric:tabular-nums">' +
+      '</b><div class="big u-font-variant-numeric-tabular-nums" id="tmr">' +
       txt +
       '</div><div class="mute small">' +
       (T.dur ? T.dur + " min timer" : "Playing… tap Stop when done") +
-      '</div></div><div class="row" style="flex-direction:column;align-items:stretch"><button class="b p" data-a="tstop">Stop &amp; log</button><button class="b s" data-a="tcancel">Cancel</button></div></div></div>'
+      '</div></div><div class="row u-fd-column u-ai-stretch"><button class="b p" data-a="tstop">Stop &amp; log</button><button class="b s" data-a="tcancel">Cancel</button></div></div></div>'
     );
   }
 
@@ -849,7 +849,7 @@
     var P = ui.pl,
       c = cat();
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">🧶 Log play for ' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">🧶 Log play for ' +
       esc(c.name) +
       "</h2>" +
       '<label class="l">1. What did you play?</label><div class="wizc">' +
@@ -869,7 +869,7 @@
         .join("") +
       "</div>" +
       (P.type
-        ? '<label class="l" style="margin-top:14px">2. How long?</label><div class="grid3">' +
+        ? '<label class="l u-mt14">2. How long?</label><div class="grid3">' +
           [5, 10, 15, 20, 30]
             .map(function (m) {
               return (
@@ -887,13 +887,13 @@
           "</div>"
         : "") +
       (P.type && P.min
-        ? '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="plsave">Add ' +
+        ? '<button class="b p w u-mt14 u-p16 u-fs17" data-a="plsave">Add ' +
           P.min +
           " min of " +
           esc(P.type) +
           "</button>"
         : "") +
-      '<button class="b w" style="margin-top:10px" data-a="close">Cancel</button></div></div>'
+      '<button class="b w u-mt10" data-a="close">Cancel</button></div></div>'
     );
   }
 
@@ -901,7 +901,7 @@
     var i = ui.tk,
       p = S.playTypes[i];
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">⏱ ' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">⏱ ' +
       esc(p) +
       " timer for " +
       esc(cat().name) +
@@ -913,7 +913,7 @@
         })
         .join("") +
       '<button class="b" data-a="tstart" data-v="0">Stopwatch</button></div>' +
-      '<button class="b w" style="margin-top:12px" data-a="close">Cancel</button></div></div>'
+      '<button class="b w u-mt12" data-a="close">Cancel</button></div></div>'
     );
   }
 
@@ -1195,10 +1195,10 @@
         );
       }).join("\n\n");
     return (
-      '<div class="modal vrm" data-a="close"><div class="sheet vrep" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">📋 ' +
+      '<div class="modal vrm" data-a="close"><div class="sheet vrep" data-stop="1"><div class="row between u-nowrap"><h2 class="u-m0">📋 ' +
       esc(c.name) +
       ' · vet summary</h2><button class="x noprint" data-a="close">✕</button></div>' +
-      '<div class="seg noprint" style="grid-template-columns:repeat(3,1fr);margin:10px 0">' +
+      '<div class="seg noprint u-cols-repeat-3-1fr u-m10-0">' +
       [
         [30, "30 days"],
         [90, "90 days"],
@@ -1219,9 +1219,9 @@
       "</div>" +
       S2.map(function (x) {
         return (
-          '<h3 style="margin:14px 0 4px">' +
+          '<h3 class="u-m14-0-4">' +
           esc(x[0]) +
-          '</h3><ul class="kvl" style="padding-left:18px">' +
+          '</h3><ul class="kvl u-pl18">' +
           x[1]
             .map(function (l) {
               return "<li>" + esc(l) + "</li>";
@@ -1230,7 +1230,7 @@
           "</ul>"
         );
       }).join("") +
-      '<div class="row noprint" style="margin-top:16px"><button class="b p" data-a="vrshare">Share</button><button class="b" data-a="vrprint">Print / PDF</button><button class="b" data-a="close">Close</button></div></div></div>'
+      '<div class="row noprint u-mt16"><button class="b p" data-a="vrshare">Share</button><button class="b" data-a="vrprint">Print / PDF</button><button class="b" data-a="close">Close</button></div></div></div>'
     );
   }
 
@@ -1346,7 +1346,7 @@
       })
       .join("");
     return (
-      '<div class="card hissc"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">Keep an eye on</h2><button class="b s ghost" data-a="tab" data-v="info">Edit in Info</button></div>' +
+      '<div class="card hissc"><div class="row between u-nowrap"><h2 class="u-m0">Keep an eye on</h2><button class="b s ghost" data-a="tab" data-v="info">Edit in Info</button></div>' +
       rows +
       "</div>"
     );
@@ -1425,7 +1425,7 @@
             var k = p[0],
               x = p[1];
             return (
-              '<div class="it"><div class="row between" style="flex-wrap:nowrap;gap:8px"><span>' +
+              '<div class="it"><div class="row between u-nowrap u-gap8"><span>' +
               spot(k).replace(
                 'class="spot"',
                 'class="spot" style="width:22px;height:22px;vertical-align:middle"'
@@ -1434,7 +1434,7 @@
               (TT[x.type] ? TT[x.type].ic : "💉") +
               " " +
               esc(x.product || x.type) +
-              '</b></span><span class="mute small" style="flex:none">' +
+              '</b></span><span class="mute small u-flex-none">' +
               short(x.d) +
               '<button class="x" data-a="tredit" data-cat="' +
               k +
@@ -1462,7 +1462,7 @@
     var wd = wormDose(c);
     function hist(list) {
       return list.length
-        ? '<details style="margin-top:10px"><summary class="mute small">History (' +
+        ? '<details class="u-mt10"><summary class="mute small">History (' +
             list.length +
             ')</summary><div class="list">' +
             list
@@ -1533,7 +1533,7 @@
           ty +
           '"' +
           isOpen("treat-" + ty, false) +
-          '><summary><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">' +
+          '><summary><div class="row between u-nowrap"><h2 class="u-m0">' +
           TT[ty].ic +
           " " +
           nm +
@@ -1542,7 +1542,7 @@
           '">' +
           txt +
           "</span></div></summary>" +
-          '<div style="margin-top:10px"><div class="small mute">' +
+          '<div class="u-mt10"><div class="small mute">' +
           (l
             ? "Last: " +
               short(l.d) +
@@ -1556,11 +1556,11 @@
           (ty === "Flea" ? "flea" : "worming") +
           "</button></div>" +
           hist(byType(ty)) +
-          '<details style="margin-top:10px"><summary class="mute small">How often' +
+          '<details class="u-mt10"><summary class="mute small">How often' +
           (ty === "Worming" ? ", and how much" : "") +
           " for " +
           esc(c.name) +
-          '</summary><div class="small" style="margin-top:6px;line-height:1.5">' +
+          '</summary><div class="small u-mt6 u-lh1_5">' +
           guide[ty] +
           "</div></details></details>"
         );
@@ -1569,9 +1569,9 @@
     var oth = byType("Other");
     return (
       h +
-      '<div style="margin:-4px 0 12px">' +
+      '<div class="u-m4-0-12">' +
       (oth.length
-        ? '<div class="card" style="margin-bottom:8px">' +
+        ? '<div class="card u-mb8">' +
           hist(oth).replace('style="margin-top:10px"', "") +
           "</div>"
         : "") +
@@ -1583,7 +1583,7 @@
     var r = ui.tr,
       c = cat();
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">' +
       TT[r.type].ic +
       " " +
       (r.id ? "Edit " : "Log ") +
@@ -1605,7 +1605,7 @@
       esc(r.next) +
       '"></div></div>' +
       (r.type !== "Other"
-        ? '<div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap"><span class="small mute">Next one in:</span>' +
+        ? '<div class="row u-gap6 u-mt8 u-wrap"><span class="small mute">Next one in:</span>' +
           [
             [30, "1 month"],
             [91, "3 months"],
@@ -1635,6 +1635,6 @@
       '<label class="l">Notes</label><textarea rows="2" data-tr="n" placeholder="Weight band on the pack, how it went…">' +
       esc(r.n) +
       "</textarea>" +
-      '<div class="row" style="margin-top:14px"><button class="b p" data-a="trsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '<div class="row u-mt14"><button class="b p" data-a="trsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   }

@@ -121,7 +121,7 @@
       });
     }
     var h =
-      '<div class="card wstrip"><div class="row between" style="margin-bottom:8px"><h2 style="margin:0">This week</h2><span class="small mute"><i class="wd on"></i>breakfast <i class="wd on w"></i>dinner <i class="wd on p"></i>play</span></div>' +
+      '<div class="card wstrip"><div class="row between u-mb8"><h2 class="u-m0">This week</h2><span class="small mute"><i class="wd on"></i>breakfast <i class="wd on w"></i>dinner <i class="wd on p"></i>play</span></div>' +
       '<div class="wsg"><span></span>' +
       days
         .map(function (d) {
@@ -473,7 +473,7 @@
       })
       .join("");
     return (
-      '<div class="modal" data-a="close"><div class="sheet qsheet" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">Quick log</h2><button class="x" data-a="close" aria-label="Close">✕</button></div><div class="small mute" style="margin:2px 0 12px">' +
+      '<div class="modal" data-a="close"><div class="sheet qsheet" data-stop="1"><div class="row between u-nowrap"><h2 class="u-m0">Quick log</h2><button class="x" data-a="close" aria-label="Close">✕</button></div><div class="small mute u-m2-0-12">' +
       why +
       "</div>" +
       (sug
@@ -493,7 +493,7 @@
       tile("fnew", "", "Fight", "what happened", "qwarn") +
       tile("calmnew", "", "Calm moment", "something nice", "qok") +
       "</div>" +
-      '<div class="seg" style="grid-template-columns:1fr 1fr;margin:12px 0 0">' +
+      '<div class="seg u-cols1fr-1fr u-m12-0-0">' +
       ks
         .map(function (k) {
           return (
@@ -507,7 +507,7 @@
           );
         })
         .join("") +
-      '</div><div class="small mute" style="margin-top:6px;text-align:center">Poo, pee and play are logged for ' +
+      '</div><div class="small mute u-mt6 u-ta-center">Poo, pee and play are logged for ' +
       esc(cat().name) +
       "</div></div></div>"
     );
@@ -515,7 +515,7 @@
 
   function searchSheet() {
     return (
-      '<div class="modal" data-a="close"><div class="sheet ssheet" data-stop="1"><div class="row between" style="flex-wrap:nowrap;margin-bottom:10px"><h2 style="margin:0">Search</h2><button class="x" data-a="close" aria-label="Close">✕</button></div><input id="qsrch" type="search" placeholder="cough, z/d, vet, Milly…" value="' +
+      '<div class="modal" data-a="close"><div class="sheet ssheet" data-stop="1"><div class="row between u-nowrap u-mb10"><h2 class="u-m0">Search</h2><button class="x" data-a="close" aria-label="Close">✕</button></div><input id="qsrch" type="search" placeholder="cough, z/d, vet, Milly…" value="' +
       esc(ui.sq || "") +
       '" autocomplete="off"><div id="qres">' +
       searchResults(ui.sq || "") +
@@ -626,12 +626,12 @@
       if (hit(tx)) R.push({ d: x.d, lab: "Cost · " + eur(x.amount), tx: tx, a: "tab", v: "money" });
     });
     if (!R.length)
-      return '<div class="pl mute" style="padding:18px 4px">Nothing found for "' + esc(q) + '"</div>';
+      return '<div class="pl mute u-p18-4">Nothing found for "' + esc(q) + '"</div>';
     R.sort(function (a, b) {
       return (a.d || "0") < (b.d || "0") ? 1 : -1;
     });
     return (
-      '<div class="small mute" style="margin:10px 2px 4px">' +
+      '<div class="small mute u-m10-2-4">' +
       R.length +
       " result" +
       (R.length > 1 ? "s" : "") +
@@ -645,7 +645,7 @@
             esc(r.v) +
             '"' +
             (r.k ? ' data-k="' + r.k + '"' : "") +
-            '><span class="small mute" style="font-weight:800">' +
+            '><span class="small mute u-fw800">' +
             esc(r.lab.toUpperCase()) +
             (r.d ? " · " + short(r.d) + " " + r.d.slice(0, 4) : "") +
             "</span><span>" +
@@ -708,7 +708,7 @@
       isOpen("whocard", false) +
       '><summary><span>👥 Today · who did what <span class="nfc">' +
       it.length +
-      '</span></span></summary><div class="card" style="margin:0">' +
+      '</span></span></summary><div class="card u-m0">' +
       it
         .map(function (x) {
           var nm = x.by || "",
@@ -718,7 +718,7 @@
             col +
             '">' +
             esc((nm || "?").charAt(0).toUpperCase()) +
-            '</span><div style="flex:1;min-width:0"><b>' +
+            '</span><div class="u-flex1 u-minw0"><b>' +
             esc(x.tx) +
             '</b><div class="small mute">' +
             esc(nm || "Not recorded") +

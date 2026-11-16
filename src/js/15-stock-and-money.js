@@ -29,7 +29,7 @@
               esc(x.amount) +
               '" placeholder="0.00" style="font-size:24px;font-weight:900"><label class="l">What for</label><input data-cs="desc" value="' +
               esc(x.desc) +
-              '" placeholder="e.g. 3 kg z/d, zooplus"><button class="b p w" style="margin-top:12px;padding:14px" data-a="cnext">Next</button>'
+              '" placeholder="e.g. 3 kg z/d, zooplus"><button class="b p w u-mt12 u-p14" data-a="cnext">Next</button>'
             : sumRow("What kind?", CI[x.cat] + " " + x.cat, "cgo", 0) +
               sumRow("Which cat?", { albert: "Albert", milly: "Milly", both: "Both" }[x.who], "cgo", 1) +
               sumRow("How much?", x.amount ? "€" + x.amount + (x.desc ? " · " + x.desc : "") : "", "cgo", 2) +
@@ -40,7 +40,7 @@
               '"><label class="l">Notes (optional)</label><input data-cs="n" value="' +
               esc(x.n || "") +
               '">' +
-              '<div class="chips" style="margin-top:10px"><button class="chip' +
+              '<div class="chips u-mt10"><button class="chip' +
               (x.planned ? " on" : "") +
               '" data-a="ccx" data-k="planned" data-v="1">📅 Not paid yet (planned)</button><button class="chip' +
               (x.rep === "monthly" ? " on" : "") +
@@ -67,7 +67,7 @@
                     .join("")
                 : "<div>") +
               "</div>" +
-              '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="csave">Save cost</button>';
+              '<button class="b p w u-mt14 u-p16 u-fs17" data-a="csave">Save cost</button>';
     return wizFrame(
       "Add a cost",
       x.step,
@@ -200,7 +200,7 @@
         (showCat
           ? spot(k).replace('class="spot"', 'class="spot" style="width:24px;height:24px;flex:none"')
           : "") +
-        '<div style="flex:1;min-width:0"><div class="ell" style="font-weight:700">' +
+        '<div class="u-flex1 u-minw0"><div class="ell u-fw700">' +
         esc(f.name) +
         '</div><div class="small mute">' +
         o.left +
@@ -289,7 +289,7 @@
       (nb ? "<span>" + nb + "</span><small>" + (nb > 1 ? "items" : "item") + "</small>" : "✓") +
       "</div></div>";
     h +=
-      '<div class="card" id="buysoon"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">🛒 Buy soon</h2>' +
+      '<div class="card" id="buysoon"><div class="row between u-nowrap"><h2 class="u-m0">🛒 Buy soon</h2>' +
       editBtn("stock") +
       "</div>" +
       (nb
@@ -303,12 +303,12 @@
               var r = extraRem(x),
                 i = S.extraStock.indexOf(x);
               return (
-                '<div class="srow"><div style="flex:1"><div style="font-weight:700">' +
+                '<div class="srow"><div class="u-flex1"><div class="u-fw700">' +
                 esc(x.name) +
                 '</div><div class="small mute">' +
                 (x.need ? "You marked this to buy" : r + " " + esc(x.unit || "") + " left") +
                 "</div></div>" +
-                '<span class="dpill bad" style="margin-right:6px">' +
+                '<span class="dpill bad u-mr6">' +
                 (x.need ? "To buy" : r === 0 ? "Out" : "Low") +
                 '</span><button class="b s" style="flex:none" data-a="xbought" data-v="' +
                 i +
@@ -317,7 +317,7 @@
               );
             })
             .join("")
-        : '<div class="note" style="margin-top:6px">✅ Nothing running low.</div>') +
+        : '<div class="note u-mt6">✅ Nothing running low.</div>') +
       "</div>";
     ["albert", "milly"].forEach(function (k) {
       var c = S.cats[k],
@@ -424,7 +424,7 @@
               lw =
                 r != null && r <= (x.unit === "sticks" || x.unit === "scoops" || x.unit === "doses" ? 5 : 0);
             return (
-              '<div class="srow"><div style="flex:1;min-width:0"><div class="ell" style="font-weight:700">' +
+              '<div class="srow"><div class="u-flex1 u-minw0"><div class="ell u-fw700">' +
               esc(x.name) +
               '</div><div class="small mute">' +
               (r == null ? "Not set" : r + " " + esc(x.unit || "") + " left") +
@@ -465,13 +465,13 @@
         return x.id === p.id;
       })[0];
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">Bought more ' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">Bought more ' +
       esc(f.name) +
       '</h2><label class="l">' +
       (f.kind === "dry"
         ? "How much did you buy? (grams, e.g. 1500 for a 1.5 kg bag)"
         : "How many cans/pouches?") +
-      '</label><input id="rsamt" inputmode="decimal"><div class="grid3" style="margin-top:8px">' +
+      '</label><input id="rsamt" inputmode="decimal"><div class="grid3 u-mt8">' +
       (f.kind === "dry"
         ? [1500, 3000, 8000]
             .map(function (g) {
@@ -483,7 +483,7 @@
               return '<button class="b s" data-a="rsq" data-v="' + n + '">' + n + "</button>";
             })
             .join("")) +
-      '</div><label class="l">Price (€, optional: adds it to Money)</label><input id="rsprice" inputmode="decimal"><div class="row" style="margin-top:14px"><button class="b p" data-a="rssave">Add to stock</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '</div><label class="l">Price (€, optional: adds it to Money)</label><input id="rsprice" inputmode="decimal"><div class="row u-mt14"><button class="b p" data-a="rssave">Add to stock</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   }
 
@@ -563,7 +563,7 @@
       return m + x.eur;
     }, 0);
     return (
-      '<div class="card"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">Coming up · 30 days</h2><b style="font-size:18px">~' +
+      '<div class="card"><div class="row between u-nowrap"><h2 class="u-m0">Coming up · 30 days</h2><b class="u-fs18">~' +
       eur(tot) +
       "</b></div>" +
       it
@@ -593,7 +593,7 @@
           );
         })
         .join("") +
-      '<div class="note" style="margin-top:6px">Food shows on the date to order by (3 days before it runs out, or before a cat hotel stay), at the usual price.</div></div>'
+      '<div class="note u-mt6">Food shows on the date to order by (3 days before it runs out, or before a cat hotel stay), at the usual price.</div></div>'
     );
   }
 
@@ -619,7 +619,7 @@
       n++;
     });
     return (
-      '<div class="card"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">Spent so far</h2><span class="mute small">' +
+      '<div class="card"><div class="row between u-nowrap"><h2 class="u-m0">Spent so far</h2><span class="mute small">' +
       n +
       " cost" +
       (n !== 1 ? "s" : "") +
@@ -637,7 +637,7 @@
           );
         })
         .join("") +
-      '</div><div class="mute small" style="margin:-2px 0 8px">' +
+      '</div><div class="mute small u-m2-0-8">' +
       L[per] +
       (per === "day" ? "" : " · since " + short(start)) +
       '</div><div class="grid3"><div class="stat"><span class="mute">Spent</span><b>' +
@@ -713,20 +713,20 @@
         .join("") +
       "</div>";
     h +=
-      '<div class="hero money"><div class="row between"><button class="rnd" style="background:rgba(255,255,255,.2);color:#fff" data-a="fmon" data-v="-1">‹</button><div style="text-align:center"><div class="sub">' +
+      '<div class="hero money"><div class="row between"><button class="rnd u-bg-rgba-255-255-255-_2 u-c-fff" data-a="fmon" data-v="-1">‹</button><div class="u-ta-center"><div class="sub">' +
       first.toLocaleDateString("en-GB", { month: "long", year: "numeric" }) +
-      '</div><div class="wt" style="margin-top:4px">' +
+      '</div><div class="wt u-mt4">' +
       eur(spent - back) +
       '</div><div class="sub">you paid after insurance</div></div><button class="rnd' +
       (m >= today().slice(0, 7) ? " off" : "") +
       '" style="background:rgba(255,255,255,.2);color:#fff" data-a="fmon" data-v="1">›</button></div>' +
-      '<div class="ends" style="margin-top:12px"><span>Spent ' +
+      '<div class="ends u-mt12"><span>Spent ' +
       eur(spent) +
       "</span><span>Insurance back " +
       eur(back) +
       "</span></div>" +
       (plan
-        ? '<div class="ends" style="margin-top:4px"><span>Coming up: ' + eur(plan) + "</span></div>"
+        ? '<div class="ends u-mt4"><span>Coming up: ' + eur(plan) + "</span></div>"
         : "") +
       "</div>";
     var wait = allCosts().filter(function (x) {
@@ -734,7 +734,7 @@
     });
     if (wait.length)
       h +=
-        '<div class="card" style="padding:12px 16px"><b>Waiting on insurance</b><div class="small mute">' +
+        '<div class="card u-p12-16"><b>Waiting on insurance</b><div class="small mute">' +
         wait.length +
         " claim" +
         (wait.length > 1 ? "s" : "") +
@@ -745,7 +745,7 @@
           })
           .join(", ") +
         "</div></div>";
-    h += '<button class="b p w" style="margin-bottom:12px;padding:14px" data-a="cnew">+ Add a cost</button>';
+    h += '<button class="b p w u-mb12 u-p14" data-a="cnew">+ Add a cost</button>';
     h += upcomingCosts(who);
     if (Object.keys(byc).length) {
       var mx = Math.max.apply(
@@ -796,7 +796,7 @@
             })
             .map(function (x) {
               return (
-                '<div class="it"><div class="row between" style="flex-wrap:nowrap"><div class="row" style="flex-wrap:nowrap;gap:10px"><span class="ic" style="width:38px;height:38px;border-radius:12px;background:var(--bg);display:grid;place-items:center;font-size:17px;flex:none">' +
+                '<div class="it"><div class="row between u-nowrap"><div class="row u-nowrap u-gap10"><span class="ic u-w38 u-h38 u-r12 u-bg-var---bg u-d-grid u-place-items-center u-fs17 u-flex-none">' +
                 (CI[x.cat] || "🧾") +
                 "</span><div><b>" +
                 esc(x.desc || x.cat) +
@@ -815,13 +815,13 @@
                   : "") +
                 (x.rep === "monthly" ? " · 🔁 monthly" : "") +
                 (x.planned ? " · <b>planned</b>" : "") +
-                '</div></div></div><div style="text-align:right"><b>' +
+                '</div></div></div><div class="u-ta-right"><b>' +
                 eur(x.amount) +
                 "</b>" +
                 (x.reimb
-                  ? '<div class="small" style="color:var(--ok)">−' + eur(x.reimb) + " back</div>"
+                  ? '<div class="small u-c-var---ok">−' + eur(x.reimb) + " back</div>"
                   : "") +
-                '</div></div><div class="row" style="justify-content:flex-end"><button class="x" data-a="cedit" data-v="' +
+                '</div></div><div class="row u-jc-flex-end"><button class="x" data-a="cedit" data-v="' +
                 x.id +
                 '">Edit</button><button class="x" data-a="cdel" data-v="' +
                 x.id +
@@ -878,7 +878,7 @@
       );
     }
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">' +
       (x.id ? "Edit cost" : "Add a cost") +
       "</h2>" +
       '<div class="grid2"><div><label class="l">Amount (€)</label><input data-cs="amount" inputmode="decimal" value="' +
@@ -911,7 +911,7 @@
       '<label class="l">Notes</label><input data-cs="n" value="' +
       esc(x.n || "") +
       '">' +
-      '<div class="chips" style="margin-top:10px"><button class="chip' +
+      '<div class="chips u-mt10"><button class="chip' +
       (x.planned ? " on" : "") +
       '" data-a="ccx" data-k="planned" data-v="1">📅 Not paid yet (planned)</button><button class="chip' +
       (x.rep === "monthly" ? " on" : "") +
@@ -938,6 +938,6 @@
             .join("")
         : "<div>") +
       "</div>" +
-      '<div class="row" style="margin-top:14px"><button class="b p" data-a="csave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '<div class="row u-mt14"><button class="b p" data-a="csave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   }

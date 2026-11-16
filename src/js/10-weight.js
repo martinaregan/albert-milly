@@ -113,7 +113,7 @@
       "</text></svg>";
     return (
       s +
-      '<div class="small mute" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:4px">' +
+      '<div class="small mute u-d-flex u-gap14 u-wrap u-mt4">' +
       L.map(function (x, i) {
         return (
           '<span><b style="color:' +
@@ -256,7 +256,7 @@
       mon(endD) +
       "</text></svg>";
     var lg =
-      '<div class="small mute" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:4px"><span><b style="color:' +
+      '<div class="small mute u-d-flex u-gap14 u-wrap u-mt4"><span><b style="color:' +
       c.color +
       '">━</b> weigh-ins</span>' +
       (eta ? '<span><b style="color:' + c.color + '">╌</b> current pace → ' + mon(eta) + "</span>" : "") +
@@ -281,7 +281,7 @@
     var c = cat(),
       W = ui.w || (ui.w = { d: today(), me: "", albert: "", milly: "", direct: "" });
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">Add a weigh-in</h2>' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">Add a weigh-in</h2>' +
       '<div class="mute small">Weigh yourself, then step on again holding each cat. It works out their weight.</div>' +
       '<label class="l">Date</label><input type="date" data-w="d" value="' +
       W.d +
@@ -298,7 +298,7 @@
             spot(k) +
             " You holding " +
             S.cats[k].name +
-            ' (kg)</label><div class="row" style="flex-wrap:nowrap"><input data-w="' +
+            ' (kg)</label><div class="row u-nowrap"><input data-w="' +
             k +
             '" inputmode="decimal" placeholder="leave blank to skip" value="' +
             esc(W[k]) +
@@ -310,12 +310,12 @@
           );
         })
         .join("") +
-      '<button class="b p w" style="margin-top:12px" data-a="addw2">Save weigh-in</button>' +
-      '<details style="margin-top:10px"><summary class="mute small">Weighed them on a pet scale instead?</summary>' +
+      '<button class="b p w u-mt12" data-a="addw2">Save weigh-in</button>' +
+      '<details class="u-mt10"><summary class="mute small">Weighed them on a pet scale instead?</summary>' +
       ["albert", "milly"]
         .map(function (k) {
           return (
-            '<div class="row" style="flex-wrap:nowrap;margin-top:8px">' +
+            '<div class="row u-nowrap u-mt8">' +
             spot(k).replace('class="spot"', 'class="spot" style="width:28px;height:28px;flex:none"') +
             '<input id="wk-' +
             k +
@@ -328,7 +328,7 @@
         })
         .join("") +
       "</details>" +
-      '<details style="margin-top:6px"><summary class="mute small">Tips</summary><div class="note">Same scale, same time of day (before breakfast), once a week. Bathroom scales can be 100 to 200 g out, so a single reading is a rough guide; the trend over a few weeks is what counts.</div></details><div class="row" style="margin-top:12px"><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '<details class="u-mt6"><summary class="mute small">Tips</summary><div class="note">Same scale, same time of day (before breakfast), once a week. Bathroom scales can be 100 to 200 g out, so a single reading is a rough guide; the trend over a few weeks is what counts.</div></details><div class="row u-mt12"><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   }
 
@@ -354,10 +354,10 @@
       st[0] +
       '">' +
       st[1] +
-      '</span><div class="bar" style="margin-top:10px"><div style="width:' +
+      '</span><div class="bar u-mt10"><div style="width:' +
       Math.max(frac * 100, 2) +
       '%"></div></div>' +
-      '<div class="grid3" style="margin-top:10px"><div class="stat"><span class="mute">Lost</span><b>' +
+      '<div class="grid3 u-mt10"><div class="stat"><span class="mute">Lost</span><b>' +
       r.lost.toFixed(2) +
       ' kg</b><span class="mute small">' +
       r.pct.toFixed(1) +
@@ -368,7 +368,7 @@
       '<div class="stat"><span class="mute">Per week</span><b>' +
       (r.kgWeek != null ? Math.round(r.kgWeek * 1000) + " g" : "–") +
       "</b></div></div>" +
-      '<div style="margin-top:12px">' +
+      '<div class="u-mt12">' +
       chart(c) +
       "</div>" +
       (r.eta
@@ -400,7 +400,7 @@
         '<button class="b s p" data-a="wopen">Add a weigh-in</button>'
       );
     return (
-      '<div class="list" style="margin-top:10px">' +
+      '<div class="list u-mt10">' +
       w
         .map(function (x) {
           return (
@@ -456,13 +456,13 @@
           " a day.</div>"
         : "") +
       (fd.plan > fd.hi * 1.1
-        ? '<div class="note" style="color:var(--warn)">The current plan is above the formula range. That is fine while the scale shows steady loss. Close the gap in steps of about 10% rather than all at once.</div>'
+        ? '<div class="note u-c-var---warn">The current plan is above the formula range. That is fine while the scale shows steady loss. Close the gap in steps of about 10% rather than all at once.</div>'
         : "") +
       (function () {
         var k = c === S.cats.albert ? "albert" : "milly",
           o = checkin(k);
         return o
-          ? '<div class="note" style="color:var(--ink)"><b>This week:</b> ' +
+          ? '<div class="note u-c-var---ink"><b>This week:</b> ' +
               esc(o.tx) +
               (o.apply
                 ? ' <button class="b s p" data-a="ciapply" data-k="' +
@@ -474,7 +474,7 @@
                   " g</button>"
                 : "") +
               "</div>"
-          : '<div class="note" style="color:var(--ink)"><b>Next step:</b> ' + fd.step + "</div>";
+          : '<div class="note u-c-var---ink"><b>Next step:</b> ' + fd.step + "</div>";
       })() +
       '<div class="note">Uses the standard vet formula (70 × target kg<sup>0.75</sup>, × 0.8–1.0) and the calories on each food. Run changes past the vet, especially for prescription food.</div>'
     );
@@ -594,11 +594,11 @@
           : nw.days + "<small>day" + (nw.days > 1 ? "s" : "") + "</small>") +
       "</div></div>";
     h +=
-      '<button class="b p w" style="margin:0 0 12px;padding:16px;font-size:17px" data-a="wopen">⚖️ Add a weigh-in for both</button>';
+      '<button class="b p w u-m0-0-12 u-p16 u-fs17" data-a="wopen">⚖️ Add a weigh-in for both</button>';
     h +=
       '<details class="nf" data-open="wboth" data-lazy' +
       isOpen("wboth", false) +
-      '><summary><span>📈 Both cats on one chart</span></summary><div class="card" style="margin:0">' +
+      '><summary><span>📈 Both cats on one chart</span></summary><div class="card u-m0">' +
       (lazyOpen("wboth") ? bothChart() : "") +
       "</div></details>";
     h += ["albert", "milly"]

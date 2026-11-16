@@ -270,7 +270,7 @@
         "</div>";
     }
     h +=
-      '</div><details class="legend2"><summary class="mute small">What the icons mean</summary><div class="small mute" style="margin-top:6px;line-height:1.8">😾 fight · ⚖️ weigh-in · 🏥 vet · 🩺 symptom · ⚠️ poo/pee to check · 🐛🛡️ worm/flea · 🍽️ ate over plan · ✅ to do · 📝 note · 🏨 hotel drop-off/pick-up · striped day = at the cat hotel</div></details></div>';
+      '</div><details class="legend2"><summary class="mute small">What the icons mean</summary><div class="small mute u-mt6 u-lh1_8">😾 fight · ⚖️ weigh-in · 🏥 vet · 🩺 symptom · ⚠️ poo/pee to check · 🐛🛡️ worm/flea · 🍽️ ate over plan · ✅ to do · 📝 note · 🏨 hotel drop-off/pick-up · striped day = at the cat hotel</div></details></div>';
     h += dayPanel(sel);
     var tdn = (S.todos || []).filter(function (x) {
       return !x.done;
@@ -286,7 +286,7 @@
     h +=
       '<details class="nf" data-open="wsall"' +
       isOpen("wsall", false) +
-      '><summary><span>📊 Last 7 days summary</span></summary><div class="card" style="margin:0">' +
+      '><summary><span>📊 Last 7 days summary</span></summary><div class="card u-m0">' +
       weekSummary() +
       "</div></details>";
     h +=
@@ -295,7 +295,7 @@
       "><summary><span>📖 What happened in " +
       first.toLocaleDateString("en-GB", { month: "long" }) +
       (month.length ? ' <span class="nfc">' + month.length + "</span>" : "") +
-      '</span></summary><div class="card" style="margin:0">' +
+      '</span></summary><div class="card u-m0">' +
       (month.length
         ? month
             .reverse()
@@ -434,7 +434,7 @@
     var h =
       '<details class="nf tdadd" data-open="tdadd"' +
       isOpen("tdadd", false) +
-      ' style="margin:0 0 12px"><summary><span>➕ Add a to-do</span></summary><div class="addrow" style="margin-top:0"><input id="tdtext" placeholder="What needs doing?"><input id="tddue" type="date" title="Due date (optional)"><button class="b p" data-a="tadd">Add</button></div></details>';
+      ' style="margin:0 0 12px"><summary><span>➕ Add a to-do</span></summary><div class="addrow u-mt0"><input id="tdtext" placeholder="What needs doing?"><input id="tddue" type="date" title="Due date (optional)"><button class="b p" data-a="tadd">Add</button></div></details>';
     G.forEach(function (g) {
       var xs = it.filter(function (x) {
         return g[2](x.d);
@@ -443,7 +443,7 @@
       h +=
         '<div class="card cgrp cg-' +
         g[0] +
-        '"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">' +
+        '"><div class="row between u-nowrap"><h2 class="u-m0">' +
         g[1] +
         '</h2><span class="mute small">' +
         xs.length +
@@ -477,7 +477,7 @@
         isOpen("tddone", false) +
         '><summary><span>✓ Done <span class="nfc">' +
         done.length +
-        '</span></span></summary><div class="card" style="margin:0">' +
+        '</span></span></summary><div class="card u-m0">' +
         done.map(todoRow).join("") +
         "</div></details>";
     return h;
@@ -491,7 +491,7 @@
       isOpen("daypan", false) +
       '><summary class="dayttl"><div class="dnum">' +
       parse(ds).getDate() +
-      '</div><div style="flex:1"><div class="dw">' +
+      '</div><div class="u-flex1"><div class="dw">' +
       parse(ds).toLocaleDateString("en-GB", { weekday: "long" }) +
       '</div><div class="mute small">' +
       parse(ds).toLocaleDateString("en-GB", { month: "long" }) +
@@ -635,7 +635,7 @@
     });
     if (0 && td.length)
       h +=
-        '<div class="dcat"><div class="dch" style="--g:linear-gradient(135deg,#52525b,#18181b)"><span style="font-size:22px">✅</span><b>To do</b></div>' +
+        '<div class="dcat"><div class="dch u---g-linear-gradient-135deg-52525b-18181b"><span class="u-fs22">✅</span><b>To do</b></div>' +
         td.map(todoRow).join("") +
         "</div>";
     var fs = S.fights.filter(function (f) {
@@ -643,7 +643,7 @@
     });
     if (fs.length)
       h +=
-        '<div class="dcat"><div class="dch" style="--g:linear-gradient(135deg,#e05a4f,#a8322a)"><span style="font-size:22px">😾</span><b>' +
+        '<div class="dcat"><div class="dch u---g-linear-gradient-135deg-e05a4f-a8322a"><span class="u-fs22">😾</span><b>' +
         fs.length +
         " fight" +
         (fs.length > 1 ? "s" : "") +
@@ -707,15 +707,15 @@
       );
     }
     return (
-      '<div class="card"><div class="row between"><h2 style="margin:0">✅ To do</h2><span class="tag">' +
+      '<div class="card"><div class="row between"><h2 class="u-m0">✅ To do</h2><span class="tag">' +
       open.length +
       " left</span></div>" +
       (open.length
         ? open.map(row).join("")
-        : '<div class="pl mute" style="margin-top:10px">All done 🎉</div>') +
+        : '<div class="pl mute u-mt10">All done 🎉</div>') +
       '<div class="addrow"><input id="tdtext" placeholder="Add a to-do…"><input id="tddue" type="date" title="Due date (optional)"><button class="b p" data-a="tadd">Add</button></div>' +
       (done.length
-        ? '<details style="margin-top:8px"><summary class="mute small">Done (' +
+        ? '<details class="u-mt8"><summary class="mute small">Done (' +
           done.length +
           ")</summary>" +
           done.map(row).join("") +

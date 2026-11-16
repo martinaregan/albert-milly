@@ -35,7 +35,7 @@
       G[g].push(el.outerHTML);
     });
     G.Phone.push(
-      '<div class="card"><h2>📱 Lock screen shortcut</h2><div class="note" style="margin:0">Shortcuts app › + › Open URLs › paste <b>martinaregan.github.io/albert-milly/?log=breakfast</b> (or ?log=dinner). First open the app once in Safari and connect, because Shortcuts opens links in Safari.</div></div>'
+      '<div class="card"><h2>📱 Lock screen shortcut</h2><div class="note u-m0">Shortcuts app › + › Open URLs › paste <b>martinaregan.github.io/albert-milly/?log=breakfast</b> (or ?log=dinner). First open the app once in Safari and connect, because Shortcuts opens links in Safari.</div></div>'
     );
     return ["Cats", "Phone", "Data"]
       .map(function (g) {
@@ -52,11 +52,11 @@
   function vSettings0() {
     var c = cat();
     return (
-      '<div class="card"><h2>📷 Cat photos</h2><div class="note" style="margin:0 0 10px">Used instead of the drawn faces everywhere in the app. A close-up of the face works best.</div><div class="row" style="gap:8px;flex-wrap:wrap">' +
+      '<div class="card"><h2>📷 Cat photos</h2><div class="note u-m0-0-10">Used instead of the drawn faces everywhere in the app. A close-up of the face works best.</div><div class="row u-gap8 u-wrap">' +
       ["albert", "milly"]
         .map(function (k) {
           return (
-            '<span class="row" style="gap:8px">' +
+            '<span class="row u-gap8">' +
             spot(k).replace('class="spot"', 'class="spot" style="width:40px;height:40px"') +
             upBtn(
               "catphoto",
@@ -70,18 +70,18 @@
         })
         .join("") +
       "</div></div>" +
-      '<div class="card"><h2>🔴 App icon badge</h2><div class="note" style="margin:0 0 10px">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
+      '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
-      '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note" style="margin:0">On their phone: open martinaregan.github.io/albert-milly, add it to the home screen, paste the same access key and type their name. Everything they log shows their name, and the app stops a second dinner.</div></div>' +
-      '<div class="card"><h2>💾 Backup</h2><div class="note" style="margin:0 0 10px">Everything (both cats, all logs, notes, costs) as one file you can keep in Files, iCloud or email to yourself. Photos stay on GitHub.</div><button class="b s p" data-a="backup">Download a backup</button></div>' +
+      '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note u-m0">On their phone: open martinaregan.github.io/albert-milly, add it to the home screen, paste the same access key and type their name. Everything they log shows their name, and the app stops a second dinner.</div></div>' +
+      '<div class="card"><h2>💾 Backup</h2><div class="note u-m0-0-10">Everything (both cats, all logs, notes, costs) as one file you can keep in Files, iCloud or email to yourself. Photos stay on GitHub.</div><button class="b s p" data-a="backup">Download a backup</button></div>' +
       '<div class="card"><h2>🔗 Connection</h2><div class="kv"><span class="k">Data</span><span class="v">' +
       esc(GH.owner + "/" + GH.repo) +
       '</span></div><div class="kv"><span class="k">This phone</span><span class="v">' +
       esc(GH.who || "") +
       '</span></div><div class="kv"><span class="k">Status</span><span class="v">' +
       esc(saveState) +
-      '</span></div><div class="row" style="margin-top:10px"><button class="b s" data-a="syncnow">Sync now</button><button class="b s ghost" data-a="ghout">Disconnect this phone</button></div><div class="note">App version ' +
+      '</span></div><div class="row u-mt10"><button class="b s" data-a="syncnow">Sync now</button><button class="b s ghost" data-a="ghout">Disconnect this phone</button></div><div class="note">App version ' +
       APPV +
       "</div></div>" +
       '<div class="card"><h2>' +
@@ -107,7 +107,7 @@
             i +
             '" data-fk="name" value="' +
             esc(f.name) +
-            '"><div class="grid2" style="margin-top:6px"><select data-fd="' +
+            '"><div class="grid2 u-mt6"><select data-fd="' +
             i +
             '" data-fk="kind"><option value="dry"' +
             (f.kind === "dry" ? " selected" : "") +
@@ -125,7 +125,7 @@
           );
         })
         .join("") +
-      '<button class="b s" style="margin-top:8px" data-a="addfood">+ Add a food</button><div class="note">Calories are on the pack ("metabolisable energy", usually in kcal/kg: divide by 10 for per 100 g). The suggestion uses the first dry and first wet food in this list.</div></div>' +
+      '<button class="b s u-mt8" data-a="addfood">+ Add a food</button><div class="note">Calories are on the pack ("metabolisable energy", usually in kcal/kg: divide by 10 for per 100 g). The suggestion uses the first dry and first wet food in this list.</div></div>' +
       '<div class="card"><h2>Daily checklist (' +
       esc(c.name) +
       ')</h2><textarea rows="4" data-s="checks">' +

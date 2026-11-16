@@ -294,9 +294,9 @@ ACT["vdel2"] = function (e, t, a, v, c) {
 ACT["vet"] = function (e, t, a, v, c) {
   ui.modal = function () {
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">Vet summary</h2><textarea id="vt" rows="12" readonly>' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">Vet summary</h2><textarea id="vt" rows="12" readonly>' +
       esc(vetText()) +
-      '</textarea><div class="row" style="margin-top:10px"><button class="b p" data-a="copy">Copy</button><button class="b" data-a="close">Close</button></div></div></div>'
+      '</textarea><div class="row u-mt10"><button class="b p" data-a="copy">Copy</button><button class="b" data-a="close">Close</button></div></div></div>'
     );
   };
   render();

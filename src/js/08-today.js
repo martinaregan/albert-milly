@@ -12,7 +12,7 @@
       } catch (e) {}
     } else ks = ["albert", "milly"];
     return (
-      '<div class="card ci2"><div class="row between" style="flex-wrap:nowrap"><h2 style="margin:0">⚖️ Weekly check-in</h2>' +
+      '<div class="card ci2"><div class="row between u-nowrap"><h2 class="u-m0">⚖️ Weekly check-in</h2>' +
       (force ? "" : '<button class="x" data-a="cidone" aria-label="Hide">✕</button>') +
       "</div>" +
       ks
@@ -24,7 +24,7 @@
             o.tone +
             '">' +
             spot(k).replace('class="spot"', 'class="spot" style="width:34px;height:34px;flex:none"') +
-            '<div style="flex:1"><b>' +
+            '<div class="u-flex1"><b>' +
             esc(o.head) +
             '</b><div class="small">' +
             esc(o.tx) +
@@ -214,7 +214,7 @@
     return (
       '<details class="card wkc" data-open="wkc"' +
       (force ? "" : isOpen("wkc", true)) +
-      '><summary><h2 style="display:inline">📊 Your week · ' +
+      '><summary><h2 class="u-d-inline">📊 Your week · ' +
       short(addDays(t, -6)) +
       " to " +
       short(t) +
@@ -222,7 +222,7 @@
       weekSummary() +
       (force
         ? ""
-        : '<button class="b s ghost" style="margin-top:8px" data-a="wsdone">Hide until next Sunday</button>') +
+        : '<button class="b s ghost u-mt8" data-a="wsdone">Hide until next Sunday</button>') +
       "</details>"
     );
   }
@@ -251,7 +251,7 @@
       })
     )
       h +=
-        '<button class="b p w" style="margin-bottom:12px;padding:14px" data-a="tab" data-v="weight">⚖️ It\'s Saturday: weigh-in day. Tap to log</button>';
+        '<button class="b p w u-mb12 u-p14" data-a="tab" data-v="weight">⚖️ It\'s Saturday: weigh-in day. Tap to log</button>';
     var prog =
       r && r.first.kg > c.target
         ? Math.max(0, Math.min(100, ((r.first.kg - r.last.kg) / (r.first.kg - c.target)) * 100))
@@ -278,7 +278,7 @@
     });
     if (lows.length)
       h +=
-        '<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap">' +
+        '<div class="row u-gap6 u-mb10 u-wrap">' +
         (lows.length ? "" : "") +
         "" +
         "</div>";
@@ -286,7 +286,7 @@
       h +=
         '<div class="hero mini"><div class="top">' +
         spot(ui.cat) +
-        '<div style="flex:1"><div class="row between"><span class="nm">' +
+        '<div class="u-flex1"><div class="row between"><span class="nm">' +
         esc(c.name) +
         '</span><span class="wt">' +
         (r ? r.last.kg.toFixed(2) : "–") +
@@ -345,7 +345,7 @@
               " on " +
               parse(ui.day).toLocaleDateString("en-GB", { weekday: "long" }),
             "Fill it in if you remember. Every day helps the averages.",
-            '<div class="row" style="gap:8px;justify-content:center"><button class="b s p" data-a="mopen" data-v="dry">Add breakfast</button><button class="b s" data-a="mopen" data-v="wet">Add dinner</button></div>'
+            '<div class="row u-gap8 u-jc-center"><button class="b s p" data-a="mopen" data-v="dry">Add breakfast</button><button class="b s" data-a="mopen" data-v="wet">Add dinner</button></div>'
           ) +
           "</div>";
     }
@@ -355,7 +355,7 @@
         ui.cat +
         '"' +
         isOpen("fplan-" + ui.cat, false) +
-        '><summary><h2 style="display:inline">🍽️ Feeding plan</h2></summary>' +
+        '><summary><h2 class="u-d-inline">🍽️ Feeding plan</h2></summary>' +
         profText(c.plan) +
         "</details>";
     h +=
@@ -375,7 +375,7 @@
         Math.round(t.kcal) + "<small>/" + Math.round(fd.lo) + "–" + Math.round(fd.hi) + "</small>"
       ) +
       "</div>" +
-      '<div class="row between" style="margin-top:10px"><span class="small">Treats: <b>' +
+      '<div class="row between u-mt10"><span class="small">Treats: <b>' +
       (d.treats || 0) +
       '</b></span><button class="b s" data-a="treat" data-v="1">+1 treat</button></div>' +
       (meals.length
@@ -421,7 +421,7 @@
           var a = d.f[f.id] || 0,
             dry = f.kind === "dry";
           return (
-            '<div class="row between" style="margin-top:6px"><span class="small">' +
+            '<div class="row between u-mt6"><span class="small">' +
             esc(f.name) +
             '</span><span class="row"><input class="amt" inputmode="decimal" data-amt="food" data-k="' +
             f.id +
@@ -433,7 +433,7 @@
           );
         })
         .join("") +
-      '<div class="row between" style="margin-top:6px"><span class="small">Treats / extras</span><input class="amt" inputmode="decimal" data-amt="treat" value="' +
+      '<div class="row between u-mt6"><span class="small">Treats / extras</span><input class="amt" inputmode="decimal" data-amt="treat" value="' +
       (d.treats || 0) +
       '"></div></details></div>';
     if (c.checks.length)
@@ -489,7 +489,7 @@
       t.play +
       " min today" +
       (tmHere ? ' <span class="nfc">⏱ on</span>' : "") +
-      '</span></summary><div class="card" style="margin:0">' +
+      '</span></summary><div class="card u-m0">' +
       (TM
         ? timerBanner().replace(
             "position:sticky;top:calc(env(safe-area-inset-top) + 34px);z-index:4",
@@ -497,14 +497,14 @@
           )
         : "") +
       (done.length
-        ? '<div style="margin-bottom:10px">' +
+        ? '<div class="u-mb10">' +
           S.playTypes
             .filter(function (p) {
               return d.play[p];
             })
             .map(function (p) {
               return (
-                '<div class="srow"><div style="flex:1"><b>' +
+                '<div class="srow"><div class="u-flex1"><b>' +
                 esc(p) +
                 "</b></div><b>" +
                 d.play[p] +
@@ -515,15 +515,15 @@
             })
             .join("") +
           "</div>"
-        : '<div class="mute small" style="margin-bottom:10px">Nothing logged yet today.</div>') +
-      '<button class="symbtn fbtn" style="min-height:58px;font-size:17px" data-a="plopen">🧶 Log play</button>' +
+        : '<div class="mute small u-mb10">Nothing logged yet today.</div>') +
+      '<button class="symbtn fbtn u-minh58 u-fs17" data-a="plopen">🧶 Log play</button>' +
       '<details data-open="tplay"' +
       isOpen("tplay", false) +
       ' style="margin-top:8px"><summary class="small mute">Edit minutes</summary>' +
       S.playTypes
         .map(function (p, i) {
           return (
-            '<div class="row between" style="margin-top:6px"><span class="small">' +
+            '<div class="row between u-mt6"><span class="small">' +
             esc(p) +
             '</span><span class="row"><input class="amt" inputmode="numeric" data-amt="play" data-k="' +
             i +
@@ -540,11 +540,11 @@
       isOpen("tnote", false) +
       "><summary><span>📝 Note &amp; photos" +
       (hasN ? ' <span class="nfc">' + (d.photos.length + (d.note ? 1 : 0)) + "</span>" : "") +
-      '</span></summary><div class="card" style="margin:0"><textarea rows="2" style="margin-top:10px" data-a="note" placeholder="Begging, ate slowly, sitter visit…">' +
+      '</span></summary><div class="card u-m0"><textarea rows="2" class="u-mt10" data-a="note" placeholder="Begging, ate slowly, sitter visit…">' +
       esc(d.note) +
       "</textarea>" +
       (d.photos.length ? thumbs(d.photos, "day") : "") +
-      '<div style="margin-top:10px">' +
+      '<div class="u-mt10">' +
       upBtn("day", "", "📷 Take or add photo", "image/*") +
       "</div></div></details>";
     return h;

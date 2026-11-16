@@ -67,7 +67,7 @@ ACT["wedit"] = function (e, t, a, v, c) {
   ui.we = { old: v, d: v, kg: String(wo.kg) };
   ui.modal = function () {
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">Edit ' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">Edit ' +
       esc(c.name) +
       '\'s weigh-in</h2><div class="grid2"><div><label class="l">Date</label><input type="date" data-we="d" value="' +
       ui.we.d +
@@ -75,7 +75,7 @@ ACT["wedit"] = function (e, t, a, v, c) {
       today() +
       '"></div><div><label class="l">Weight (kg)</label><input data-we="kg" inputmode="decimal" value="' +
       esc(ui.we.kg) +
-      '"></div></div><div class="row" style="margin-top:14px"><button class="b p" data-a="wsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '"></div></div><div class="row u-mt14"><button class="b p" data-a="wsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   };
   render();

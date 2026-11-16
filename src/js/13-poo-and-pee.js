@@ -83,14 +83,14 @@
       extra: [
         "Anything unusual?",
         big(LX, "extra", true) +
-          '<button class="b p w" style="margin-top:12px;padding:14px" data-a="lnext">' +
+          '<button class="b p w u-mt12 u-p14" data-a="lnext">' +
           (l.extra.length ? "Next" : "Nothing unusual") +
           "</button>"
       ],
       done: ["All good?", ""]
     };
     var h =
-      '<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><span class="small mute" style="font-weight:800">Log ' +
+      '<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between u-nowrap"><span class="small mute u-fw800">Log ' +
       nm +
       " · " +
       (l.step + 1) +
@@ -126,12 +126,12 @@
         .join("");
       h +=
         (l.pre
-          ? '<div class="note" style="margin:0 0 8px">Filled in with what\'s usual for ' +
+          ? '<div class="note u-m0-0-8">Filled in with what\'s usual for ' +
             esc(l.who) +
             " lately. Tap anything to change it.</div>"
           : "") +
         rows +
-        '<div class="grid2" style="margin-top:10px"><div><label class="l">Date</label><input type="date" data-lf="d" value="' +
+        '<div class="grid2 u-mt10"><div><label class="l">Date</label><input type="date" data-lf="d" value="' +
         l.d +
         '" max="' +
         today() +
@@ -139,7 +139,7 @@
         l.m +
         '"></div></div>' +
         (GH
-          ? '<button class="b w" style="padding:14px;margin-top:10px" data-a="pick" data-k="pend" data-v="litter" data-acc="image/*" data-cap="1">📷 ' +
+          ? '<button class="b w u-p14 u-mt10" data-a="pick" data-k="pend" data-v="litter" data-acc="image/*" data-cap="1">📷 ' +
             (ui.pend.length ? "Take another photo" : "Add a photo (optional)") +
             "</button>"
           : "") +
@@ -147,11 +147,11 @@
         '<label class="l">Notes (optional)</label><textarea rows="2" data-lf="n">' +
         esc(l.n) +
         "</textarea>" +
-        '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="lsave">Save ' +
+        '<button class="b p w u-mt14 u-p16 u-fs17" data-a="lsave">Save ' +
         nm +
         "</button>";
     }
-    if (l.step > 0) h += '<button class="b ghost" style="margin-top:10px" data-a="lback">‹ Back</button>';
+    if (l.step > 0) h += '<button class="b ghost u-mt10" data-a="lback">‹ Back</button>';
     return h + "</div></div>";
   }
 
@@ -180,12 +180,12 @@
       );
     }
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">' +
       (l.id ? "Edit " : "Log ") +
       (l.type === "Poo" ? "💩 poo" : "💧 pee") +
       "</h2>" +
       (GH
-        ? '<button class="b w" style="padding:16px;font-size:16px;margin-bottom:6px" data-a="pick" data-k="pend" data-v="litter" data-acc="image/*" data-cap="1">📷 ' +
+        ? '<button class="b w u-p16 u-fs16 u-mb6" data-a="pick" data-k="pend" data-v="litter" data-acc="image/*" data-cap="1">📷 ' +
           (ui.pend.length ? "Take another photo" : "Take a photo") +
           "</button>"
         : "") +
@@ -213,10 +213,10 @@
       '<label class="l">Notes</label><textarea rows="2" data-lf="n">' +
       esc(l.n) +
       "</textarea>" +
-      '<div style="margin-top:10px">' +
+      '<div class="u-mt10">' +
       upBtn("pend", "litter", "🖼️ Choose from library", "image/*") +
       "</div>" +
-      '<div class="row" style="margin-top:14px"><button class="b p" data-a="lsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '<div class="row u-mt14"><button class="b p" data-a="lsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   }
 

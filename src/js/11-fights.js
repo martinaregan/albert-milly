@@ -38,9 +38,9 @@
     var diff = cT - cL,
       trend =
         diff > 0
-          ? '<span style="color:#e0703a">▲ ' + diff + " vs last week</span>"
+          ? '<span class="u-c-e0703a">▲ ' + diff + " vs last week</span>"
           : diff < 0
-            ? '<span style="color:#5cb85c">▼ ' + -diff + " vs last week</span>"
+            ? '<span class="u-c5cb85c">▼ ' + -diff + " vs last week</span>"
             : '<span class="mute">same as last week</span>';
     var groups = [],
       gi = {};
@@ -55,9 +55,9 @@
     var h =
       '<details class="card flog" data-open="flog"' +
       isOpen("flog", false) +
-      '><summary><div class="row between" style="flex:1"><h2 style="margin:0">Log</h2><span class="small">' +
+      '><summary><div class="row between u-flex1"><h2 class="u-m0">Log</h2><span class="small">' +
       all.length +
-      ' total</span></div><div class="small" style="margin-top:4px">This week <b>' +
+      ' total</span></div><div class="small u-mt4">This week <b>' +
       cT +
       "</b> · " +
       trend +
@@ -84,13 +84,13 @@
         g.w +
         '"' +
         isOpen("fwk" + g.w, i === 0) +
-        '><summary><div style="flex:1"><div class="row between"><b>' +
+        '><summary><div class="u-flex1"><div class="row between"><b>' +
         lbl +
         '</b><span class="small">' +
         it.length +
         (it.length === 1 ? " incident" : " incidents") +
         "</span></div>" +
-        '<div class="row between" style="margin-top:4px"><span>' +
+        '<div class="row between u-mt4"><span>' +
         it
           .slice()
           .reverse()
@@ -101,7 +101,7 @@
         '</span><span class="mute small">' +
         (bites ? bites + (bites > 1 ? " bites" : " bite") + " or worse" : "no bites") +
         "</span></div>" +
-        (trig ? '<div class="mute small" style="margin-top:2px">Top trigger: ' + esc(trig) + "</div>" : "") +
+        (trig ? '<div class="mute small u-mt2">Top trigger: ' + esc(trig) + "</div>" : "") +
         "</div></summary>";
       it.forEach(function (f) {
         var who =
@@ -109,16 +109,16 @@
             ? spot("albert")
             : f.who === "Milly"
               ? spot("milly")
-              : '<span style="width:30px;text-align:center;font-size:20px">❔</span>';
+              : '<span class="u-w30 u-ta-center u-fs20">❔</span>';
         var sub = (f.trig || [])[0] || f.where || "";
         h +=
           '<details class="fit" data-open="fit' +
           f.id +
           '"' +
           isOpen("fit" + f.id, false) +
-          '><summary><div class="fl" style="flex:1;align-items:center">' +
+          '><summary><div class="fl u-flex1 u-ai-center">' +
           who +
-          '<div style="flex:1;min-width:0"><div class="row between"><b><span class="sevdot" style="background:' +
+          '<div class="u-flex1 u-minw0"><div class="row between"><b><span class="sevdot" style="background:' +
           (SEVC[f.sev] || "#999") +
           '"></span>' +
           esc(f.sev || "Fight") +
@@ -142,9 +142,9 @@
               .join(" · ")
           ) +
           "</div>" +
-          (f.n ? '<div class="small mute" style="margin-top:4px">' + esc(f.n) + "</div>" : "") +
+          (f.n ? '<div class="small mute u-mt4">' + esc(f.n) + "</div>" : "") +
           ((f.att || []).length ? thumbs(f.att) : "") +
-          '<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="x" data-a="fedit" data-v="' +
+          '<div class="row u-jc-flex-end u-mt6"><button class="x" data-a="fedit" data-v="' +
           f.id +
           '">Edit</button><button class="x" data-a="delf" data-v="' +
           f.id +
@@ -228,7 +228,7 @@
       spot("albert") +
       "<b>&amp;</b>" +
       spot("milly") +
-      '</div><div style="text-align:center;font-weight:900;font-size:20px">' +
+      '</div><div class="u-ta-center u-fw900 u-fs20">' +
       (since0 == null
         ? "No fights logged"
         : since0 === 0
@@ -279,7 +279,7 @@
       var s0 = h.indexOf('<svg viewBox="0 0 ' + W),
         sv = h.slice(s0, h.indexOf("</svg>", s0) + 6).replace(/fill="#fff"/g, 'class="fbar"');
       h =
-        '<div class="card fchart"><div class="row between"><h2 style="margin:0">Fights · last 14 days</h2><span class="mute small">' +
+        '<div class="card fchart"><div class="row between"><h2 class="u-m0">Fights · last 14 days</h2><span class="mute small">' +
         c7 +
         " this week · " +
         rec.length +
@@ -288,15 +288,15 @@
         "</div>";
     } else
       h +=
-        '<button class="b p w" style="margin-bottom:12px;padding:16px;font-size:17px" data-a="fnew">😾 Log a fight</button>';
+        '<button class="b p w u-mb12 u-p16 u-fs17" data-a="fnew">😾 Log a fight</button>';
     h +=
       '<!--bg--><details class="card"' +
       (editing("bully") ? " open" : "") +
-      '><summary><b>Background &amp; what you\'ve tried</b></summary><div class="row" style="justify-content:flex-end;margin-top:6px">' +
+      '><summary><b>Background &amp; what you\'ve tried</b></summary><div class="row u-jc-flex-end u-mt6">' +
       editBtn("bully") +
       "</div>" +
       (editing("bully")
-        ? '<textarea rows="14" style="margin-top:6px" data-notes="bullying">' +
+        ? '<textarea rows="14" class="u-mt6" data-notes="bullying">' +
           esc(S.notes.bullying || "") +
           "</textarea>"
         : '<div class="rv">' + fmtText(S.notes.bullying) + "</div>") +
@@ -358,13 +358,13 @@
           r.v +
           " of " +
           r.tot +
-          '</span><div class="bar" style="height:4px;margin-top:4px"><div style="width:' +
+          '</span><div class="bar u-h4 u-mt4"><div style="width:' +
           Math.round((r.v / r.tot) * 100) +
           '%"></div></div></div>'
         );
       }
       h +=
-        '<!--pt--><div class="card"><div class="row between"><h2 style="margin:0">Patterns · 30 days</h2>' +
+        '<!--pt--><div class="card"><div class="row between"><h2 class="u-m0">Patterns · 30 days</h2>' +
         (embed ? "" : '<button class="b s ghost" data-a="tab" data-v="hows">🤝 Friendship</button>') +
         "</div>" +
         '<div class="ptiles">' +
@@ -466,7 +466,7 @@
       );
     }
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">' +
       (f.id ? "Edit fight" : "Log a fight") +
       "</h2>" +
       '<div class="grid2"><div><label class="l">Date</label><input type="date" data-ff="d" value="' +
@@ -477,7 +477,7 @@
       f.m +
       '"></div></div>' +
       (ui.pend.length ? thumbs(ui.pend, "pend") : "") +
-      '<div style="margin-top:10px">' +
+      '<div class="u-mt10">' +
       upBtn("pend", "fight", "📷 Add photo or video", "image/*,video/*").replace(
         'class="b s"',
         'class="b w upbig"'
@@ -498,7 +498,7 @@
       '<label class="l">Notes</label><textarea rows="2" data-ff="n" placeholder="What happened just before?">' +
       esc(f.n) +
       "</textarea>" +
-      '<div class="row" style="margin-top:14px"><button class="b p" data-a="fsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+      '<div class="row u-mt14"><button class="b p" data-a="fsave">Save</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
   }
 
@@ -536,7 +536,7 @@
       trig: [
         "What was going on?",
         big(TRIG, "trig", true) +
-          '<button class="b p w" style="margin-top:12px;padding:14px" data-a="fnext">' +
+          '<button class="b p w u-mt12 u-p14" data-a="fnext">' +
           (f.trig.length ? "Next" : "Not sure, skip") +
           "</button>"
       ],
@@ -547,7 +547,7 @@
       done: ["All good?", ""]
     };
     var h =
-      '<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><span class="small mute" style="font-weight:800">Log a fight · ' +
+      '<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between u-nowrap"><span class="small mute u-fw800">Log a fight · ' +
       (f.step + 1) +
       " of " +
       steps.length +
@@ -575,7 +575,7 @@
             );
           })
           .join("") +
-        '<div class="grid2" style="margin-top:10px"><div><label class="l">Date</label><input type="date" data-ff="d" value="' +
+        '<div class="grid2 u-mt10"><div><label class="l">Date</label><input type="date" data-ff="d" value="' +
         f.d +
         '" max="' +
         today() +
@@ -583,7 +583,7 @@
         f.m +
         '"></div></div>' +
         (ui.pend.length ? thumbs(ui.pend, "pend") : "") +
-        '<div style="margin-top:10px">' +
+        '<div class="u-mt10">' +
         upBtn("pend", "fight", "📷 Add photo or video", "image/*,video/*").replace(
           'class="b s"',
           'class="b w upbig"'
@@ -592,8 +592,8 @@
         '<label class="l">Notes (optional)</label><textarea rows="2" data-ff="n" placeholder="What happened just before?">' +
         esc(f.n) +
         "</textarea>" +
-        '<button class="b p w" style="margin-top:14px;padding:16px;font-size:17px" data-a="fsave">Save fight</button>';
+        '<button class="b p w u-mt14 u-p16 u-fs17" data-a="fsave">Save fight</button>';
     }
-    if (f.step > 0) h += '<button class="b ghost" style="margin-top:10px" data-a="fback">‹ Back</button>';
+    if (f.step > 0) h += '<button class="b ghost u-mt10" data-a="fback">‹ Back</button>';
     return h + "</div></div>";
   }

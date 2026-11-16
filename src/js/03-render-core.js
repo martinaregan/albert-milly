@@ -7,13 +7,13 @@
       document.body.className = "albert duo";
       document.getElementById("root").innerHTML = !GH
         ? setupView()
-        : '<div class="hero duo-h" style="margin-top:40px;text-align:center"><div class="vs">' +
+        : '<div class="hero duo-h u-mt40 u-ta-center"><div class="vs">' +
           spot("albert") +
           "<b>&amp;</b>" +
           spot("milly") +
-          '</div><div style="font-size:20px;font-weight:900">' +
+          '</div><div class="u-fs20 u-fw900">' +
           esc(saveState === "Synced" ? "Loading…" : saveState) +
-          '</div></div><div class="row" style="justify-content:center;gap:8px"><button class="b" data-a="syncnow">Try again</button><button class="b ghost" data-a="ghout2">Re-enter access key</button></div><div class="note" style="text-align:center">Version ' +
+          '</div></div><div class="row u-jc-center u-gap8"><button class="b" data-a="syncnow">Try again</button><button class="b ghost" data-a="ghout2">Re-enter access key</button></div><div class="note u-ta-center">Version ' +
           APPV +
           "</div>";
       return;
@@ -382,11 +382,11 @@
       })[0],
       dry = k === "dry";
     var h =
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">Add ' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">Add ' +
       (dry ? "dry" : "wet") +
       " food for " +
       esc(c.name) +
-      '</h2><div class="row" style="gap:6px;flex-wrap:wrap">' +
+      '</h2><div class="row u-gap6 u-wrap">' +
       fs
         .map(function (f) {
           return (
@@ -404,9 +404,9 @@
       "</div>";
     if (mf) {
       h +=
-        '<label class="l" style="margin-top:12px">How much? ' +
+        '<label class="l u-mt12">How much? ' +
         (dry ? "(grams)" : "(cans/pouches)") +
-        '</label><div class="row" style="gap:6px;flex-wrap:wrap;align-items:center"><input class="amt" id="mamt" inputmode="decimal" style="width:90px" value="' +
+        '</label><div class="row u-gap6 u-wrap u-ai-center"><input class="amt" id="mamt" inputmode="decimal" style="width:90px" value="' +
         esc(String(M.amt)) +
         '" placeholder="' +
         (dry ? "g" : "×") +
@@ -425,9 +425,9 @@
           })
           .join("") +
         "</div>" +
-        '<label class="l" style="margin-top:12px">Did ' +
+        '<label class="l u-mt12">Did ' +
         esc(c.name) +
-        ' eat it?</label><div class="row" style="gap:6px;flex-wrap:wrap">' +
+        ' eat it?</label><div class="row u-gap6 u-wrap">' +
         ["all", "some", "no"]
           .map(function (x) {
             return (
@@ -449,7 +449,7 @@
         A = M.add || [];
       if (ad.length)
         h +=
-          '<label class="l" style="margin-top:12px">Added anything to it?</label><div class="row" style="gap:6px;flex-wrap:wrap">' +
+          '<label class="l u-mt12">Added anything to it?</label><div class="row u-gap6 u-wrap">' +
           ad
             .map(function (x) {
               return (
@@ -481,7 +481,7 @@
     }
     return (
       h +
-      '<div class="row" style="margin-top:14px"><button class="b p" data-a="mlog"' +
+      '<div class="row u-mt14"><button class="b p" data-a="mlog"' +
       (mf ? "" : ' disabled style="opacity:.4"') +
       '>Log meal</button><button class="b" data-a="close">Cancel</button></div></div></div>'
     );
@@ -529,7 +529,7 @@
 
   function wizFrame(title, step, n, q, body, backAct) {
     return (
-      '<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between" style="flex-wrap:nowrap"><span class="small mute" style="font-weight:800">' +
+      '<div class="modal" data-a="close"><div class="sheet wiz" data-stop="1"><div class="row between u-nowrap"><span class="small mute u-fw800">' +
       title +
       " · " +
       (step + 1) +

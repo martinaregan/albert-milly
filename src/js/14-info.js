@@ -31,7 +31,7 @@
           '" target="_blank" rel="noopener">📍 Map</a>'
       );
     return out.length
-      ? '<div class="row small" style="margin-top:8px;gap:14px">' + out.join("") + "</div>"
+      ? '<div class="row small u-mt8 u-gap14">' + out.join("") + "</div>"
       : "";
   }
 
@@ -199,7 +199,7 @@
         insurance: "Policies · numbers · premiums"
       }[sec] || "Details") +
       "</i></div></summary>" +
-      '<div class="row" style="justify-content:flex-end">' +
+      '<div class="row u-jc-flex-end">' +
       editBtn(key) +
       "</div>" +
       (ed
@@ -208,7 +208,7 @@
               return infoField(sec, f[0], f[1], f[2]);
             })
             .join("")
-        : '<div style="margin-top:4px">' + view(o) + "</div>");
+        : '<div class="u-mt4">' + view(o) + "</div>");
     return (
       h +
       '<details class="nf" data-open="' +
@@ -220,7 +220,7 @@
       "</span></summary>" +
       (o.notes ? fmtText(o.notes) : "") +
       (nf ? thumbs(o.att, "info-" + sec) : "") +
-      '<div style="margin-top:10px">' +
+      '<div class="u-mt10">' +
       upBtn("info", sec, "📎 Add file", "image/*,application/pdf") +
       "</div>" +
       (after || "") +
@@ -409,7 +409,7 @@
       })() +
       "</div></summary>" +
       profText(S.profiles[k]) +
-      '<div class="row" style="justify-content:flex-end;margin-top:8px">' +
+      '<div class="row u-jc-flex-end u-mt8">' +
       editBtn("prof") +
       "</div></details>"
     );
@@ -441,7 +441,7 @@
     var h = "";
     if (editing("prof"))
       h +=
-        '<div class="card"><div class="row between"><h2 style="margin:0">🐾 About the cats</h2>' +
+        '<div class="card"><div class="row between"><h2 class="u-m0">🐾 About the cats</h2>' +
         editBtn("prof") +
         '</div><div class="note">Start a line with "- " for a bullet point, and end a line with ":" to make it a heading.</div>' +
         ["albert", "milly"]
@@ -470,7 +470,7 @@
         "</div>";
     else h += ["albert", "milly"].map(profileCard).join("");
     h +=
-      '<div class="card"><div class="row between"><h2 style="margin:0">🏨 Bookings</h2><button class="b s p" data-a="bnew">+ Booking</button></div>' +
+      '<div class="card"><div class="row between"><h2 class="u-m0">🏨 Bookings</h2><button class="b s p" data-a="bnew">+ Booking</button></div>' +
       (up.length
         ? up
             .map(function (b) {
@@ -582,7 +582,7 @@
   function bookSheet() {
     var b = ui.b;
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 style="margin-top:0">' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">' +
       (b.isNew ? "New booking" : "Edit booking") +
       "</h2>" +
       '<label class="l">Which cats</label><div class="chips">' +
@@ -626,10 +626,10 @@
       "</textarea>" +
       '<label class="l">Confirmation / files</label>' +
       (b.att.length ? thumbs(b.att, "b") : "") +
-      '<div style="margin-top:6px">' +
+      '<div class="u-mt6">' +
       upBtn("book", "", "📎 Add confirmation", "image/*,application/pdf") +
       "</div>" +
-      '<div class="row" style="margin-top:14px"><button class="b p" data-a="bsave">Save</button><button class="b" data-a="close">Cancel</button>' +
+      '<div class="row u-mt14"><button class="b p" data-a="bsave">Save</button><button class="b" data-a="close">Cancel</button>' +
       (b.isNew
         ? ""
         : '<button class="b" style="background:var(--bad);color:#fff" data-a="bdel" data-v="' +
