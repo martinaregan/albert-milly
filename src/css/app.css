@@ -420,7 +420,7 @@ button.s {
 }
 button.p,
 label.p {
-  background: var(--accent);
+  background: var(--accentbtn, var(--accent));
 }
 button.x {
   background: transparent;
@@ -661,8 +661,8 @@ svg text {
   font-size: 14px;
 }
 .chip.on {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accentbtn, var(--accent));
+  border-color: var(--accentbtn, var(--accent));
 }
 .cal {
   display: grid;
@@ -3617,7 +3617,7 @@ img.spot {
   height: 58px;
   border-radius: 50%;
   border: 0;
-  background: var(--accent);
+  background: var(--accentbtn, var(--accent));
   font-size: 32px;
   font-weight: 700;
   line-height: 1;
@@ -4075,11 +4075,11 @@ body.milly {
   }
 }
 .hlbtn {
-  background: var(--accent) !important;
+  background: var(--accentbtn, var(--accent)) !important;
   color: var(--onaccent, #fff) !important;
 }
 .qbig {
-  background: var(--accent) !important;
+  background: var(--accentbtn, var(--accent)) !important;
   color: var(--onaccent, #fff) !important;
 }
 .fab {
@@ -4497,4 +4497,49 @@ button.sosc {
 }
 .tile b small {
   opacity: 1 !important;
+}
+
+/* Filled buttons: a darker orange in light mode so white text is easy to read (4.5:1). */
+body.albert {
+  --accentbtn: #b85a1c;
+}
+@media (prefers-color-scheme: dark) {
+  body.albert {
+    --accentbtn: initial;
+  }
+}
+
+/* "How this works": the long explanation, folded away. */
+details.more {
+  margin-top: 6px;
+}
+details.more > summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--mute);
+  cursor: pointer;
+  padding: 4px 0;
+}
+details.more > summary::-webkit-details-marker {
+  display: none;
+}
+details.more > summary i {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  font-style: normal;
+  font-size: 11px;
+}
+details.more[open] > summary {
+  color: var(--ink);
+}
+details.more > .note {
+  margin-top: 4px;
 }

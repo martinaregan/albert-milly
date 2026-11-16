@@ -76,6 +76,21 @@
     return "#" + ((1 << 24) | (o[0] << 16) | (o[1] << 8) | o[2]).toString(16).slice(1);
   }
 
+  // WCAG contrast against white, and the colour darkened just enough to reach 4.5:1 for white text.
+  function onWhite(h) {
+    var n = parseInt(h.slice(1), 16),
+      L = [16, 8, 0].reduce(function (t, sh, i) {
+        var c = ((n >> sh) & 255) / 255;
+        c = c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        return t + c * [0.2126, 0.7152, 0.0722][i];
+      }, 0);
+    return 1.05 / (L + 0.05);
+  }
+  function btnCol(h) {
+    for (var f = 0, b = h; onWhite(b) < 4.5 && f < 0.6; ) b = mix(h, "#000000", (f += 0.02));
+    return b;
+  }
+
   // Face SVG for a coat. Patches are clipped to the head shape.
   function coatFace(co, label) {
     var a = co.a || "#8d9198",
@@ -206,13 +221,13 @@
               mix(d, "#000000", 0.65) +
               " 60%," +
               mix(d, "#000000", 0.72) +
-              " 100%)}:where(html" +
+              " 100%)}html:where(html" +
               c +
               ") body." +
               k +
               "{--accent:" +
               mix(d, "#ffffff", 0.25) +
-              "!important;--onaccent:#fff!important}"
+              "!important;--accentbtn:initial!important;--onaccent:#fff!important}"
             );
           };
           return "@media (prefers-color-scheme: dark){" + dk(":not(.light)") + "}" + dk(".dark");
@@ -221,6 +236,8 @@
         k +
         "{--accent:" +
         d +
+        "!important;--accentbtn:" +
+        btnCol(d) +
         "!important;--onaccent:" +
         on +
         "!important}";

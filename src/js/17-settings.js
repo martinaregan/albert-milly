@@ -23,6 +23,11 @@
     }, 1000);
   }
 
+  // The long how-to behind a small "How this works" link, so each card stays one line.
+  function more(html, label) {
+    return '<details class="more"><summary><i>?</i>' + (label || "How this works") + '</summary><div class="note">' + html + "</div></details>";
+  }
+
   // Settings: a short menu; each section opens on its own page (ui.sset).
   var SSECT = [
     ["cats", "🐱", "Cats", "Looks, names, photos, plans, foods, checklist"],
@@ -52,9 +57,11 @@
       else G[g].push(el.outerHTML);
     });
     G.phone.push(
-      '<div class="card"><h2>📱 Lock screen shortcut</h2><div class="note u-m0">Shortcuts app › + › Open URLs › paste <b>' +
+      '<div class="card"><h2>📱 Lock screen shortcut</h2><div class="note u-m0">Log breakfast or dinner straight from the lock screen.</div>' + more(
+        "Shortcuts app › + › Open URLs › paste <b>" +
         esc(location.host + location.pathname) +
-        "?log=breakfast</b> (or ?log=dinner). First open the app once in Safari and connect, because Shortcuts opens links in Safari.</div></div>"
+        "?log=breakfast</b> (or ?log=dinner). First open the app once in Safari and connect, because Shortcuts opens links in Safari.") +
+        "</div>"
     );
     var cur = ui.sset;
     if (cur && G[cur]) {
@@ -114,7 +121,7 @@
         })
         .join("") +
       "</div></div>" +
-      '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
+      '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0">A number on the app icon for what\'s still to do today.</div>' + more("Shows a number on the app icon for today's open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday's weigh-in. It updates when the app opens. Only works from the home screen app.") + '<div class="u-mt8"></div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
       '<div class="card"><h2>⚙️ Language & display</h2><label class="l">Language</label><select data-lang="1">' +
@@ -164,7 +171,7 @@
         ? ""
         : '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note u-m0-0-10">Connect their phone in one scan. Everything they log shows their name, and the app stops a second dinner.</div><button class="b s p" data-a="qrshow">Show setup code</button></div>') +
       '<div class="card"><h2>🔒 Privacy</h2><div class="note u-m0">Everything you log stays on this phone and in your own private GitHub repository. The app doesn\'t send it anywhere else. <a href="about/#privacy">More</a></div></div>' +
-      '<div class="card"><h2>💾 Backup</h2><div class="note u-m0-0-10">Everything (both cats, all logs, notes, costs) as one file you can keep in Files, iCloud or email to yourself. Photos stay on GitHub.</div><div class="row u-gap8"><button class="b s p" data-a="backup">Download a backup</button><button class="b s" data-a="restore">Restore from a backup</button></div><input type="file" id="restoreIn" accept=".json,application/json" hidden></div>' +
+      '<div class="card"><h2>💾 Backup</h2><div class="note u-m0-0-10">Both cats, all logs, notes and costs in one file. Photos stay on GitHub.</div><div class="row u-gap8"><button class="b s p" data-a="backup">Download a backup</button><button class="b s" data-a="restore">Restore from a backup</button></div><input type="file" id="restoreIn" accept=".json,application/json" hidden></div>' +
       (GH.local
         ? '<div class="card"><h2>🔗 Your data</h2><div class="note u-m0-0-10"><b>Only on this phone.</b> If the phone is lost, or the app is deleted, it\'s gone. Connect GitHub (free) to keep it safe and share it with someone, or download a backup now and then.</div><div class="row u-gap8"><button class="b s p" data-a="connGh">Connect GitHub</button><button class="b s ghost" data-a="erase">Erase everything</button></div><div class="note">App version ' +
           APPV +
@@ -177,7 +184,7 @@
       esc(saveState) +
       '</span></div><div class="row u-mt10"><button class="b s" data-a="syncnow">Sync now</button><button class="b s ghost" data-a="ghout">Disconnect this phone</button></div>' +
             (/Access key|Can\'t save/.test(saveState) ? '<button class="b s p u-mt8" data-a="connGh">Enter a new access key</button>' : "") +
-            '<div class="note">To delete your data completely, disconnect here, then on GitHub open the data repository › Settings › Delete this repository.</div><div class="note">App version ' +
+            more("To delete your data completely, disconnect here, then on GitHub open the data repository › Settings › Delete this repository.", "Delete everything") + '<div class="note">App version ' +
       APPV +
       "</div></div>") +
       
@@ -231,7 +238,7 @@
           );
         })
         .join("") +
-      '<button class="b s u-mt8" data-a="addfood">+ Add a food</button><div class="note">Calories are on the pack ("metabolisable energy", usually in kcal/kg: divide by 10 for per 100 g). The suggestion uses the first dry and first wet food in this list.</div></div>' +
+      '<button class="b s u-mt8" data-a="addfood">+ Add a food</button>' + more('Calories are on the pack ("metabolisable energy", usually in kcal/kg: divide by 10 for per 100 g). The suggestion uses the first dry and first wet food in this list.', "Where to find the calories") + '</div>' +
       '<div class="card"><h2>Daily checklist (' +
       esc(c.name) +
       ')</h2><textarea rows="4" data-s="checks">' +
