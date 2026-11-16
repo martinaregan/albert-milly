@@ -4165,3 +4165,17 @@ body.milly {
 .demo-bar .b {
   flex: none;
 }
+
+/* Setup QR code */
+.qr {
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px;
+  width: min(260px, 70vw);
+  margin: 6px auto 4px;
+}
+.qr svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}

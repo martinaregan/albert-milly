@@ -30,15 +30,14 @@ ACT["ghwho"] = function (e, t, a, v, c) {
 
 ACT["ghconnect"] = function (e, t, a, v, c) {
   var tok = document.getElementById("ghtok").value.trim(),
-    rp = (
-      document.getElementById("ghrepo")
-        ? document.getElementById("ghrepo").value
-        : "martinaregan/albert-milly-data"
-    )
-      .trim()
-      .split("/");
+    rp = ((document.getElementById("ghrepo") || {}).value || "").trim().split("/");
   if (!tok) {
     ui.gherr = "Paste your access key first.";
+    render();
+    return;
+  }
+  if (rp.length !== 2 || !rp[0] || !rp[1]) {
+    ui.gherr = "Fill in your data repository as owner/name.";
     render();
     return;
   }
@@ -57,6 +56,7 @@ ACT["ghconnect"] = function (e, t, a, v, c) {
         localStorage.setItem(LS + "-gh", JSON.stringify(GH));
       } catch (e) {}
       ui.gherr = "";
+      INVITE = null;
       S = null;
       BASE = null;
       SHA = null;
@@ -116,4 +116,65 @@ ACT["demo"] = function () {
 
 ACT["demoexit"] = function () {
   location.href = location.pathname;
+};
+
+// Setup link + QR code so someone else can connect without typing the access key.
+function inviteLink() {
+  return (
+    location.origin +
+    location.pathname +
+    "#k=" +
+    encodeURIComponent(GH.token) +
+    "&r=" +
+    encodeURIComponent(GH.owner + "/" + GH.repo)
+  );
+}
+
+function loadQR() {
+  if (window.qrcode) return Promise.resolve();
+  return new Promise(function (ok, no) {
+    var sc = document.createElement("script");
+    sc.src = "vendor/qrcode.min.js";
+    sc.onload = ok;
+    sc.onerror = no;
+    document.head.appendChild(sc);
+  });
+}
+
+ACT["qrshow"] = function () {
+  loadQR().then(
+    function () {
+      var q = qrcode(0, "M");
+      q.addData(inviteLink());
+      q.make();
+      var svg = q.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+      ui.modal = function () {
+        return (
+          '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2>Add another phone</h2>' +
+          '<div class="qr">' +
+          svg +
+          "</div>" +
+          '<div class="note">Scan this with the other phone\'s camera, then add the app to its home screen. ' +
+          "<b>The code contains your access key</b>, so only show it to people you'd trust with all the data, and don't screenshot or send it.</div>" +
+          '<div class="row u-mt10"><button class="b s" data-a="qrcopy">Copy link instead</button><button class="b s ghost" data-a="close">Done</button></div></div></div>'
+        );
+      };
+      render();
+    },
+    function () {
+      toast("Couldn't load the QR code. Check your connection");
+    }
+  );
+};
+
+ACT["qrcopy"] = function () {
+  var l = inviteLink();
+  (navigator.clipboard ? navigator.clipboard.writeText(l) : Promise.reject()).then(
+    function () {
+      toast("Link copied. Paste it into Safari on the other phone");
+    },
+    function () {
+      prompt("Copy this link", l);
+    }
+  );
 };

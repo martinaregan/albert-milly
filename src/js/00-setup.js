@@ -33,6 +33,18 @@
     dirty = false;
   }
 
+  // A setup link (#k=key&r=owner/repo, made in Settings) fills in the setup screen.
+  // It's in the # part so it never leaves the phone, and it's wiped from the address straight away.
+  var INVITE = null;
+  (function () {
+    var m = location.hash.match(/[#&]k=([^&]+)(?:&r=([^&]+))?/);
+    if (!m) return;
+    try {
+      history.replaceState(null, "", location.pathname + location.search);
+    } catch (e) {}
+    if (!GH) INVITE = { token: decodeURIComponent(m[1]), repo: decodeURIComponent(m[2] || "") };
+  })();
+
   var ui = {
     cat: "albert",
     tab: "today",

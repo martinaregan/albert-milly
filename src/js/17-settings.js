@@ -73,7 +73,10 @@
       '<div class="card"><h2>🔴 App icon badge</h2><div class="note u-m0-0-10">Shows a number on the app icon for today\'s open must-dos: breakfast (after 7:00), dinner (after 20:00) and Saturday\'s weigh-in. It updates when the app opens. Only works from the home screen app.</div><button class="b s" data-a="badgeon">' +
       (window.Notification && Notification.permission === "granted" ? "✓ Badge is on" : "Turn on the badge") +
       "</button></div>" +
-      '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note u-m0">On their phone: open martinaregan.github.io/albert-milly, add it to the home screen, paste the same access key and type their name. Everything they log shows their name, and the app stops a second dinner.</div></div>' +
+      (DEMO
+        ? ""
+        : '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note u-m0-0-10">Connect their phone in one scan. Everything they log shows their name, and the app stops a second dinner.</div><button class="b s p" data-a="qrshow">Show setup code</button></div>') +
+      '<div class="card"><h2>🔒 Privacy</h2><div class="note u-m0">Your data lives in your own private GitHub repository and on this phone. The app has no server, no account, no ads and no tracking. Nobody else, including whoever made the app, can see it. <a href="about/#privacy">More</a></div></div>' +
       '<div class="card"><h2>💾 Backup</h2><div class="note u-m0-0-10">Everything (both cats, all logs, notes, costs) as one file you can keep in Files, iCloud or email to yourself. Photos stay on GitHub.</div><button class="b s p" data-a="backup">Download a backup</button></div>' +
       '<div class="card"><h2>🔗 Connection</h2><div class="kv"><span class="k">Data</span><span class="v">' +
       esc(DEMO ? "Demo (made-up data)" : GH.owner + "/" + GH.repo) +

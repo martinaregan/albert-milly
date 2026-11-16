@@ -478,29 +478,40 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "28";
+  var APPV = "29";
 
   function setupView() {
-    var g = GH || {};
+    var g = GH || {},
+      inv = INVITE || {},
+      host = location.hostname.match(/^([\w-]+)\.github\.io$/),
+      repo = inv.repo || (g.owner ? g.owner + "/" + g.repo : host ? host[1] + "/albert-milly-data" : "");
     return (
       '<div class="hero duo-h u-mt20"><div class="vs">' +
       spot("albert") +
       "<b>&amp;</b>" +
       spot("milly") +
       '</div><div class="u-ta-center u-fs24 u-fw900">Albert &amp; Milly</div><div class="sub u-ta-center u-mt4">Connect this phone to your data</div></div>' +
-      '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" class="u-c-b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>' +
-      '<div class="pl">2. Name it after this phone (e.g. <i>My iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>' +
-      '<div class="pl">4. Permissions → Repository permissions → <b>Contents: Read and write</b>.</div><div class="pl">5. Tap <b>Generate token</b>, copy it and paste it below.</div>' +
-      '<label class="l">Access key</label><input id="ghtok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…"><label class="l">Your name</label><input id="ghname" autocomplete="name" placeholder="Shown next to everything you log" value="' +
+      (INVITE
+        ? '<div class="card"><h2>You\'ve been invited</h2><div class="pl">The access key is already filled in. Type your name and tap <b>Connect</b>.</div>'
+        : '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" class="u-c-b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>' +
+          '<div class="pl">2. Name it after this phone (e.g. <i>My iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → your data repository.</div>' +
+          '<div class="pl">4. Permissions → Repository permissions → <b>Contents: Read and write</b>.</div><div class="pl">5. Tap <b>Generate token</b>, copy it and paste it below.</div>') +
+      '<label class="l">Access key</label><input id="ghtok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…" value="' +
+      esc(inv.token || "") +
+      '"><label class="l">Your name</label><input id="ghname" autocomplete="name" placeholder="Shown next to everything you log" value="' +
       esc(ui.who || "") +
       '">' +
-      '<details class="u-mt10"><summary class="mute small">Advanced</summary><label class="l">Data repository</label><input id="ghrepo" value="' +
-      esc((g.owner || "martinaregan") + "/" + (g.repo || "albert-milly-data")) +
+      '<details class="u-mt10"' +
+      (repo ? "" : " open") +
+      '><summary class="mute small">Data repository</summary><label class="l">Your private repository (owner/name)</label><input id="ghrepo" autocapitalize="off" spellcheck="false" placeholder="yourname/albert-milly-data" value="' +
+      esc(repo) +
       '"></details>' +
       '<button class="b p w u-mt14 u-p14" data-a="ghconnect">Connect</button><button class="b ghost w u-mt10" data-a="demo">Just looking? Try the demo</button><div class="note u-c-var---bad u-fw700" id="gherr">' +
       esc(ui.gherr || "") +
-      '</div><div class="note">Version ' +
+      '</div><div class="note">Your data stays in your own private GitHub repository. The app has no server, no account and no tracking. ' +
+      '<a href="about/#privacy" class="u-c-b9a6ff">Privacy</a> · Version ' +
       APPV +
       "</div></div>"
     );
   }
+
