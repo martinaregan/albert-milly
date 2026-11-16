@@ -12,7 +12,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon-v3.png">
 <link rel="icon" href="icon-192-v3.png">
-<style id="css">@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap");
+<link rel="preload" href="nunito-v1.woff2" as="font" type="font/woff2" crossorigin>
+<style id="css">@font-face{font-family:'Nunito';font-style:normal;font-weight:200 1000;font-display:swap;src:url(nunito-v1.woff2) format('woff2')}
 
 :root{--bg:#faf6f1;--card:#fff;--ink:#2b2622;--mute:#8a8079;--line:#ece4db;--albert:#e07a2e;--milly:#3b3b3b;--ok:#3e9a63;--warn:#d49a1f;--bad:#c9453b;--accent:var(--albert)}
 body.milly{--accent:var(--milly)}
@@ -398,7 +399,7 @@ function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(
   document.querySelectorAll('[data-phv]').forEach(function(el){var p=el.getAttribute('data-phv');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='17';
+var APPV='18';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Me iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -447,12 +448,12 @@ function render(){if(S)infoData();if(ui.tab==='hows')ui.tab='fights';if(ui.tab==
   if(ui.modal)h+=ui.modal().replace('data-stop="1">','data-stop="1"><button class="xbtn" data-a="close" aria-label="Close">✕</button>');
   h+='<input type="file" id="fileIn" class="file">';
   var oldNav=document.querySelector('.navin'),navX=oldNav?oldNav.scrollLeft:null;if(navX==null){try{var sx=sessionStorage.getItem(LS+'-navx');if(sx!=null)navX=+sx}catch(e){}}
-  var rt=document.getElementById('root'),sy=window.scrollY||0,sameTab=ui.lastTab===ui.tab;rt.style.minHeight=rt.offsetHeight+'px';rt.innerHTML=h;(function(){var pw=document.createElement('div');pw.id='pg';[].slice.call(rt.childNodes).forEach(function(n){if(n.nodeType===1&&n.matches('nav,.modal,.fab'))return;pw.appendChild(n)});rt.insertBefore(pw,rt.firstChild)})();if(sameTab){window.scrollTo(0,sy);requestAnimationFrame(function(){if(Math.abs((window.scrollY||0)-sy)>2)window.scrollTo(0,sy)})}rt.style.minHeight='';
+  var rt=document.getElementById('root'),sy=window.scrollY||0,sameTab=ui.lastTab===ui.tab;rt.style.minHeight=rt.offsetHeight+'px';rt.innerHTML=iconizeHTML(h);(function(){var pw=document.createElement('div');pw.id='pg';[].slice.call(rt.childNodes).forEach(function(n){if(n.nodeType===1&&n.matches('nav,.modal,.fab'))return;pw.appendChild(n)});rt.insertBefore(pw,rt.firstChild)})();if(sameTab){window.scrollTo(0,sy);requestAnimationFrame(function(){if(Math.abs((window.scrollY||0)-sy)>2)window.scrollTo(0,sy)})}rt.style.minHeight='';
   var nv=document.querySelector('.navin'),act=nv&&nv.querySelector('.on');
   if(nv){if(navX!=null)nv.scrollLeft=navX;if(act){var l=act.offsetLeft,r=l+act.clientWidth,vl=nv.scrollLeft,vr=vl+nv.clientWidth;if(l<vl+10)nv.scrollLeft=l-10;else if(r>vr-10)nv.scrollLeft=r-nv.clientWidth+10}}
   if(nv){var navEl=nv.parentNode,edges=function(){navEl.classList.toggle('atstart',nv.scrollLeft<4);navEl.classList.toggle('atend',nv.scrollLeft+nv.clientWidth>=nv.scrollWidth-4)};edges();nv.addEventListener('scroll',function(){edges();try{sessionStorage.setItem(LS+'-navx',nv.scrollLeft)}catch(e){}},{passive:true});if(!window.__navNudged&&nv.scrollLeft<4&&0){window.__navNudged=1;setTimeout(function(){nv.scrollTo({left:110,behavior:'smooth'});setTimeout(function(){nv.scrollTo({left:0,behavior:'smooth'})},700)},900)}}
-  try{var pgEl=document.getElementById('pg'),rmo=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(pgEl&&pgEl.animate&&!rmo){if(ui.lastTab&&ui.lastTab!==ui.tab){var tdir=TABS.indexOf(ui.tab)>=TABS.indexOf(ui.lastTab)?1:-1;pgEl.animate([{transform:'translate3d('+(tdir*40)+'px,0,0)',opacity:0},{transform:'translate3d(0,0,0)',opacity:1}],{duration:260,easing:'cubic-bezier(.2,.8,.2,1)'})}else if(ui.lastCat&&ui.lastCat!==ui.cat){pgEl.animate([{opacity:.3},{opacity:1}],{duration:200,easing:'ease-out'})}}}catch(e){}
-  ui.lastCat=ui.cat;ui.lastTab=ui.tab;fixNav();hydrate();badge();try{iconize(document.getElementById('root'))}catch(e){}if(ui.tab==='weight')wcalc()}
+  try{var pgEl=document.getElementById('pg'),rmo=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(pgEl&&pgEl.animate&&!rmo){if(ui.lastTab&&ui.lastTab!==ui.tab){var tdir=TABS.indexOf(ui.tab)>=TABS.indexOf(ui.lastTab)?1:-1;pgEl.animate([{transform:'translate3d('+(tdir*24)+'px,0,0)',opacity:0},{transform:'translate3d(0,0,0)',opacity:1}],{duration:170,easing:'cubic-bezier(.2,.8,.2,1)'})}else if(ui.lastCat&&ui.lastCat!==ui.cat){pgEl.animate([{opacity:.4},{opacity:1}],{duration:140,easing:'ease-out'})}}}catch(e){}
+  ui.lastCat=ui.cat;ui.lastTab=ui.tab;fixNav();hydrate();badge();if(ui.tab==='weight')wcalc()}
 
 (function(){return;var pg=null,off=0,raw=0,pull=0,ly=null,lt=0,fv=0,touching=false,raf=0,anim=null,C=0.55,W=10,idle=0;
   function H(){return window.innerHeight||700}
@@ -612,7 +613,7 @@ function rrSection(k){var c=S.cats[k],r=(c.rr||[]).slice().sort(function(a,b){re
   var flag=last?(last.bpm>40?'<div class="rrflag bad">Over 40 breaths a minute while asleep. Call the vet today, and go straight away if he\'s breathing with his mouth open or his belly is heaving.</div>':last.bpm>30?'<div class="rrflag">Over 30 while asleep. Recount later today; if it stays over 30, tell the vet.</div>':''):'';
   return'<div class="hsec"><div class="row between"><h2 style="margin:0">🫁 Sleeping breathing rate</h2><button class="b s p" data-a="rrnew">Count now</button></div>'+
     (last?'<div class="grid2" style="margin-top:8px"><div class="stat"><span class="mute">Last</span><b style="color:'+(last.bpm>30?'var(--bad)':'inherit')+'">'+last.bpm+'</b><span class="mute small">per min · '+short(last.d)+'</span></div><div class="stat"><span class="mute">Average</span><b>'+Math.round(avg)+'</b><span class="mute small">last '+Math.min(7,r.length)+' counts</span></div></div>'+flag+rrChart(c)+
-      '<details style="margin-top:6px"><summary class="small mute">All counts ('+r.length+')</summary>'+r.map(function(x){return'<div class="row between swr" data-del="rrdel" data-id="'+x.id+'" style="padding:7px 0;border-top:1px solid var(--line)"><span>'+short(x.d)+' '+esc(x.m||'')+(x.n?' · '+esc(x.n):'')+'</span><span><b>'+x.bpm+'</b>/min <button class="x" data-a="rrdel" data-v="'+x.id+'">✕</button></span></div>'}).join('')+'</details>':
+      '<details style="margin-top:6px" data-open="rra-'+k+'" data-lazy'+isOpen('rra-'+k,false)+'><summary class="small mute">All counts ('+r.length+')</summary>'+(!lazyOpen('rra-'+k)?'':r.map(function(x){return'<div class="row between swr" data-del="rrdel" data-id="'+x.id+'" style="padding:7px 0;border-top:1px solid var(--line)"><span>'+short(x.d)+' '+esc(x.m||'')+(x.n?' · '+esc(x.n):'')+'</span><span><b>'+x.bpm+'</b>/min <button class="x" data-a="rrdel" data-v="'+x.id+'">✕</button></span></div>'}).join(''))+'</details>':
     '<div class="small mute" style="margin-top:6px">Count while '+esc(c.name)+' is fast asleep, not purring or dreaming. Under 30 a minute is normal. A few counts a week builds a picture the vet can use.</div>')+'</div>'}
 function rrSheet(){var R=ui.rr,c=S.cats[R.k],sec=R.start?Math.min(30,Math.floor((Date.now()-R.start)/1000)):0;
   var body=R.done?'<div class="rrbig"><b>'+R.taps*2+'</b><span>breaths a minute</span></div><div class="note" style="text-align:center">'+R.taps+' breaths in 30 seconds × 2</div>':
@@ -724,6 +725,10 @@ function weekSummary(){var t=today(),s0=addDays(t,-6),p0=addDays(t,-13),ks=['alb
 function weekCard(force){var dow=new Date().getDay(),t=today();if(!force){if(!(dow===0||(dow===1&&new Date().getHours()<14)))return'';try{if(localStorage.getItem(LS+'-ws')===t)return''}catch(e){}}
   return'<details class="card wkc" data-open="wkc"'+(force?'':isOpen('wkc',true))+'><summary><h2 style="display:inline">📊 Your week · '+short(addDays(t,-6))+' to '+short(t)+'</h2></summary>'+weekSummary()+(force?'':'<button class="b s ghost" style="margin-top:8px" data-a="wsdone">Hide until next Sunday</button>')+'</details>'}
 
+function iconizeHTML(h){var keep=[];h=h.replace(/<(textarea|select|nav|svg)\b[\s\S]*?<\/\1>/g,function(m){keep.push(m);return'\u0000'+(keep.length-1)+'\u0000'});
+  h=h.replace(/>([^<]+)</g,function(m,t){EMRE.lastIndex=0;if(!EMRE.test(t))return m;EMRE.lastIndex=0;return'>'+t.replace(EMRE,function(x,k){var key=EMI[k]||EMI[k.replace('️','')];return key?ico(key):x})+'<'});
+  return h.replace(/\u0000(\d+)\u0000/g,function(m,i){return keep[+i]})}
+
 function vToday(){var c=cat(),d=day(c),r=stats(c),st=status(r,c),t=dayTotals(c,d),fd=feed(c);
   var h=(ui.day===today()?headline()+checkinCard()+weekCard():'')+'<div class="datebar"><button class="b" data-a="day" data-v="-1">‹</button><b>'+nice(ui.day)+'</b><button class="b" data-a="day" data-v="1" '+(ui.day>=today()?'disabled style="opacity:.3"':'')+'>›</button></div>';
   if(new Date().getDay()===6&&ui.day===today()&&['albert','milly'].some(function(k){return!S.cats[k].weights.some(function(w){return w.d===today()})}))
@@ -785,7 +790,8 @@ function fightLog(F){
   });
   return h+'</details>';
 }
-document.addEventListener('toggle',function(e){var k=e.target&&e.target.dataset&&e.target.dataset.open;if(k){ui.open=ui.open||{};ui.open[k]=e.target.open}},true);
+document.addEventListener('toggle',function(e){var k=e.target&&e.target.dataset&&e.target.dataset.open;if(k){ui.open=ui.open||{};ui.open[k]=e.target.open;if(e.target.open&&e.target.hasAttribute('data-lazy'))render()}},true);
+function lazyOpen(k,dflt){ui.open=ui.open||{};return k in ui.open?ui.open[k]:!!dflt}
 function spot(k){if(S&&S.cats&&S.cats[k]&&S.cats[k].photo&&GH)return'<img class="spot" data-ph="'+esc(S.cats[k].photo)+'" alt="" data-sph="'+k+'">';var c=k==='albert'?'#e8822f':'#1e1e1e',patch=k==='albert'?
   '<path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q17 8.6 15.6 10.4 12 8.2 8.4 10.4 7 8.6 4.2 9.2Z" fill="'+c+'"/><path d="M11 6.1h2l-.5 3h-1z" fill="#fff" opacity=".9"/>':
   '<path d="M5.7 4.1 6.1 7.3 8.6 6.1Z" fill="#f4b9c2"/><path d="M18.3 4.1 17.9 7.3 15.4 6.1Z" fill="#f4b9c2"/><path d="M7.6 6.6 9.6 6.2Q11.2 5.7 12.4 6.0Q12.2 8.0 10.8 8.9Q9.0 9.3 7.8 8.4Q7.3 7.6 7.6 6.6Z" fill="'+c+'"/><path d="M16.0 6.9Q18.6 6.6 19.8 9.2Q20.5 11.4 20.1 13.2Q18.7 12.3 17.7 10.9Q16.5 9.3 16.0 6.9Z" fill="'+c+'"/>';
@@ -962,7 +968,7 @@ function vWeight(){var nw=nextWeighIn(),od=-nw.days,when=nw.over?'Over by '+od+'
   h+=['albert','milly'].map(function(k){var c=S.cats[k],r=stats(c);
     return'<details class="catcard catd" data-open="w-'+k+'"'+isOpen('w-'+k,false)+'><summary class="head" style="--g:var(--g-'+k+')">'+spot(k)+'<div><b>'+esc(c.name)+'</b><span>'+(r?(+r.last.kg).toFixed(2)+' kg → '+esc(c.target)+' kg'+(r.toGo>0?' · '+r.toGo.toFixed(2)+' to go':' · target reached'):'target '+esc(c.target)+' kg')+'</span>'+(function(){var sp=r?r.lost+Math.max(r.toGo,0):0,f=sp>0?Math.max(0,Math.min(1,r.lost/sp)):0;return'<div class="hpbar"><div style="width:'+Math.max(f*100,3)+'%"></div></div><span class="hpct">'+Math.round(f*100)+'% of the way</span>'})()+'</div></summary>'+
       weightProgress(c,r)+
-      '<details class="nf" data-open="wh-'+k+'"'+isOpen('wh-'+k,false)+'><summary><span>📈 History</span></summary>'+weightHistory(k,c)+'</details>'+
+      '<details class="nf" data-open="wh-'+k+'" data-lazy'+isOpen('wh-'+k,false)+'><summary><span>📈 History</span></summary>'+(lazyOpen('wh-'+k)?weightHistory(k,c):'')+'</details>'+
       '<details class="nf" data-open="wf-'+k+'"'+isOpen('wf-'+k,false)+'><summary><span>🍽️ Feeding suggestion</span></summary>'+weightFeed(c)+'</details>'+
       likesBlock(k,c)+'</details>'}).join('');
   return h}
@@ -1067,7 +1073,7 @@ function vHealth(){var c=cat(),since=addDays(today(),-30),hf=ui.hf||(ui.hf={});
   var ls=litterSummary(c);
   h+='<div class="hsec"><h2>Poo &amp; pee, last 30 days</h2>'+(ls?'<div class="grid2"><div class="stat"><span class="mute">Poos</span><b>'+ls.poo+'</b><span class="mute small">'+fmt(ls.poo/ls.days)+' per logged day</span></div><div class="stat"><span class="mute">Pees</span><b>'+ls.pee+'</b><span class="mute small">'+fmt(ls.pee/ls.days)+' per logged day</span></div></div>'+
     (Object.keys(ls.cs).length?'<h3>Poo consistency</h3>'+hbars(ls.cs):'')+(Object.keys(ls.sm).length?'<h3>Smell</h3>'+hbars(ls.sm):'')+(Object.keys(ls.fl).length?'<h3>⚠️ Unusual</h3>'+hbars(ls.fl):'<p class="small mute">Nothing unusual logged.</p>'):'<span class="mute small">Nothing logged yet.</span>')+
-    '<details style="margin-top:8px"><summary class="mute small">All entries</summary><div class="list">'+S.litter.filter(function(x){return x.who===c.name}).sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1}).slice(0,60).map(function(x){return'<div class="mute small" style="margin-top:6px">'+short(x.d)+'</div>'+litterLine(x)}).join('')+'</div></details></div>';
+    '<details style="margin-top:8px" data-open="lall-'+k+'" data-lazy'+isOpen('lall-'+k,false)+'><summary class="mute small">All entries</summary>'+(lazyOpen('lall-'+k)?'<div class="list">'+S.litter.filter(function(x){return x.who===c.name}).sort(function(a,b){return(a.d+a.m)<(b.d+b.m)?1:-1}).slice(0,60).map(function(x){return'<div class="mute small" style="margin-top:6px">'+short(x.d)+'</div>'+litterLine(x)}).join('')+'</div>':'')+'</details></div>';
   h+=rrSection(k)+pooFood(k)+vqSection(k);
     h+='<div class="hsec"><div class="row between"><h2 style="margin:0">Vet notes &amp; files</h2><button class="b s p" data-a="vnew">+ Add</button></div>';
   h+='<div style="margin-top:6px">'+(c.vet.length?c.vet.slice().sort(function(a,b){return(a.d||'0')<(b.d||'0')?1:-1}).map(function(v){return'<details class="fit" data-open="vet'+v.id+'"'+isOpen('vet'+v.id,false)+'><summary><div class="row between" style="flex-wrap:nowrap;gap:8px"><b class="ell">'+esc(v.reason||'Vet note')+'</b><span class="mute small" style="flex:none">'+(v.d?short(v.d)+' '+parse(v.d).getFullYear():'No date')+'</span></div>'+(v.next?'<div class="small" style="margin-top:2px">Follow-up '+short(v.next)+'</div>':'')+'</summary><div style="padding-top:6px">'+
