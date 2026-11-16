@@ -21,7 +21,7 @@ It was built for two real cats: Albert (ginger and white, on a vet-supervised we
 
 **Videos:** [how to use it in a minute](https://martinaregan.github.io/albert-milly/docs/how-to-use.mp4) · [the full three-minute tour](https://martinaregan.github.io/albert-milly/docs/full-tour.mp4)
 
-**Privacy:** your data lives in your own private GitHub repository and on your phone. There's no server, no account, no ads and no tracking, and nobody else (including whoever made the app) can see it.
+Your data stays on your phone and in your own private GitHub repository. More under [Privacy](#privacy).
 
 ---
 
@@ -134,13 +134,13 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 - Every phone keeps a copy, so the app opens instantly and works offline. Changes are saved locally straight away and uploaded about a second later.
 - Every 20 seconds (and whenever the app comes back to the front) it pulls the latest version. If two phones changed things at the same time, the changes are **merged**, not overwritten.
 - The screen never redraws while you're touching or scrolling; new data waits until you stop.
-- Claude can also log things from chat by editing `data.json` directly, using the same merge rules.
+- `data.json` is plain JSON, so it can also be edited outside the app. The app merges those edits in the same way.
 
 ## Privacy
 
 - Everything you log is saved in `data.json` in **your own private GitHub repository**, and a copy is kept on each connected phone so the app works offline.
 - The app talks to two places only: this website (for the app itself) and `api.github.com` (to read and save your data, using your access key).
-- No server, no account with the app, no analytics, no ads, no cookies, no tracking. Nobody else can see your data, including whoever made the app.
+- The app has no server of its own and collects nothing: no analytics, ads or cookies. I made it, and I can't see your data either.
 - Your access key is stored only on your phone. A setup link puts it after `#`, the part of a web address that browsers never send to a server, and the app wipes it from the address as soon as it opens.
 - To remove everything: Settings › Data & sync › Disconnect this phone, then delete the access key on GitHub and the data repository if you want.
 

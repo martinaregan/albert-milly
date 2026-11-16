@@ -513,7 +513,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "50";
+  var APPV = "51";
 
   // Links that open GitHub with most of the form already filled in.
   var GH_NEW_REPO =
@@ -578,7 +578,7 @@
       '<button class="b p w u-mt14 u-p14" data-a="ghconnect">Connect</button><div class="note u-c-var---bad u-fw700" id="gherr">' +
       esc(ui.gherr || "") +
       "</div></details>" +
-      '<div class="note u-ta-center">No server, no app account, no tracking. <a href="about/#privacy" class="u-c-b9a6ff">Privacy</a> · Version ' +
+      '<div class="note u-ta-center">Your data stays with you. <a href="about/#privacy" class="u-c-b9a6ff">Privacy</a> · Version ' +
       APPV +
       "</div>"
     );
