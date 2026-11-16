@@ -110,7 +110,7 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 | File | What it is |
 |---|---|
 | `src/index.html` | Page shell (the HTML), with markers where the CSS and JavaScript go |
-| `src/css/` | Styles, in three files, joined in name order |
+| `src/css/app.css` | All styles in one file, in three sections (base, look and feel, newer features). Dark mode is in `@media (prefers-color-scheme: dark)` blocks |
 | `src/js/` | The code, by area (setup, sync, weight maths, each tab, icons, start-up), joined in name order. Each file starts with a one-line note saying what's in it |
 | `src/js/19-actions-*.js` | What every button does, grouped by area (today, health, weight, money…). Each is `ACT["name"]`, run when a `data-a="name"` button is tapped |
 | `tests/smoke.py` | Automated checks: every tab in light and dark mode, logging and undo, quick log, search, vet summary, swipe to delete, and the minified build |

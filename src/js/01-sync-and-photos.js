@@ -446,7 +446,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "25";
+  var APPV = "26";
 
   function setupView() {
     var g = GH || {};
