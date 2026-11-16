@@ -233,7 +233,8 @@
   }
 
   function isBday(c, ds) {
-    return !!c.born && ds.slice(5) === c.born.slice(5) && ds > c.born;
+    // A rough birth date only gives an age, no birthday on the calendar.
+    return !!c.born && !c.bornGuess && ds.slice(5) === c.born.slice(5) && ds > c.born;
   }
 
   function nextBday(c) {

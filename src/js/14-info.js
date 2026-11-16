@@ -409,8 +409,9 @@
       })() +
       (c.born
         ? '<span class="pchip">🎂 ' +
-          (c.bornGuess ? "Around " : "") +
-          parse(c.born).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) +
+          (c.bornGuess
+            ? "Born around " + c.born.slice(0, 4)
+            : parse(c.born).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })) +
           " · " +
           esc(ageText(c)) +
           "</span>"

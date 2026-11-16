@@ -503,7 +503,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "31";
+  var APPV = "32";
 
   function setupView() {
     var g = GH || {},

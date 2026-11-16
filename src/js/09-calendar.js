@@ -366,7 +366,7 @@
     ["albert", "milly"].forEach(function (k) {
       var c = S.cats[k],
         nb = nextBday(c);
-      if (nb && daysBetween(t, nb) <= 60)
+      if (nb && !c.bornGuess && daysBetween(t, nb) <= 60)
         it.push({ d: nb, ic: "🎂", tx: c.name + " turns " + (c.bornGuess ? "about " : "") + ageOn(c, nb) });
     });
     (S.info.bookings || []).forEach(function (b) {
