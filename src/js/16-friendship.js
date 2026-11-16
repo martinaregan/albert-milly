@@ -122,6 +122,24 @@
           : w1 > w0
             ? ["Rougher week", w1 + " fight" + (w1 !== 1 ? "s" : "") + " this week, up from " + w0]
             : ["About the same", w1 + " fight" + (w1 !== 1 ? "s" : "") + " this week, same as last week"];
+    // One card: how this week compares, then the last fight and the calm record in plain words.
+    var lastTxt =
+        since0 == null
+          ? "No fights logged yet"
+          : since0 === 0
+            ? "Last fight: today"
+            : since0 === 1
+              ? "Last fight: yesterday"
+              : "Last fight: " + since0 + " days ago",
+      rec = since0 != null && since0 >= best && since0 > 1;
+    if (rec)
+      try {
+        var ck = LS + "-confetti";
+        if (localStorage.getItem(ck) !== String(since0)) {
+          localStorage.setItem(ck, String(since0));
+          setTimeout(confetti, 350);
+        }
+      } catch (e) {}
     var h =
       '<div class="wcount' +
       (w1 > w0 ? " over" : "") +
@@ -129,25 +147,12 @@
       mood[0] +
       '</b><span class="mute small">' +
       esc(mood[1]) +
-      '</span></div><div class="wdays"><span>' +
-      (since0 == null ? "–" : since0) +
-      "</span><small>days since</small></div></div>" +
+      '</span><span class="wlast">' +
+      lastTxt +
       (fd.length > 1
-        ? '<div class="small mute u-m4-4-12 u-ta-right">' +
-          (since0 >= best && since0 > 0
-            ? (function () {
-                try {
-                  var ck = LS + "-confetti";
-                  if (since0 > 1 && localStorage.getItem(ck) !== String(since0)) {
-                    localStorage.setItem(ck, String(since0));
-                    setTimeout(confetti, 350);
-                  }
-                } catch (e) {}
-                return "🏆 Longest calm stretch yet";
-              })()
-            : "Longest calm stretch: <b>" + best + " days</b>") +
-          "</div>"
-        : "");
+        ? '<br><span class="mute">' + (rec ? "🏆 Longest calm stretch yet" : "Longest calm stretch: " + best + " days") + "</span>"
+        : "") +
+      "</span></div></div>";
     h += bedStats();
     h +=
       '<div class="duob"><button class="duof" data-a="fnew"><span>😾</span>Log a fight</button><button class="duoc" data-a="calmnew"><span>😊</span>Log a calm moment</button></div>';

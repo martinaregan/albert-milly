@@ -4357,3 +4357,17 @@ body.milly {
   margin-top: 4px;
   line-height: 1.4;
 }
+.wcount .wlast {
+  display: block;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid currentColor;
+  border-top-color: color-mix(in srgb, currentColor 15%, transparent);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.wcount .wlast .mute {
+  font-weight: 700;
+  font-size: 14px;
+}
