@@ -109,9 +109,11 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 
 | File | What it is |
 |---|---|
-| `src/index.html` | **The app's source**: HTML, CSS and JavaScript in one readable file. Edit this one |
-| `index.html` | The published app, minified from `src/index.html` by `tools/build.js`. Don't edit by hand |
-| `tools/build.js` | Build script: `npm i terser csso`, then `node tools/build.js` |
+| `src/index.html` | Page shell (the HTML), with markers where the CSS and JavaScript go |
+| `src/css/` | Styles, in three files, joined in name order |
+| `src/js/` | The code, in 21 files by area (setup, sync, each tab, clicks, start-up), joined in name order. Each file starts with a one-line note saying what's in it |
+| `index.html` | The published app, built and minified from `src/` by `tools/build.js`. Don't edit by hand |
+| `tools/build.js` | Build script: `npm i terser csso`, then `node tools/build.js` (add `--dev` for an unminified `dev.html` to test with) |
 | `sw.js` | Service worker: keeps a copy of the app for offline use |
 | `manifest.webmanifest` | Name, colours and icons for "Add to Home Screen" |
 | `icon-*-v5.png`, `apple-touch-icon-v5.png` | App icons. The version number is in the name so phones fetch new ones |
@@ -120,7 +122,7 @@ This is a tracking tool, not veterinary advice. Run food changes past the vet, e
 
 ## For developers
 
-- **No framework.** Plain JavaScript in one `<script>` block, wrapped in a function so nothing leaks into the page. Edit `src/index.html`, then run `node tools/build.js` to produce the minified `index.html` that GitHub Pages serves.
+- **No framework.** Plain JavaScript in one `<script>` block, wrapped in a function so nothing leaks into the page. Edit the files in `src/`, then run `node tools/build.js` to produce the minified `index.html` that GitHub Pages serves. The JavaScript files are joined in order inside one function, so they share variables; function declarations can live in any file, but statements that run at start-up (in `20-start.js`) must stay last.
 - **State**: one object `S` (the contents of `data.json`) plus `ui` for screen state (tab, selected cat, open sections, open sheet).
 - **Rendering**: each view is a function that returns an HTML string (`vToday`, `vWeight`, `vHealth`, `vCal`, `vTogether`, `vStock`, `vMoney`, `vInfo`, `vSettings`). `render()` builds the page, swaps emoji for line icons, then updates only the parts of the screen that changed (a small DOM diff, `morphKids`), so taps are quick and the scroll position stays put. Switching tabs does a full rebuild. Collapsed sections marked `data-lazy` are only built when opened.
 - **Actions**: buttons carry `data-a="action"` and `data-v="value"`; one click handler routes them. `change()` saves locally, redraws and schedules the upload.
