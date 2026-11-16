@@ -1,5 +1,5 @@
 // Offline shell for the Albert & Milly app. Data and photos sync through GitHub, not this cache.
-const SHELL = 'am-shell-v41';
+const SHELL = 'am-shell-v42';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192-v2.png', './icon-512-v2.png', './apple-touch-icon-v2.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(SHELL).then(c => c.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener('activate', e => {
