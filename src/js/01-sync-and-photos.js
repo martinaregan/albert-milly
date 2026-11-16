@@ -513,7 +513,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "41";
+  var APPV = "42";
 
   // Links that open GitHub with most of the form already filled in.
   var GH_NEW_REPO =
@@ -524,7 +524,7 @@
     encodeURIComponent("Cat app on my phone") +
     "&description=" +
     encodeURIComponent("Lets the cat app read and save cat-data") +
-    "&expires_in=366&contents=write";
+    "&contents=write";
 
   function setupView() {
     var g = GH && !GH.local ? GH : {},
@@ -565,7 +565,7 @@
           lnk("https://github.com/signup", "Sign up") +
           "</li><li>Make a private repository for the data. The name and Private are filled in: just tap <b>Create repository</b>. " +
           lnk(GH_NEW_REPO, "Create it") +
-          "</li><li>Make an access key. Most of it is filled in. Under <b>Repository access</b> choose <b>Only select repositories</b> and pick <b>cat-data</b>, then tap <b>Generate token</b> and copy it. " +
+          "</li><li>Make an access key. Most of it is filled in. Set <b>Expiration</b> to <b>No expiration</b> so it never stops working. Under <b>Repository access</b> choose <b>Only select repositories</b> and pick <b>cat-data</b>. Then tap <b>Generate token</b> and copy it. " +
           lnk(GH_NEW_KEY, "Create key") +
           "</li><li>Paste it here.</li></ol>") +
       '<label class="l">Access key</label><input id="ghtok" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…" value="' +

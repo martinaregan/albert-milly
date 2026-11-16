@@ -39,7 +39,7 @@ async def open_app(browser, url, **ctx):
     await page.route("**/api.github.com/**", lambda r: r.abort())
     await page.goto(url)
     await page.evaluate("""d=>{localStorage.setItem('am-tracker-cache',JSON.stringify({S:d,BASE:d,SHA:'x',dirty:false}));
-        localStorage.setItem('am-tracker-gh',JSON.stringify({owner:'x',repo:'y',token:'t',who:'Tester'}))}""", DATA)
+        localStorage.setItem('am-tracker-gh',JSON.stringify({owner:'x',repo:'y',token:'t',who:'Tester'}));localStorage.setItem('am-tracker-seenv','9999')}""", DATA)
     await page.reload()
     await page.clock.run_for(800)
     return page, errors

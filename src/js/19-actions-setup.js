@@ -72,10 +72,11 @@ ACT["swNext"] = function () {
     ui.sw.step = 0;
   } else {
     delete S.fresh;
-    ui.modal = null;
     ui.sw = null;
+    ui.intro = 0;
+    ui.modal = introSheet;
     change();
-    return toast("All set. Log their first breakfast from the + button");
+    return;
   }
   ui.cat = swCat();
   change();

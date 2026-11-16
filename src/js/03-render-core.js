@@ -21,6 +21,10 @@
     }
     needRender = false;
     if (!tabOn(ui.tab)) ui.tab = "today";
+    if (!render.helped) {
+      render.helped = true;
+      helpOnStart();
+    }
     if (S.fresh && !DEMO && !ui.modal) {
       ui.sw = ui.sw || { intro: true, cat: 0, step: 0 };
       ui.modal = setupWiz;

@@ -377,9 +377,9 @@
       since = addDays(today(), -30),
       hf = ui.hf || (ui.hf = {});
     var h = !ui.hedit
-      ? '<button class="b w u-mb10 u-p12" data-a="vrep">📋 Vet summary for ' +
+      ? '<div class="row u-gap8 u-mb10 u-nowrap"><button class="b u-flex1 u-p12" data-a="vrep">📋 Vet summary for ' +
         esc(c.name) +
-        '</button><button class="symbtn fbtn" data-a="hnew">🩺 Log a symptom</button>'
+        '</button><button class="b u-p12 sosb" data-a="sos" aria-label="When to call a vet">🚨 Urgent?</button></div><button class="symbtn fbtn" data-a="hnew">🩺 Log a symptom</button>'
       : '<details class="card flog" id="hform" data-open="hform" open><summary><span class="symbtn">✎ Edit symptom</span></summary><div class="u-mt6"><label class="l">Which cat?</label><div class="seg u-cols1fr-1fr u-m0">' +
         ["albert", "milly"]
           .map(function (k) {

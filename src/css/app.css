@@ -4371,3 +4371,57 @@ body.milly {
   font-weight: 700;
   font-size: 14px;
 }
+
+/* What's new, intro, emergency panel */
+.newsl,
+.sosl {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+.newsl li,
+.sosl li {
+  margin: 7px 0;
+  line-height: 1.4;
+}
+.sos h2 {
+  color: var(--bad);
+}
+.sosc {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+.sosb {
+  flex: none;
+  color: var(--bad);
+  font-weight: 800;
+}
+.intro {
+  text-align: center;
+}
+.introic {
+  font-size: 46px;
+  margin: 6px 0 2px;
+}
+.intro .pl {
+  min-height: 72px;
+}
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+.dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.dots i.on {
+  background: var(--accent);
+}
+button.sosc {
+  background: var(--bad) !important;
+  color: #fff !important;
+}

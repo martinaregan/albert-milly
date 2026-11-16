@@ -348,18 +348,31 @@ ACT["restore2"] = function () {
   toast("Backup restored");
 };
 
+// Erasing needs three steps: tap Erase, read the warning, type the code shown.
 ACT["erase"] = function () {
+  ui.ecode = String(1000 + Math.floor(Math.random() * 9000));
   ui.modal = function () {
-    return confirmBox(
-      "Erase all of the cats' data on this phone? It can't be undone. Download a backup first if you might want it.",
-      "erase2",
-      "x"
+    return (
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">Erase everything?</h2>' +
+      '<div class="pl">This deletes all of the cats\' data on this phone' +
+      (GH && !GH.local ? " (it stays on GitHub)" : ". It can't be undone, and there's no copy anywhere else") +
+      ".</div>" +
+      '<button class="b s u-mt8" data-a="backup">Download a backup first</button>' +
+      '<label class="l">To erase, type <b>' +
+      ui.ecode +
+      '</b></label><input id="ecode" inputmode="numeric" autocomplete="off">' +
+      '<div class="row u-gap8 u-mt12"><button class="b u-flex1" data-a="close">Cancel</button><button class="b u-flex1 u-bg-var---bad u-c-fff" data-a="erase2">Erase</button></div></div></div>'
     );
   };
   render();
 };
 
 ACT["erase2"] = function () {
+  var ec = document.getElementById("ecode");
+  if (!ec || ec.value.trim() !== ui.ecode) {
+    if (ec) flash("ecode");
+    return toast("Type the code to erase");
+  }
   try {
     Object.keys(localStorage).forEach(function (k) {
       if (k.indexOf(LS) === 0) localStorage.removeItem(k);
@@ -384,4 +397,40 @@ ACT["unitset"] = function (e, t, a, v) {
     localStorage.setItem(LS + "-unit", v);
   } catch (x) {}
   render();
+};
+
+ACT["newsok"] = function () {
+  markSeen();
+  ui.modal = null;
+  render();
+};
+
+ACT["intronext"] = function () {
+  ui.intro = (ui.intro || 0) + 1;
+  render();
+};
+
+ACT["introdone"] = function () {
+  markSeen();
+  ui.modal = null;
+  render();
+};
+
+ACT["sos"] = function () {
+  ui.modal = sosSheet;
+  render();
+};
+
+ACT["helpintro"] = function () {
+  ui.intro = 0;
+  ui.modal = introSheet;
+  render();
+};
+
+ACT["callvet"] = function (e, t, a, v) {
+  location.href = "tel:" + v;
+};
+
+ACT["report"] = function () {
+  window.open(reportLink(), "_blank", "noopener");
 };

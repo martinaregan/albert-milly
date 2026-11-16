@@ -99,6 +99,9 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **Care sheet** (Info › Bookings › Care sheet): one page for a cat hotel or sitter with each cat's food plan, supplements, health, personality, vet and insurance details, plus your own "Important" notes. Print it, save it as a PDF or share it as text. It's built from the live data, so it's never out of date.
 - **Holiday mode**: while the cats are at a booked cat hotel, Today shows "At Betty's, home Tue 29 Dec" instead of meals to log, the app icon badge and the week strip stop counting missed meals, and the weekly summary counts only days at home. Breakfast on drop-off day and dinner on pick-up day still count.
 - **Birthdays**: Settings › each cat's plan › Birthday. Shows their age on Info, a 🎂 on the calendar, "turns 3" in Coming up, and a birthday headline on the day. Tick "Only roughly known" for a guessed date: you get the age without a birthday.
+- **This phone** (Settings): weights in kg or lb. **Tabs**: switch off the ones you don't need; nothing is deleted.
+- **Help** (Settings): the intro again, "When to call a vet" (also the 🚨 Urgent? button on Health) and Report a problem (opens a GitHub issue).
+- **What's new** shows once after an update; a new phone gets a short intro instead.
 - **No signal?** Everything you log is saved on the phone straight away and uploads when you're back online, even if the app was closed in between.
 - **App icon badge**: Settings › This phone › turn on. The icon shows how many must-dos are open (breakfast after 7:00, dinner after 20:00, Saturday weigh-in).
 - **Lock screen shortcut**: an iPhone Shortcut that opens `…/albert-milly/?log=breakfast` (or `?log=dinner`) logs the usual meal for both cats. Shortcuts open links in Safari, so connect the app once in Safari first.
