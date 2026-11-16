@@ -1,0 +1,1552 @@
+{
+ "demoAnchor": "2026-11-16",
+ "v": 2,
+ "savedAt": 0,
+ "playTypes": [
+  "Wand",
+  "Laser",
+  "Fetch",
+  "Basket play"
+ ],
+ "fights": [
+  {
+   "id": "f0",
+   "d": "2026-11-04",
+   "m": "23:10",
+   "sev": "Bite",
+   "trig": [
+    "Night"
+   ],
+   "where": "Bedroom",
+   "who": "Albert",
+   "sep": "No",
+   "pher": "Yes",
+   "n": "",
+   "att": []
+  },
+  {
+   "id": "f1",
+   "d": "2026-11-08",
+   "m": "07:20",
+   "sev": "Chase / hiss",
+   "trig": [
+    "Milly begging for food"
+   ],
+   "where": "Bedroom",
+   "who": "Albert",
+   "sep": "No",
+   "pher": "Yes",
+   "n": "",
+   "att": []
+  },
+  {
+   "id": "f2",
+   "d": "2026-11-13",
+   "m": "01:00",
+   "sev": "Stare / stalk",
+   "trig": [
+    "Night"
+   ],
+   "where": "Bedroom",
+   "who": "Albert",
+   "sep": "No",
+   "pher": "Yes",
+   "n": "",
+   "att": []
+  },
+  {
+   "id": "f3",
+   "d": "2026-11-15",
+   "m": "22:40",
+   "sev": "Chase / hiss",
+   "trig": [
+    "Night"
+   ],
+   "where": "Bedroom",
+   "who": "Albert",
+   "sep": "No",
+   "pher": "Yes",
+   "n": "",
+   "att": []
+  }
+ ],
+ "cats": {
+  "albert": {
+   "name": "Albert",
+   "color": "#e07a2e",
+   "target": 6.5,
+   "foods": [
+    {
+     "id": "a-dry",
+     "name": "Example diet dry",
+     "kind": "dry",
+     "kcal": 370,
+     "main": true,
+     "price": 30,
+     "buy": "bag"
+    },
+    {
+     "id": "a-wet",
+     "name": "Example diet wet (150 g can)",
+     "kind": "wet",
+     "kcal": 170,
+     "main": true,
+     "price": 40,
+     "buy": "box of 24"
+    }
+   ],
+   "dryAllowance": 50,
+   "wetAllowance": 1,
+   "treatAllowance": 0,
+   "treatKcal": 5,
+   "checks": [
+    "Probiotic"
+   ],
+   "weights": [
+    {
+     "d": "2026-10-31",
+     "kg": 8.6
+    },
+    {
+     "d": "2026-11-07",
+     "kg": 8.55
+    },
+    {
+     "d": "2026-11-14",
+     "kg": 8.48
+    }
+   ],
+   "days": {
+    "2026-11-15": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry1",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet1",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-14": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry2",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet2",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-13": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry3",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet3",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-12": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry4",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet4",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-11": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry5",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet5",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-10": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry6",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet6",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-09": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry7",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet7",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-08": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry8",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet8",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-07": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry9",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet9",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-06": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry10",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet10",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-05": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry11",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet11",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-04": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry12",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet12",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    },
+    "2026-11-03": {
+     "f": {
+      "a-dry": 50,
+      "a-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "a-dry13",
+       "f": "a-dry",
+       "a": 50,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "a-wet13",
+       "f": "a-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "a-dry": "all",
+      "a-wet": "all"
+     }
+    }
+   },
+   "health": [
+    {
+     "id": "h1",
+     "t": "Cough / wheeze episode",
+     "d": "2026-11-13",
+     "m": "19:40",
+     "n": "After running",
+     "att": []
+    }
+   ],
+   "vet": [
+    {
+     "id": "v1",
+     "d": "2026-11-06",
+     "clinic": "Example Vet Clinic",
+     "reason": "Weight check",
+     "notes": "Keep to the plan.",
+     "next": "",
+     "email": "",
+     "att": []
+    }
+   ],
+   "treat": [
+    {
+     "id": "tAlbert",
+     "type": "Flea",
+     "product": "",
+     "dose": "",
+     "d": "2026-11-13",
+     "next": "2027-02-14",
+     "n": ""
+    }
+   ],
+   "plan": "Morning (6 to 7am):\n- 50 g Example diet dry, weighed\nEvening (around 19:30):\n- 1 can Example diet wet\nRules:\n- Nothing else\n- Log each meal in the app",
+   "rr": [
+    {
+     "id": "r1",
+     "d": "2026-11-12",
+     "m": "22:10",
+     "bpm": 24
+    },
+    {
+     "id": "r2",
+     "d": "2026-11-14",
+     "m": "22:30",
+     "bpm": 28
+    }
+   ],
+   "vq": [
+    {
+     "id": "q1",
+     "t": "Ask about the cough after running",
+     "d": "2026-11-13"
+    }
+   ],
+   "kcalLo": 330,
+   "kcalHi": 370
+  },
+  "milly": {
+   "name": "Milly",
+   "color": "#2e2e2e",
+   "target": 4,
+   "foods": [
+    {
+     "id": "m-dry",
+     "name": "Example indoor dry",
+     "kind": "dry",
+     "kcal": 375,
+     "main": true,
+     "price": 30,
+     "buy": "bag"
+    },
+    {
+     "id": "m-wet",
+     "name": "Example fish pouch (85 g)",
+     "kind": "wet",
+     "kcal": 60,
+     "main": true,
+     "price": 7,
+     "buy": "pack"
+    }
+   ],
+   "dryAllowance": 35,
+   "wetAllowance": 1,
+   "treatAllowance": 0,
+   "treatKcal": 5,
+   "checks": [
+    "Probiotic"
+   ],
+   "weights": [
+    {
+     "d": "2026-10-31",
+     "kg": 5.3
+    },
+    {
+     "d": "2026-11-07",
+     "kg": 5.25
+    },
+    {
+     "d": "2026-11-14",
+     "kg": 5.2
+    }
+   ],
+   "days": {
+    "2026-11-15": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry1",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet1",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-14": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry2",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet2",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-13": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry3",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet3",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-12": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry4",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet4",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-11": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry5",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet5",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-10": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry6",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet6",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-09": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry7",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet7",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-08": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry8",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet8",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-07": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry9",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet9",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-06": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry10",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet10",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-05": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 15
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry11",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet11",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-04": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 5
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry12",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet12",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    },
+    "2026-11-03": {
+     "f": {
+      "m-dry": 35,
+      "m-wet": 1
+     },
+     "treats": 0,
+     "play": {
+      "Wand": 10
+     },
+     "checks": {
+      "Probiotic": true
+     },
+     "note": "",
+     "photos": [],
+     "meals": [
+      {
+       "id": "m-dry13",
+       "f": "m-dry",
+       "a": 35,
+       "rx": "all",
+       "t": "07:05",
+       "who": "Sam",
+       "add": []
+      },
+      {
+       "id": "m-wet13",
+       "f": "m-wet",
+       "a": 1,
+       "rx": "all",
+       "t": "19:30",
+       "who": "Sam",
+       "add": [
+        "Probiotic"
+       ]
+      }
+     ],
+     "react": {
+      "m-dry": "all",
+      "m-wet": "all"
+     }
+    }
+   },
+   "health": [],
+   "vet": [],
+   "treat": [
+    {
+     "id": "tMilly",
+     "type": "Flea",
+     "product": "",
+     "dose": "",
+     "d": "2026-11-13",
+     "next": "2027-02-14",
+     "n": ""
+    }
+   ],
+   "plan": "Morning:\n- 35 g Example indoor dry\nEvening (around 19:30):\n- 1 pouch\nRules:\n- Keep Albert away while she eats",
+   "rr": [],
+   "vq": [],
+   "planFrom": "2026-10-31"
+  }
+ },
+ "info": {
+  "insurance": {
+   "provider": "Example Insurance",
+   "policy": "",
+   "phone": "",
+   "email": "",
+   "notes": "",
+   "att": [],
+   "policyAlbert": "",
+   "policyMilly": "",
+   "yearAlbert": "",
+   "yearMilly": ""
+  },
+  "vet": {
+   "clinic": "Example Vet Clinic",
+   "address": "1 Example Street",
+   "phone": "",
+   "email": "",
+   "hours": "",
+   "notes": "",
+   "att": []
+  },
+  "hotel": {
+   "name": "Example Cat Hotel",
+   "address": "",
+   "phone": "",
+   "email": "",
+   "notes": "",
+   "att": []
+  },
+  "bookings": [
+   {
+    "id": "b1",
+    "cats": [
+     "Albert",
+     "Milly"
+    ],
+    "from": "2026-12-06",
+    "to": "2026-12-13",
+    "place": "Example Cat Hotel",
+    "cost": "200",
+    "status": "Confirmed",
+    "notes": "",
+    "att": []
+   }
+  ]
+ },
+ "profiles": {
+  "albert": "About:\n- Example cat\n- Age 3",
+  "milly": "About:\n- Example cat\n- Age 7",
+  "ages": ""
+ },
+ "notes": {
+  "bullying": "Example background notes."
+ },
+ "litter": [
+  {
+   "id": "l0",
+   "d": "2026-11-11",
+   "m": "08:30",
+   "who": "Albert",
+   "type": "Poo",
+   "cons": "Firm, well formed",
+   "amt": "Normal",
+   "smell": "Normal",
+   "extra": [],
+   "n": "",
+   "att": [],
+   "by": "Sam"
+  },
+  {
+   "id": "l1",
+   "d": "2026-11-13",
+   "m": "08:30",
+   "who": "Albert",
+   "type": "Poo",
+   "cons": "Mushy, no shape",
+   "amt": "Normal",
+   "smell": "Normal",
+   "extra": [],
+   "n": "",
+   "att": [],
+   "by": "Sam"
+  },
+  {
+   "id": "l2",
+   "d": "2026-11-14",
+   "m": "08:30",
+   "who": "Albert",
+   "type": "Poo",
+   "cons": "Firm, well formed",
+   "amt": "Normal",
+   "smell": "Normal",
+   "extra": [],
+   "n": "",
+   "att": [],
+   "by": "Sam"
+  },
+  {
+   "id": "l3",
+   "d": "2026-11-15",
+   "m": "08:30",
+   "who": "Albert",
+   "type": "Pee",
+   "cons": "",
+   "amt": "Normal",
+   "smell": "Normal",
+   "extra": [],
+   "n": "",
+   "att": [],
+   "by": "Sam"
+  },
+  {
+   "id": "l4",
+   "d": "2026-11-15",
+   "m": "08:30",
+   "who": "Milly",
+   "type": "Poo",
+   "cons": "Firm, well formed",
+   "amt": "Normal",
+   "smell": "Normal",
+   "extra": [],
+   "n": "",
+   "att": [],
+   "by": "Sam"
+  },
+  {
+   "id": "l5",
+   "d": "2026-11-16",
+   "m": "08:30",
+   "who": "Milly",
+   "type": "Pee",
+   "cons": "",
+   "amt": "Normal",
+   "smell": "Normal",
+   "extra": [],
+   "n": "",
+   "att": [],
+   "by": "Sam"
+  }
+ ],
+ "mailSeen": [],
+ "costs": [
+  {
+   "id": "c1",
+   "d": "2026-11-07",
+   "who": "albert",
+   "cat": "Vet",
+   "amount": 60,
+   "reimb": 45,
+   "desc": "Weight check",
+   "n": "",
+   "claim": "paid"
+  },
+  {
+   "id": "c2",
+   "d": "2026-09-01",
+   "who": "both",
+   "cat": "Insurance",
+   "amount": 40,
+   "reimb": 0,
+   "desc": "Insurance premium",
+   "n": "",
+   "rep": "monthly"
+  }
+ ],
+ "calm": [
+  {
+   "id": "cm1",
+   "d": "2026-11-14",
+   "m": "20:00",
+   "what": "Lying together",
+   "n": "",
+   "att": []
+  }
+ ],
+ "todos": [
+  {
+   "id": "t1",
+   "text": "Order cat litter",
+   "done": false,
+   "due": "2026-11-15"
+  },
+  {
+   "id": "t2",
+   "text": "Book vet check",
+   "done": false,
+   "due": ""
+  }
+ ],
+ "extraStock": [
+  {
+   "id": "x1",
+   "name": "Example probiotic",
+   "qty": 30,
+   "unit": "scoops",
+   "check": "Probiotic",
+   "cat": "both",
+   "group": "supp",
+   "on": "2026-11-06",
+   "usedAtSet": 0
+  },
+  {
+   "id": "x2",
+   "name": "Cat litter",
+   "qty": 0,
+   "unit": "bags",
+   "on": "2026-11-11",
+   "group": "home",
+   "price": 20,
+   "buy": "bag",
+   "need": false
+  }
+ ],
+ "stock": {
+  "a-dry": {
+   "qty": 900,
+   "on": "2026-11-11",
+   "usedAtSet": 0
+  },
+  "a-wet": {
+   "qty": 12,
+   "on": "2026-11-11",
+   "usedAtSet": 0
+  },
+  "m-dry": {
+   "qty": 600,
+   "on": "2026-11-11",
+   "usedAtSet": 0
+  },
+  "m-wet": {
+   "qty": 8,
+   "on": "2026-11-11",
+   "usedAtSet": 0
+  }
+ },
+ "bed": {
+  "2026-11-13": "21:30",
+  "2026-11-14": "21:40",
+  "2026-11-15": "21:20"
+ }
+}

@@ -40,6 +40,7 @@
     if (t.id === "fileIn") {
       var files = Array.prototype.slice.call(t.files || []);
       if (!files.length || !GH) return;
+      if (DEMO) return toast("Photos don't upload in the demo");
       var tg = upTarget;
       saveState = "Uploading…";
       render();

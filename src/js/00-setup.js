@@ -25,6 +25,14 @@
     }
   } catch (e) {}
 
+  // ?demo in the address opens made-up data (demo.json). Nothing is read from or saved to GitHub.
+  var DEMO = /[?&]demo\b/.test(location.search);
+  if (DEMO) {
+    GH = { demo: true, who: "You" };
+    S = BASE = SHA = null;
+    dirty = false;
+  }
+
   var ui = {
     cat: "albert",
     tab: "today",

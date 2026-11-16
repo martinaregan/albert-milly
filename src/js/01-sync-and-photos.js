@@ -10,6 +10,7 @@
   }
 
   function persist() {
+    if (DEMO) return;
     try {
       localStorage.setItem(LS + "-cache", JSON.stringify({ S: S, BASE: BASE, SHA: SHA, dirty: dirty }));
     } catch (e) {}
@@ -149,6 +150,10 @@
   }
 
   function push() {
+    if (DEMO) {
+      dirty = false;
+      return setStatus("Demo");
+    }
     if (!GH || !S || pushing || !dirty) return;
     pushing = true;
     var snap = JSON.parse(JSON.stringify(S));
@@ -204,7 +209,34 @@
       });
   }
 
+  // Demo: load demo.json once and move its dates so the newest entries land on today.
+  function loadDemo() {
+    return fetch("demo.json", { cache: "no-cache" })
+      .then(function (r) {
+        return r.text();
+      })
+      .then(function (txt) {
+        var anchor = (txt.match(/"demoAnchor":\s*"(\d{4}-\d\d-\d\d)"/) || [])[1] || today(),
+          shift = daysBetween(anchor, today());
+        if (shift)
+          txt = txt.replace(/\b20\d\d-\d\d-\d\d\b/g, function (d) {
+            return addDays(d, shift);
+          });
+        S = JSON.parse(txt);
+        migrate();
+        BASE = JSON.parse(txt);
+        SHA = "demo";
+        setStatus("Demo");
+        render();
+      })
+      .catch(function () {
+        setStatus("Could not load the demo");
+        render();
+      });
+  }
+
   function sync() {
+    if (DEMO) return S ? Promise.resolve() : loadDemo();
     if (!GH || pushing) return Promise.resolve();
     return pull()
       .then(function (p) {
@@ -446,7 +478,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "27";
+  var APPV = "28";
 
   function setupView() {
     var g = GH || {};
@@ -465,7 +497,7 @@
       '<details class="u-mt10"><summary class="mute small">Advanced</summary><label class="l">Data repository</label><input id="ghrepo" value="' +
       esc((g.owner || "martinaregan") + "/" + (g.repo || "albert-milly-data")) +
       '"></details>' +
-      '<button class="b p w u-mt14 u-p14" data-a="ghconnect">Connect</button><div class="note u-c-var---bad u-fw700" id="gherr">' +
+      '<button class="b p w u-mt14 u-p14" data-a="ghconnect">Connect</button><button class="b ghost w u-mt10" data-a="demo">Just looking? Try the demo</button><div class="note u-c-var---bad u-fw700" id="gherr">' +
       esc(ui.gherr || "") +
       '</div><div class="note">Version ' +
       APPV +

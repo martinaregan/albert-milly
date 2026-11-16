@@ -76,7 +76,7 @@
       '<div class="card"><h2>👥 Someone else feeding them?</h2><div class="note u-m0">On their phone: open martinaregan.github.io/albert-milly, add it to the home screen, paste the same access key and type their name. Everything they log shows their name, and the app stops a second dinner.</div></div>' +
       '<div class="card"><h2>💾 Backup</h2><div class="note u-m0-0-10">Everything (both cats, all logs, notes, costs) as one file you can keep in Files, iCloud or email to yourself. Photos stay on GitHub.</div><button class="b s p" data-a="backup">Download a backup</button></div>' +
       '<div class="card"><h2>🔗 Connection</h2><div class="kv"><span class="k">Data</span><span class="v">' +
-      esc(GH.owner + "/" + GH.repo) +
+      esc(DEMO ? "Demo (made-up data)" : GH.owner + "/" + GH.repo) +
       '</span></div><div class="kv"><span class="k">This phone</span><span class="v">' +
       esc(GH.who || "") +
       '</span></div><div class="kv"><span class="k">Status</span><span class="v">' +

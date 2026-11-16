@@ -30,7 +30,10 @@
       ico("search") +
       '</button><button class="b s hb" data-a="tab" data-v="settings" aria-label="Settings">' +
       ico("gear") +
-      "</button></span></header>";
+      "</button></span></header>" +
+      (DEMO
+        ? '<div class="demo-bar"><span>Demo with made-up data. Nothing you change is saved.</span><button class="b s" data-a="demoexit">Exit</button></div>'
+        : "");
     if (
       ["fights", "calendar", "info", "todo", "stock", "money", "hows", "weight", "health"].indexOf(ui.tab) < 0
     )

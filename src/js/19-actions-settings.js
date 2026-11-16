@@ -99,6 +99,7 @@ ACT["ghout"] = function (e, t, a, v, c) {
 };
 
 ACT["ghout2"] = function (e, t, a, v, c) {
+  if (DEMO) return ACT.demoexit();
   try {
     localStorage.removeItem(LS + "-gh");
     localStorage.removeItem(LS + "-cache");
@@ -107,4 +108,12 @@ ACT["ghout2"] = function (e, t, a, v, c) {
   S = null;
   ui.modal = null;
   render();
+};
+
+ACT["demo"] = function () {
+  location.href = location.pathname + "?demo";
+};
+
+ACT["demoexit"] = function () {
+  location.href = location.pathname;
 };

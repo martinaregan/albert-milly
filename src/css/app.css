@@ -4146,3 +4146,22 @@ body.milly {
   grid-template-columns: repeat(3, 1fr);
   margin: 4px 0 6px;
 }
+
+/* Demo mode banner */
+.demo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: -4px 0 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1.5px dashed var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.demo-bar .b {
+  flex: none;
+}
