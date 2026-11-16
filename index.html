@@ -10,8 +10,8 @@
 <meta name="apple-mobile-web-app-title" content="Albert &amp; Milly">
 <meta name="theme-color" content="#141210">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="apple-touch-icon-v4.png">
-<link rel="icon" href="icon-192-v4.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-v5.png">
+<link rel="icon" href="icon-192-v5.png">
 <link rel="preload" href="nunito-v1.woff2" as="font" type="font/woff2" crossorigin>
 <style id="css">@font-face{font-family:'Nunito';font-style:normal;font-weight:200 1000;font-display:swap;src:url(nunito-v1.woff2) format('woff2')}
 
@@ -399,7 +399,7 @@ function hydrate(){if(!GH)return;document.querySelectorAll('[data-ph]').forEach(
   document.querySelectorAll('[data-phv]').forEach(function(el){var p=el.getAttribute('data-phv');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.src=u}).catch(function(){})});
   document.querySelectorAll('[data-phl]').forEach(function(el){var p=el.getAttribute('data-phl');if(!/^photos\//.test(p))return;photoURL(p).then(function(u){el.href=u}).catch(function(){})})}
 function keyErr(e){return e&&e.noaccess?'This key can\'t see your data. Make a new key and under Repository access choose Only select repositories → albert-milly-data, then Permissions → Contents: Read and write.':e&&e.auth?'That key didn\'t work (wrong or expired). Make a new one and paste it here.':'Could not reach GitHub. Check your internet connection.'}
-var APPV='19';
+var APPV='20';
 function setupView(){var g=GH||{};return'<div class="hero duo-h" style="margin-top:20px"><div class="vs">'+spot('albert')+'<b>&amp;</b>'+spot('milly')+'</div><div style="text-align:center;font-size:24px;font-weight:900">Albert &amp; Milly</div><div class="sub" style="text-align:center;margin-top:4px">Connect this phone to your data</div></div>'+
   '<div class="card"><h2>One-time setup</h2><div class="pl">1. Tap <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#b9a6ff"><b>Create access key</b></a> and sign in to GitHub.</div>'+
   '<div class="pl">2. Name it after this phone (e.g. <i>Me iPhone</i>). Expiration: the longest option.</div><div class="pl">3. Repository access: <b>Only select repositories</b> → <b>albert-milly-data</b>.</div>'+
@@ -793,7 +793,7 @@ function fightLog(F){
 document.addEventListener('toggle',function(e){var k=e.target&&e.target.dataset&&e.target.dataset.open;if(k){ui.open=ui.open||{};ui.open[k]=e.target.open;if(e.target.open&&e.target.hasAttribute('data-lazy'))render()}},true);
 function lazyOpen(k,dflt){ui.open=ui.open||{};return k in ui.open?ui.open[k]:!!dflt}
 function spot(k){if(S&&S.cats&&S.cats[k]&&S.cats[k].photo&&GH)return'<img class="spot" data-ph="'+esc(S.cats[k].photo)+'" alt="" data-sph="'+k+'">';var c=k==='albert'?'#e8822f':'#1e1e1e',patch=k==='albert'?
-  '<path d="M5 2.6 9.6 6.2Q10.6 5.8 11.3 5.75L10.1 11.4Q8.7 12.2 7.3 11.9Q5.8 12.6 4.6 13.5Q3.9 11.6 4.2 9.2Z" fill="'+c+'"/><path d="M19 2.6 14.4 6.2Q13.4 5.8 12.7 5.75L13.9 11.4Q15.3 12.2 16.7 11.9Q18.2 12.6 19.4 13.5Q20.1 11.6 19.8 9.2Z" fill="'+c+'"/><path d="M5.7 4.1 6.1 7.3 8.6 6.1Z" fill="#f2b29a"/><path d="M18.3 4.1 17.9 7.3 15.4 6.1Z" fill="#f2b29a"/><ellipse cx="12" cy="17.7" rx=".75" ry=".42" fill="'+c+'"/>':
+  '<path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q20.1 11.6 19.4 13.5Q18.2 12.6 16.7 11.9Q15.3 12.2 13.9 11.4L12 7.8 10.1 11.4Q8.7 12.2 7.3 11.9Q5.8 12.6 4.6 13.5Q3.9 11.6 4.2 9.2Z" fill="'+c+'"/><path d="M5.7 4.1 6.1 7.3 8.6 6.1Z" fill="#f2b29a"/><path d="M18.3 4.1 17.9 7.3 15.4 6.1Z" fill="#f2b29a"/><path d="M12 17.15Q10.9 16.95 9.9 17.9Q11.1 18.35 12 17.7Q12.9 18.35 14.1 17.9Q13.1 16.95 12 17.15Z" fill="'+c+'"/>':
   '<path d="M5.7 4.1 6.1 7.3 8.6 6.1Z" fill="#f4b9c2"/><path d="M18.3 4.1 17.9 7.3 15.4 6.1Z" fill="#f4b9c2"/><path d="M7.6 6.6 9.6 6.2Q11.2 5.7 12.4 6.0Q12.2 8.0 10.8 8.9Q9.0 9.3 7.8 8.4Q7.3 7.6 7.6 6.6Z" fill="'+c+'"/><path d="M16.0 6.9Q18.6 6.6 19.8 9.2Q20.5 11.4 20.1 13.2Q18.7 12.3 17.7 10.9Q16.5 9.3 16.0 6.9Z" fill="'+c+'"/>';
   return'<svg class="spot" viewBox="0 0 24 24" aria-label="'+k+'"><path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q21 13.2 19 16.8 16.4 21 12 21 7.6 21 5 16.8 3 13.2 4.2 9.2Z" fill="#fff"/>'+patch+
   '<path d="M4.2 9.2 5 2.6 9.6 6.2Q12 5.4 14.4 6.2L19 2.6 19.8 9.2Q21 13.2 19 16.8 16.4 21 12 21 7.6 21 5 16.8 3 13.2 4.2 9.2Z" fill="none" stroke="#6b6560" stroke-width="1.1" stroke-linejoin="round"/>'+
