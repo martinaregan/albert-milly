@@ -69,7 +69,7 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 ## Everyday use
 
 - **Headline card** at the top of Today: breakfast, dinner, weigh-in and the one thing that needs doing (an order, an overdue to-do, a cat hotel drop-off). From 21:00 it adds the bedtime routine. When everything is done, a sleepy cat shows up.
-- **One-tap meals**: the headline card shows "Log both" or "Log Milly" when a meal is missing. It logs the usual amount from each cat's plan and marks it as eaten. A meal that is already logged can't be logged twice.
+- **One-tap meals**: the headline card shows "Log both" or "Log Milly" when a meal is missing. It logs the usual amount from each cat's plan and marks it as eaten. A meal that is already logged can't be logged twice. **Change** next to it opens both cats' amounts, filled in with the usual, so you can adjust the grams and still log both in one go.
 - **Quick log**: the round **+** button (Today, Health, Friendship) opens big buttons for breakfast, dinner, poo, pee, play, fight and calm moment. It guesses the meal from the time of day.
 - **Undo**: most one-tap actions show "Logged · Undo" for 7 seconds.
 - **Swipe left** on a meal or a poo/pee entry to delete it (with undo).

@@ -3521,6 +3521,44 @@ img.spot {
   border-radius: 10px;
   padding: 7px 12px;
 }
+.hlalt {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 800;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+.qalt {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 6px 8px 14px;
+  margin-top: -2px;
+}
+.bstep {
+  min-width: 44px;
+  min-height: 40px;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+.bamt {
+  width: 72px;
+  font-size: 18px;
+  text-align: center;
+}
+.bus {
+  margin-left: 4px;
+}
 .hlact {
   display: flex;
   justify-content: space-between;

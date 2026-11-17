@@ -1,6 +1,7 @@
 /* 17c-help: First-time intro, "What's new" after an update, the emergency vet panel, and report a problem. */
   // Newest first. Add a line here with every release that changes something people will notice.
   var NEWS = [
+    ["56", "Log both with different amounts: tap Change next to Log both, adjust the grams, log both cats in one go"],
     ["55", "Shortcut links for a home screen widget: breakfast, dinner, poo, pee, play, fight, calm moment, weigh-in, note (Settings › This phone)"],
     ["54", "The app icon badge can be turned off again (Settings › This phone)"],
     ["53", "Fixes: the sync status now says why it couldn't sync, more of the app in Dutch, money totals fit small screens"],
@@ -70,7 +71,7 @@
     [
       "🍽️",
       "Log in a tap",
-      "The top card on Food & play shows what's left today. Tap <b>Log both</b> for the usual breakfast or dinner. The round <b>+</b> logs anything else."
+      "The top card on Food & play shows what's left today. Tap <b>Log both</b> for the usual breakfast or dinner. <b>Change</b> sets other amounts first. The round <b>+</b> logs anything else."
     ],
     [
       "⚖️",

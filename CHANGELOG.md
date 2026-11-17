@@ -2,6 +2,10 @@
 
 The version number is at the bottom of Settings › Data & sync.
 
+## 17 November 2026 (version 56)
+
+- **Log both with different amounts**: tap **Change** next to **Log both** (or "Not the usual amount? Change it" in Quick log). Both cats' amounts are filled in with the usual; adjust with − / + or type, then log both in one go. Set a cat to 0 to leave them out. Undo works as before.
+
 ## 16 November 2026, night (version 55)
 
 - **Shortcuts & widget** (Settings › This phone): copyable links that log breakfast or dinner in one tap, or open the poo, pee, play, fight, calm moment, weigh-in, note or quick log form. Put them in iPhone Shortcuts and add the Shortcuts widget to your home screen. Replaces the lock screen shortcut card (the old `?log=breakfast` and `?log=dinner` links still work).

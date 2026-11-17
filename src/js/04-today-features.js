@@ -56,7 +56,8 @@
     toast.t = setTimeout(hide, undoFn ? 7000 : 3500);
   }
 
-  function logUsual(who, kd) {
+  // amts (optional): { albert: 40, milly: 35 } to log something other than the usual. A cat set to 0 is left out.
+  function logUsual(who, kd, amts) {
     var now2 = new Date(),
       tm2 = String(now2.getHours()).padStart(2, "0") + ":" + String(now2.getMinutes()).padStart(2, "0"),
       t = today(),
@@ -65,6 +66,8 @@
     (who === "both" ? ["albert", "milly"] : [who]).forEach(function (k) {
       var u = usualMeal(k, kd);
       if (!u) return;
+      var am7 = amts && amts[k] != null ? amts[k] : u.a;
+      if (!(am7 > 0)) return;
       var c7 = S.cats[k];
       var d0 = peek(c7, t);
       if (
@@ -83,7 +86,7 @@
       d7.meals.push({
         id: uid(),
         f: u.f.id,
-        a: u.a,
+        a: am7,
         rx: "all",
         t: tm2,
         who: (GH && GH.who) || "",
@@ -92,7 +95,7 @@
       u.add.forEach(function (q) {
         d7.checks[q] = true;
       });
-      d7.f[u.f.id] = fmt((d7.f[u.f.id] || 0) + u.a);
+      d7.f[u.f.id] = fmt((d7.f[u.f.id] || 0) + am7);
       if (!d7.react) d7.react = {};
       d7.react[u.f.id] = "all";
       names.push(c7.name);
@@ -118,6 +121,71 @@
       change();
     });
     return true;
+  }
+
+  // Has this cat already had this meal today (eaten or refused)?
+  function mealLogged(k, kind) {
+    var c = S.cats[k],
+      x = peek(c, today());
+    return (
+      !!x &&
+      c.foods.some(function (f) {
+        return (
+          (kind === "dry" ? f.kind === "dry" : f.kind !== "dry") && ((x.f || {})[f.id] || (x.waste || {})[f.id])
+        );
+      })
+    );
+  }
+
+  // The cats "Log both" would log now: a usual meal set, not away, not logged yet.
+  function mealOpenFor(kind) {
+    return ["albert", "milly"].filter(function (k) {
+      return usualMeal(k, kind) && !awayAt(k, today(), kind) && !mealLogged(k, kind);
+    });
+  }
+
+  // "Log both" with other amounts: one row per cat, filled in with the usual, one button to log them together.
+  function bothSheet() {
+    var B = ui.both,
+      dry = B.kd === "dry";
+    return (
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><h2 class="u-mt0">' +
+      (dry ? "Breakfast" : "Dinner") +
+      (B.ks.length > 1 ? " for both" : "") +
+      '</h2><div class="small mute">Change what wasn\'t the usual today, then log it in one go.</div>' +
+      B.ks
+        .map(function (k) {
+          var u = usualMeal(k, B.kd);
+          return (
+            '<label class="l u-mt12" for="ba-' +
+            k +
+            '">' +
+            esc(S.cats[k].name) +
+            " · " +
+            esc(u.f.name) +
+            '</label><div class="row u-gap6 u-ai-center u-nowrap"><button class="chip bstep" data-a="bstep" data-v="' +
+            k +
+            '|-1" aria-label="Less">−</button><input class="amt bamt" id="ba-' +
+            k +
+            '" inputmode="decimal" value="' +
+            esc(String(B.a[k])) +
+            '"><span class="small mute">' +
+            (dry ? "g" : "×") +
+            '</span><button class="chip bstep" data-a="bstep" data-v="' +
+            k +
+            '|1" aria-label="More">+</button><span class="small mute bus">' +
+            "usual " +
+            u.a +
+            (dry ? " g" : "×") +
+            "</span></div>"
+          );
+        })
+        .join("") +
+      (B.ks.length > 1 ? '<div class="note">Set a cat to 0 to leave them out.</div>' : "") +
+      '<div class="row u-mt14"><button class="b p" data-a="blog">Log ' +
+      (B.ks.length > 1 ? "both" : esc(S.cats[B.ks[0]].name)) +
+      '</button><button class="b" data-a="close">Cancel</button></div></div></div>'
+    );
   }
 
   function weekStrip() {
@@ -232,6 +300,9 @@
       else
         right =
           (d.length ? '<span class="hlok">✓ ' + esc(S.cats[d[0]].name) + "</span> " : "") +
+          '<button class="hlalt" data-a="bopen" data-v="' +
+          kind +
+          '" aria-label="Change amounts">Change</button>' +
           '<button class="hlbtn" data-a="usual" data-v="' +
           (m.length > 1 ? "both" : m[0]) +
           "|" +
@@ -530,7 +601,10 @@
           (sug === "dry" ? "Breakfast" : "Dinner") +
           " for both</span><small>" +
           amt(sug) +
-          "</small></button>"
+          "</small></button>" +
+          '<button class="qalt" data-a="bopen" data-v="' +
+          sug +
+          '">Not the usual amount? Change it</button>'
         : "") +
       '<div class="qgrid">' +
       mt +

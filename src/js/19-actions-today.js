@@ -108,6 +108,59 @@ ACT["usual"] = function (e, t, a, v, c) {
   logUsual(pv[0], pv[1]);
 };
 
+// "Log both" with other amounts (bothSheet).
+ACT["bopen"] = function (e, t, a, v, c) {
+  var ks = mealOpenFor(v);
+  if (!ks.length) return logUsual("both", v);
+  ui.both = { kd: v, ks: ks, a: {} };
+  ks.forEach(function (k) {
+    ui.both.a[k] = usualMeal(k, v).a;
+  });
+  ui.modal = bothSheet;
+  render();
+};
+
+function bothRead() {
+  ui.both.ks.forEach(function (k) {
+    var el = document.getElementById("ba-" + k);
+    if (el) ui.both.a[k] = el.value;
+  });
+}
+
+function bothNum(k) {
+  return parseFloat(String(ui.both.a[k]).replace(",", ".")) || 0;
+}
+
+ACT["bstep"] = function (e, t, a, v, c) {
+  var pv = String(v).split("|"),
+    st = ui.both.kd === "dry" ? 5 : 0.25;
+  bothRead();
+  ui.both.a[pv[0]] = Math.max(0, fmt(bothNum(pv[0]) + st * +pv[1]));
+  render();
+};
+
+ACT["blog"] = function (e, t, a, v, c) {
+  bothRead();
+  var B = ui.both,
+    am = {},
+    any = false;
+  B.ks.forEach(function (k) {
+    am[k] = bothNum(k);
+    if (am[k] > 0) any = true;
+  });
+  if (!any) {
+    var el = document.getElementById("ba-" + B.ks[0]);
+    if (el) {
+      el.focus();
+      el.style.borderColor = "var(--bad)";
+    }
+    return;
+  }
+  ui.modal = null;
+  render();
+  logUsual(B.ks.length > 1 ? "both" : B.ks[0], B.kd, am);
+};
+
 ACT["cidone"] = function (e, t, a, v, c) {
   try {
     localStorage.setItem(LS + "-ci", today());

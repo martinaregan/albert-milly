@@ -539,7 +539,7 @@
         : "Could not reach GitHub. Check your internet connection.";
   }
 
-  var APPV = "55";
+  var APPV = "56";
 
   // Links that open GitHub with most of the form already filled in.
   var GH_NEW_REPO =
