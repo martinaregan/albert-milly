@@ -72,7 +72,7 @@ Just want a look? Tap **Try the demo** on the setup screen, or open [`?demo`](ht
 - **One-tap meals**: the headline card shows "Log both" or "Log Milly" when a meal is missing. It logs the usual amount from each cat's plan and marks it as eaten. A meal that is already logged can't be logged twice. **Change** next to it opens both cats' amounts, filled in with the usual, so you can adjust the grams and still log both in one go.
 - **Quick log**: the round **+** button (Today, Health, Friendship) opens big buttons for breakfast, dinner, poo, pee, play, fight and calm moment. It guesses the meal from the time of day.
 - **Undo**: most one-tap actions show "Logged · Undo" for 7 seconds.
-- **Swipe left** on a meal or a poo/pee entry to delete it (with undo).
+- **Swipe left** on a meal, a poo/pee entry or a note to delete it (with undo).
 - **Poo and pee** forms open already filled in with what is usual for that cat lately, so saving is one tap.
 
 ## The tabs

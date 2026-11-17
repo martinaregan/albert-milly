@@ -90,6 +90,22 @@ async def main():
             n = await page.evaluate("""['albert','milly'].filter(k=>{var d=T.S.cats[k].days['2026-11-16'];
                 return d&&(Object.keys(d.f).length||(d.meals||[]).length)}).length""")
             check(n == 0, "undo removes both again")
+        await page.click("[data-a=usual][data-v='both|dry']"); await page.clock.run_for(300)
+        by = await page.evaluate("(document.querySelector('.hlby')||{}).textContent||''")
+        check("Tester" in by, f"headline shows who fed them ({by!r})")
+        await page.click("#toast button"); await page.clock.run_for(300)
+        await page.evaluate("""T.S.msgs=[{id:'n1',from:'Tester',to:['Tester'],text:'Test note',at:0,created:Date.now(),done:false}];
+            T.ui.tab='today';T.render()""")
+        await page.clock.run_for(200)
+        check(await page.query_selector(".swr[data-del=noteDel]") is not None, "notes can be swiped")
+        await page.evaluate("""()=>{var r=document.querySelector('.swr[data-del=noteDel]'),b=r.getBoundingClientRect(),x=b.left+b.width*.7,y=b.top+b.height/2;
+          function ev(t,x2){var tt=new Touch({identifier:1,target:r,clientX:x2,clientY:y});r.dispatchEvent(new TouchEvent(t,{touches:t==='touchend'?[]:[tt],changedTouches:[tt],bubbles:true,cancelable:true}))}
+          ev('touchstart',x);for(var i=1;i<=10;i++)ev('touchmove',x-i*15);ev('touchend',x-150)}""")
+        await page.clock.run_for(500)
+        check(await page.evaluate("T.S.msgs.length") == 0, "swipe left deletes a note")
+        await page.click("#toast button"); await page.clock.run_for(300)
+        check(await page.evaluate("T.S.msgs.length") == 1, "undo brings the note back")
+        await page.evaluate("T.S.msgs=[];T.render()")
         await page.click(".fab"); await page.clock.run_for(200)
         check(await page.query_selector(".qsheet") is not None, "quick log opens")
         await page.click(".qsheet [data-a=close]"); await page.clock.run_for(200)
@@ -108,6 +124,14 @@ async def main():
         await page.clock.run_for(500)
         after = await page.evaluate("T.S.cats.albert.days['2026-11-15'].meals.length")
         check(after == before - 1, "swipe left deletes a meal")
+        await page.evaluate("T.ui.modal=null;T.ui.tab='fights';T.render()"); await page.clock.run_for(200)
+        await page.click("[data-a=fnew]"); await page.clock.run_for(300)
+        for _ in range(4):  # the wizard asks other things first: step on until "How bad was it?"
+            if await page.query_selector("[data-a=fc][data-k=sev]"): break
+            await page.evaluate("T.ui.f.step++;T.render()"); await page.clock.run_for(200)
+        rb = await page.query_selector("[data-a=fc][data-k=sev][data-v='Run & bite']")
+        check(rb is not None, "fight form offers Run & bite")
+        await page.evaluate("T.ui.modal=null;T.render()")
         check(not errors, f"no page errors during actions ({errors[:1]})")
         await page.context.close()
 

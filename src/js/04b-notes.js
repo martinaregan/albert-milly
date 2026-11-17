@@ -47,8 +47,10 @@
     if (!mine.length && !sent.length) return "";
     function row(m, forMe) {
       return (
-        '<div class="note1' +
+        '<div class="note1 swr' +
         (m.done ? " done" : "") +
+        '" data-del="noteDel" data-id="' +
+        m.id +
         '"><div class="n1t">' +
         esc(m.text) +
         '<div class="small mute">' +

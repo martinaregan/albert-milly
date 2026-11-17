@@ -2,6 +2,12 @@
 
 The version number is at the bottom of Settings › Data & sync.
 
+## 17 November 2026 (version 57)
+
+- **Notes**: swipe a note left to delete it, with Undo, like meals and poo entries.
+- **Fights**: a new **Run & bite** option under "How bad was it?", next to Bite. It counts as a bite in the charts and totals.
+- **Who fed them**: once a meal is logged, the headline card shows who did it ("✓ Both · Martina", or "Martina & Eóin" when you each fed one).
+
 ## 17 November 2026 (version 56)
 
 - **Log both with different amounts**: tap **Change** next to **Log both** (or "Not the usual amount? Change it" in Quick log). Both cats' amounts are filled in with the usual; adjust with − / + or type, then log both in one go. Set a cat to 0 to leave them out. Undo works as before.

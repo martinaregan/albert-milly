@@ -100,7 +100,7 @@
     "No obvious reason"
   ];
 
-  var SEV = ["Stare / stalk", "Chase / hiss", "Bite", "Full fight"];
+  var SEV = ["Stare / stalk", "Chase / hiss", "Bite", "Run & bite", "Full fight"];
 
   var WHERE = ["Bedroom", "Kitchen", "Hall", "Living room", "Bathroom", "Other"];
 

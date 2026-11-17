@@ -78,7 +78,7 @@ T = {
 "Hold an empty spot on the home screen › Edit › Add Widget › Shortcuts. The medium size fits 4 buttons, the large one 8. Hold the widget › Edit Widget to choose your folder.":"Houd een lege plek op het beginscherm ingedrukt › Wijzig › Voeg widget toe › Opdrachten. Het middelste formaat heeft 4 knoppen, het grote 8. Houd de widget ingedrukt › Wijzig widget om je map te kiezen.",
 "For poo and pee, add":"Zet voor poep en plas","to the end of the link to pick the cat.":"achter de link om de kat te kiezen.",
 "Link copied. Paste it into an Open URLs shortcut":"Link gekopieerd. Plak hem in een opdracht met Open URL's",
-"Dinner for both":"Avondeten voor allebei","Change":"Aanpassen","Change amounts":"Hoeveelheden aanpassen","Less":"Minder",
+"Run & bite":"Rennen en bijten","Dinner for both":"Avondeten voor allebei","Change":"Aanpassen","Change amounts":"Hoeveelheden aanpassen","Less":"Minder",
 "Change what wasn't the usual today, then log it in one go.":"Pas aan wat vandaag anders was dan normaal en vul het dan in één keer in.",
 "Set a cat to 0 to leave them out.":"Zet een kat op 0 om die over te slaan.",
 "Not the usual amount? Change it":"Niet de normale hoeveelheid? Pas aan",

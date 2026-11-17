@@ -3521,6 +3521,15 @@ img.spot {
   border-radius: 10px;
   padding: 7px 12px;
 }
+.hlby {
+  font-weight: 700;
+  color: #d8cfc6;
+  margin-left: -3px;
+}
+.hlr {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
 .hlalt {
   border: 1px solid rgba(255, 255, 255, 0.4);
   background: none;

@@ -3,9 +3,11 @@
       "Stare / stalk": "#b8a6ff",
       "Chase / hiss": "#8b6cff",
       Bite: "#e0703a",
+      "Run & bite": "#d9552f",
       "Full fight": "#d23b3b"
     },
-    SEVN = { "Stare / stalk": 1, "Chase / hiss": 2, Bite: 3, "Full fight": 4 };
+    // "Run & bite" counts as a bite wherever fights are ranked.
+    SEVN = { "Stare / stalk": 1, "Chase / hiss": 2, Bite: 3, "Run & bite": 3, "Full fight": 4 };
 
   document.addEventListener(
     "toggle",
@@ -660,7 +662,7 @@
           .map(function (f) {
             return (
               '<div class="ci"><span class="ic">' +
-              (f.sev === "Full fight" ? "💥" : f.sev === "Bite" ? "🦷" : "💨") +
+              (f.sev === "Full fight" ? "💥" : SEVN[f.sev] === 3 ? "🦷" : "💨") +
               '</span><span><span class="val">' +
               esc((f.m ? f.m + " · " : "") + (f.sev || "Fight")) +
               '</span><br><span class="small mute">' +

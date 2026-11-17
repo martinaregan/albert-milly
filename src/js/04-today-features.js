@@ -294,8 +294,19 @@
         });
       if (!m.length && aw.length && !d.length)
         right = '<span class="hlmute">🏨 ' + esc((awayAt(aw[0], t, kind).place || "Cat hotel").split(" ")[0]) + "</span>";
-      else if (!m.length)
-        right = '<span class="hlok">✓ ' + (d.length > 1 ? "Both" : esc(S.cats[d[0]].name)) + "</span>";
+      else if (!m.length) {
+        // Who fed them: "✓ Both · Martina", or "· Martina & Eóin" when they each did one.
+        var by = [];
+        d.forEach(function (k) {
+          var w = (mealBy(k, kind) || {}).who;
+          if (w && by.indexOf(w) < 0) by.push(w);
+        });
+        right =
+          '<span class="hlok">✓ ' +
+          (d.length > 1 ? "Both" : esc(S.cats[d[0]].name)) +
+          "</span>" +
+          (by.length ? '<span class="hlby">· ' + esc(by.join(" & ")) + "</span>" : "");
+      }
       else if (later) right = '<span class="hlmute">' + later + "</span>";
       else
         right =
