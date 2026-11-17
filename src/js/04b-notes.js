@@ -51,7 +51,9 @@
         (m.done ? " done" : "") +
         '" data-del="noteDel" data-id="' +
         m.id +
-        '"><div class="n1t">' +
+        '"><div class="n1t"' +
+        (m.from === me && !m.done ? ' data-a="noteEdit" data-v="' + m.id + '" role="button"' : "") +
+        ">" +
         esc(m.text) +
         '<div class="small mute">' +
         (forMe
@@ -61,6 +63,8 @@
           : "To " + esc((m.to || []).join(" & "))) +
         (m.at ? " · ⏰ " + whenText(m.at) : "") +
         (m.done ? " · ✓ " + esc(m.doneBy || "") : !forMe ? " · not done yet" : "") +
+        (m.edited ? " · edited" : "") +
+        (m.from === me && !m.done ? ' · <span class="n1e">✎ Edit</span>' : "") +
         "</div></div>" +
         (m.done
           ? ""
@@ -90,7 +94,9 @@
     var f = ui.nf,
       P = people();
     return (
-      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><div class="row between u-nowrap"><h2 class="u-m0">New note</h2><button class="x" data-a="close">✕</button></div>' +
+      '<div class="modal" data-a="close"><div class="sheet" data-stop="1"><div class="row between u-nowrap"><h2 class="u-m0">' +
+      (f.id ? "Edit note" : "New note") +
+      '</h2><button class="x" data-a="close">✕</button></div>' +
       '<textarea id="ntext" rows="3" placeholder="e.g. Can you give Albert his worm tablet tonight?">' +
       esc(f.text || "") +
       "</textarea>" +
@@ -122,7 +128,9 @@
       (f.later
         ? "Reminders can arrive up to about 30 minutes late."
         : "They get a notification within a minute or so, if they've turned notifications on.") +
-      '</div><button class="b p w u-mt10" data-a="noteSend">Send</button></div></div>'
+      '</div><button class="b p w u-mt10" data-a="noteSend">' +
+      (f.id ? "Save" : "Send") +
+      "</button></div></div>"
     );
   }
 

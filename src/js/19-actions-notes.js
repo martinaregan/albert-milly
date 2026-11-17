@@ -34,6 +34,22 @@ ACT["noteWhen"] = function (e, t, a, v) {
   render();
 };
 
+// Edit a note you wrote: same sheet, filled in. Changing the time or who it's for sends it again.
+ACT["noteEdit"] = function (e, t, a, v) {
+  var m = (S.msgs || []).filter(function (x) {
+    return x.id === v;
+  })[0];
+  if (!m || m.from !== myName() || m.done) return;
+  var at = "";
+  if (m.at) {
+    var d = new Date(m.at);
+    at = iso(d) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+  }
+  ui.nf = { id: m.id, text: m.text, to: (m.to || []).slice(), later: !!m.at, at: at };
+  ui.modal = noteSheet;
+  render();
+};
+
 ACT["noteSend"] = function () {
   keepNoteText();
   var f = ui.nf,
@@ -46,6 +62,33 @@ ACT["noteSend"] = function () {
     if (!at || isNaN(at)) return toast("Pick a time");
   }
   S.msgs = S.msgs || [];
+  if (f.id) {
+    var m = S.msgs.filter(function (x) {
+      return x.id === f.id;
+    })[0];
+    if (!m) return;
+    var added = f.to.some(function (n) {
+        return (m.to || []).indexOf(n) < 0;
+      }),
+      moved = at !== (m.at || 0);
+    if (txt === m.text && !added && !moved && f.to.length === (m.to || []).length) {
+      ui.modal = null;
+      return render();
+    }
+    m.text = txt;
+    m.to = f.to.slice();
+    m.at = at;
+    m.edited = Date.now();
+    // New time or a new person: let it go out again (the time is in the future, or it's for someone new).
+    if (m.sent && (added || (moved && at > Date.now()))) {
+      delete m.sent;
+      notifyNext = true;
+    }
+    if (!m.sent) notifyNext = true;
+    ui.modal = null;
+    change();
+    return toast(moved && at ? "Reminder moved to " + whenText(at) : "Saved");
+  }
   S.msgs.push({ id: uid(), from: myName(), to: f.to.slice(), text: txt, at: at, created: Date.now(), done: false });
   ui.modal = null;
   notifyNext = true;

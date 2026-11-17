@@ -4368,6 +4368,13 @@ body.milly {
   min-width: 0;
   font-weight: 700;
 }
+.n1t[data-a] {
+  cursor: pointer;
+}
+.n1e {
+  color: var(--accent);
+  font-weight: 800;
+}
 .note1.done .n1t {
   opacity: 0.55;
   text-decoration: line-through;

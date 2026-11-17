@@ -1,6 +1,7 @@
 /* 17c-help: First-time intro, "What's new" after an update, the emergency vet panel, and report a problem. */
   // Newest first. Add a line here with every release that changes something people will notice.
   var NEWS = [
+    ["58", "Edit a note: tap a note you wrote to change the text, the time or who it's for"],
     ["57", "Swipe a note left to delete it", "The top card shows who fed them: ✓ Both · Martina", "Fights: a new Run & bite option"],
     ["56", "Log both with different amounts: tap Change next to Log both, adjust the grams, log both cats in one go"],
     ["55", "Shortcut links for a home screen widget: breakfast, dinner, poo, pee, play, fight, calm moment, weigh-in, note (Settings › This phone)"],

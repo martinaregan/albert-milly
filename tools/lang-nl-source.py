@@ -83,8 +83,11 @@ T = {
 "Set a cat to 0 to leave them out.":"Zet een kat op 0 om die over te slaan.",
 "Not the usual amount? Change it":"Niet de normale hoeveelheid? Pas aan",
 "for the usual breakfast or dinner.":"voor het gewone ontbijt of avondeten.","sets other amounts first. The round":"stelt eerst andere hoeveelheden in. De ronde",
+"Edit note":"Notitie bewerken","✎ Edit":"✎ Bewerken","edited":"bewerkt","Saved":"Opgeslagen",
+"Edit a note: tap a note you wrote to change the text, the time or who it's for":"Notitie bewerken: tik op een notitie die je schreef om de tekst, de tijd of de ontvanger te wijzigen",
 }
 P = [
+[r"Reminder moved to (.+)", r"Herinnering verplaatst naar \1"],
 [r"usual (\d.*)", r"normaal \1"],
 [r"In (.+) · Out (.+)", r"Brengen \1 · Ophalen \2"],
 [r"(.+): flea due", r"\1: vlo gepland"],
